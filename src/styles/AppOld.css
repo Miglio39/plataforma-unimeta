@@ -1,0 +1,614 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --glass-panel: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --accent-color: #38bdf8; /* Azul cielo elegante */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --card-radius: 24px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-primary);
+  background: #0f172a; /* Fallback */
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: var(--bg-gradient);
+  overflow: hidden;
+  padding: 20px; /* Margen externo para que parezca una app flotante */
+  box-sizing: border-box;
+  gap: 20px;
+}
+
+/* =========================================
+   SIDEBAR: Panel de Cristal Izquierdo
+   ========================================= */
+.sidebar {
+  width: 260px;
+  background: var(--glass-panel);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  transition: width 0.3s ease;
+  z-index: 10;
+}
+
+.logo-section {
+  margin-bottom: 40px;
+  text-align: left;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 20px;
+}
+
+.unimeta-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 5px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.section-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 20px 0 10px 10px;
+  font-weight: 600;
+}
+
+.sidebar li {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateX(5px);
+}
+
+.sidebar li.active {
+  background: var(--accent-color);
+  color: #0f172a; /* Texto oscuro para contraste */
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+}
+
+/* =========================================
+   CONTENIDO PRINCIPAL: Panel Derecho
+   ========================================= */
+.main-content {
+  flex: 1;
+  background: var(--glass-panel);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.top-header h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  margin: 0;
+}
+
+.top-header h1 span {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+/* --- GRID CENTRAL: Distribución Inteligente --- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  grid-template-rows: 1fr auto;   /* Fila superior grande, inferior auto */
+  gap: 20px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* TARJETA DEL MAPA/EDIFICIO (Izquierda) */
+.card-preview {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--glass-border);
+}
+
+.card-preview img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.3)); /* Brillo suave */
+}
+
+.card-preview:hover img {
+  transform: scale(1.05);
+}
+
+/* TARJETA DEL VISOR 360 (Derecha) */
+.card-viewer {
+  background: black;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.card-viewer canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.badge-360 {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(5px);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 10;
+}
+
+/* --- BARRA DE CONTROL (Abajo, Izquierda) --- */
+.control-dock {
+  grid-column: 1 / 2; /* Se alinea debajo de la imagen del mapa */
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  gap: 15px;
+  padding-top: 15px;
+  flex-wrap: wrap; 
+}
+
+.dock-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  padding: 15px 25px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+.dock-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
+  box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2);
+}
+
+.dock-btn .icon {
+  font-size: 1.2rem;
+}
+
+
+/* =========================================
+   MÓDULO: MAPA INTERACTIVO (MODAL FLOTANTE)
+   ========================================= */
+.map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200; 
+  animation: fadeIn 0.3s ease;
+}
+
+.map-content-glass {
+  background: var(--glass-panel);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  max-width: 85%;
+  max-height: 90vh;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.close-map {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: #ef4444; /* Rojo suave */
+  color: white;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.close-map:hover {
+  transform: scale(1.1) rotate(90deg);
+}
+
+.map-title {
+  font-weight: 300;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.map-image-container {
+  position: relative;
+  display: inline-block;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0,0,0,0.3);
+}
+
+.map-image {
+  display: block;
+  max-width: 100%;
+  max-height: 60vh; 
+  object-fit: contain;
+}
+
+/* Pines (Marcadores) */
+.map-pin {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* Animación de Latido (Radar) */
+.pin-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: var(--accent-color);
+  border-radius: 50%;
+  animation: radarPulse 2s infinite;
+  z-index: -1;
+}
+
+@keyframes radarPulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+}
+
+/* Tooltip de los pines */
+.pin-tooltip {
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, bottom 0.3s ease;
+  border: 1px solid var(--accent-color);
+}
+
+.pin-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--accent-color) transparent transparent transparent;
+}
+
+.map-pin:hover .pin-tooltip {
+  opacity: 1;
+  bottom: 160%;
+}
+
+.map-instruction {
+  color: var(--accent-color);
+  font-size: 0.85rem;
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+
+/* =========================================
+   CHATBOT INTERACTIVO (GLASSMORPHISM)
+   ========================================= */
+.chatbot-wrapper {
+  position: fixed;
+  bottom: 30px; /* La distancia desde abajo */
+  left: 30px;   /* 🔴 AQUÍ ESTÁ LA MAGIA: Cambiamos 'right' por 'left' */
+  left: auto;  /* Esto anula cualquier alineación a la derecha anterior */
+  z-index: 1000;
+}
+
+/* El Búho */
+.buho-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-color);
+  background: white;
+  padding: 5px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.buho-avatar:hover {
+  transform: scale(1.1) rotate(-5deg);
+  box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+}
+
+/* Globito de vista previa cuando el chat está cerrado */
+.chat-bubble-preview {
+  background: white;
+  color: #0f172a;
+  padding: 10px 18px;
+  border-radius: 15px 15px 0 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  cursor: pointer;
+  animation: floatChat 3s ease-in-out infinite;
+  transform-origin: bottom right;
+}
+
+.chat-bubble-preview::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  border-left: 10px solid transparent;
+  border-top: 10px solid white;
+}
+
+@keyframes floatChat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+/* --- LA VENTANA DEL CHAT --- */
+.chat-window {
+  width: 320px;
+  height: 400px;
+  background: var(--glass-panel);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: slideUp 0.3s ease-out forwards;
+  transform-origin: bottom right;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: scale(0.8) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.chat-header {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.chat-title {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot-online {
+  width: 8px;
+  height: 8px;
+  background: #22c55e; /* Verde brillante */
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.chat-close {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.chat-close:hover {
+  color: white;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-message {
+  max-width: 80%;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  animation: fadeInMsg 0.3s ease;
+}
+
+@keyframes fadeInMsg {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-message.bot {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 15px 15px 15px 0;
+  align-self: flex-start;
+  border: 1px solid var(--glass-border);
+}
+
+.chat-message.user {
+  background: var(--accent-color);
+  color: #0f172a;
+  border-radius: 15px 15px 0 15px;
+  align-self: flex-end;
+  font-weight: 500;
+}
+
+.chat-footer {
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid var(--glass-border);
+}
+
+.chat-footer input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  transition: border-color 0.3s;
+}
+
+.chat-footer input::placeholder {
+  color: var(--text-secondary);
+}
+
+.chat-footer input:focus {
+  border-color: var(--accent-color);
+}
+
+.send-btn {
+  background: var(--accent-color);
+  color: #0f172a;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.send-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+.a-enter-vr-button {
+  position: absolute !important;
+  bottom: 20px !important;
+  left: 20px !important;   /* 🔥 ahora lado izquierdo */
+  right: auto !important;  /* desactiva el right original */
+}
+
+/* Scrollbars invisibles */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
