@@ -528,3 +528,31 @@ ul { list-style: none; }
   transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(56, 189, 248, 0.5);
 }
+
+/* =========================================
+   ADAPTACIÓN PARA CELULARES Y TABLETS
+   ========================================= */
+@media (max-width: 768px) {
+  /* Convierte la cuadrícula en una sola columna hacia abajo */
+  .dashboard-grid-nuevo {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    overflow-y: auto !important;
+  }
+
+  /* Ajusta el visor 360 para que ocupe la mitad superior de la pantalla */
+  .visor-container, .viewer-container {
+    width: 100% !important;
+    height: 55vh !important; /* 55% del alto de la pantalla */
+    order: 1; /* Lo pone de primero arriba */
+  }
+
+  /* Ajusta el menú lateral para que quede abajo y se pueda hacer scroll */
+  .sidebar, .Sidebar {
+    width: 100% !important;
+    height: auto !important;
+    order: 2; /* Lo pone debajo del visor */
+    padding: 15px !important;
+  }
+}
