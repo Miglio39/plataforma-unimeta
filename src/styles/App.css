@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
+/* =========================================
+   1. VARIABLES Y RESET GENERAL
+   ========================================= */
 :root {
   --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   --glass-panel: rgba(255, 255, 255, 0.05);
@@ -24,52 +27,19 @@ body {
   overflow: hidden; 
 }
 
-ul { list-style: none; }
+ul { 
+  list-style: none; 
+}
 
+/* =========================================
+   2. ESTRUCTURA PRINCIPAL (LAYOUT)
+   ========================================= */
 .app-container {
   display: flex;
   height: 100vh;
   width: 100vw;
   padding: 20px;
   gap: 20px;
-}
-
-.sidebar {
-  width: 280px;
-  background: var(--glass-panel);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--card-radius);
-  padding: 25px 20px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow-y: auto;
-  z-index: 10;
-}
-
-.sidebar li {
-  padding: 12px 15px;
-  margin-bottom: 8px;
-  border-radius: 12px;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: all 0.2s ease;
-  font-size: 0.9rem;
-}
-
-.sidebar li:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  transform: translateX(5px);
-}
-
-.sidebar li.active, .sidebar li[style*="background"] {
-  background: var(--accent-color) !important;
-  color: #0f172a !important;
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
 }
 
 .main-content {
@@ -102,6 +72,85 @@ ul { list-style: none; }
   height: 100%;
 }
 
+.columna-principal {
+  background: black;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+/* =========================================
+   3. BARRA LATERAL (SIDEBAR Y MENÚ COMPACTO)
+   ========================================= */
+.sidebar {
+  width: 280px;
+  background: var(--glass-panel);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: hidden; /* Evita scroll en PC para que todo se vea de una vez */
+  z-index: 10;
+}
+
+.sidebar-nav {
+  overflow-y: hidden; 
+}
+
+.menu-section {
+  margin-bottom: 10px !important; 
+}
+
+.section-title {
+  font-size: 0.95rem;
+  margin-bottom: 5px !important;
+  margin-top: 5px !important;
+  color: var(--text-secondary);
+}
+
+.sidebar li, .sidebar-item {
+  padding: 6px 15px !important;
+  margin-bottom: 2px !important;
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  font-size: 0.85rem !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-item .icon {
+  font-size: 1.1rem !important;
+}
+
+.sidebar li:hover, .sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateX(5px);
+}
+
+.sidebar li.active, .sidebar li[style*="background"], .sidebar-item.active {
+  background: var(--accent-color) !important;
+  color: #0f172a !important;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+}
+
+/* =========================================
+   4. TARJETAS Y VISOR 360
+   ========================================= */
 .tarjeta-lateral {
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid var(--glass-border);
@@ -137,6 +186,25 @@ ul { list-style: none; }
   background: #1e293b;
 }
 
+.badge-360 {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 20 !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* =========================================
+   5. BOTONES DE EXPANSIÓN
+   ========================================= */
 .btn-expandir {
   background: transparent;
   border: none;
@@ -172,37 +240,8 @@ ul { list-style: none; }
   transform: scale(1.2);
 }
 
-.columna-principal {
-  background: black;
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
-  min-width: 0;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-}
-
-.badge-360 {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(5px);
-  padding: 6px 15px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  z-index: 20 !important;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 /* =========================================
-   6. MODALES FLOTANTES (CENTRADOS A PRUEBA DE FALLOS)
+   6. MODALES FLOTANTES (CENTRADOS)
    ========================================= */
 .modal-overlay {
   position: fixed !important;
@@ -216,8 +255,6 @@ ul { list-style: none; }
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
   z-index: 100000 !important;
-  
-  /* Centrado absoluto forzado */
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -232,8 +269,6 @@ ul { list-style: none; }
   max-width: 85vw;
   max-height: 85vh;
   padding: 10px;
-  
-  /* Doble seguro para que la caja abrace la imagen y se centre */
   width: fit-content;
   height: fit-content;
   margin: auto; 
@@ -245,7 +280,7 @@ ul { list-style: none; }
   max-height: 80vh;
   object-fit: contain;
   border-radius: 12px;
-  margin: 0 auto; /* Centra la imagen dentro de su propia caja */
+  margin: 0 auto;
 }
 
 .modal-contenido iframe {
@@ -282,7 +317,7 @@ ul { list-style: none; }
 }
 
 /* =========================================
-   AJUSTES EXACTOS Y FORZADOS PARA A-FRAME
+   7. AJUSTES A-FRAME (VISOR 360)
    ========================================= */
 .columna-principal a-scene {
   position: absolute !important;
@@ -302,7 +337,7 @@ ul { list-style: none; }
 .a-enter-vr, .a-fullscreen-button { display: none !important; }
 
 /* =========================================
-   CHATBOT INTERACTIVO (BÚHO)
+   8. CHATBOT INTERACTIVO (BÚHO RAU)
    ========================================= */
 .chatbot-wrapper {
   position: fixed !important;
@@ -480,7 +515,6 @@ ul { list-style: none; }
   padding: 10px 15px;
   border-radius: 20px;
   outline: none;
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   transition: border-color 0.3s;
 }
@@ -506,13 +540,10 @@ ul { list-style: none; }
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
 }
 
-/* =========================================
-   BOTONES DENTRO DEL CHAT (ENLACES IA)
-   ========================================= */
 .chat-link-btn {
   display: inline-block;
   background-color: var(--accent-color);
-  color: #0f172a !important; /* Fuerza color oscuro en el texto */
+  color: #0f172a !important;
   padding: 6px 14px;
   border-radius: 12px;
   text-decoration: none;
@@ -530,29 +561,68 @@ ul { list-style: none; }
 }
 
 /* =========================================
-   ADAPTACIÓN PARA CELULARES Y TABLETS
+   9. RESPONSIVE (CELULARES Y TABLETS)
    ========================================= */
 @media (max-width: 768px) {
-  /* Convierte la cuadrícula en una sola columna hacia abajo */
+  /* Hacemos que la pantalla permita hacer scroll hacia abajo en celular */
+  body {
+    overflow-y: auto !important;
+  }
+
+  .app-container {
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 100vh;
+    padding: 15px !important;
+  }
+
+  /* Cambia la cuadrícula a una sola columna */
   .dashboard-grid-nuevo {
     display: flex !important;
     flex-direction: column !important;
     height: auto !important;
-    overflow-y: auto !important;
   }
 
-  /* Ajusta el visor 360 para que ocupe la mitad superior de la pantalla */
-  .visor-container, .viewer-container {
-    width: 100% !important;
-    height: 55vh !important; /* 55% del alto de la pantalla */
-    order: 1; /* Lo pone de primero arriba */
-  }
-
-  /* Ajusta el menú lateral para que quede abajo y se pueda hacer scroll */
+  /* El menú lateral pasa a la parte inferior y ocupa todo el ancho */
   .sidebar, .Sidebar {
     width: 100% !important;
     height: auto !important;
     order: 2; /* Lo pone debajo del visor */
     padding: 15px !important;
+  }
+
+  /* El contenido principal (Visor) se pone arriba y ocupa el 55% de la pantalla */
+  .main-content {
+    width: 100% !important;
+    height: 55vh !important;
+    min-height: 400px;
+    order: 1; /* Lo pone arriba */
+    padding: 15px !important;
+  }
+
+  /* Reposicionamos al Búho Rau para que quede fijo en la esquina inferior derecha */
+  .chatbot-wrapper {
+    left: auto !important;
+    right: 20px !important;
+    bottom: 20px !important;
+  }
+
+  /* Ajustamos la ventana del chat para que no se salga de la pantalla del celular */
+  .chat-window {
+    left: auto !important;
+    right: 0 !important;
+    width: calc(100vw - 40px) !important; /* Ocupa casi todo el ancho */
+    max-width: 350px !important;
+  }
+  
+  .chat-bubble-preview {
+    left: auto !important;
+    right: 10px !important;
+    transform-origin: bottom right;
+  }
+  
+  .chat-bubble-preview::after {
+    left: auto !important;
+    right: 25px !important;
   }
 }

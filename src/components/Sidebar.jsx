@@ -8,7 +8,11 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
     { nombre: 'Consultorio Jurídico', archivo: 'consultorio.jpg', icono: '⚖️' },
     { nombre: 'Sala de Audiencias', archivo: 'audiencias.jpg', icono: '👨‍⚖️' },
     { nombre: 'Rectoría', archivo: 'rectoria.jpg', icono: '🏛️' },
-    { nombre: 'Biblioteca', archivo: 'biblioteca.jpg', icono: '📚' }
+    { nombre: 'Biblioteca', archivo: 'biblioteca.jpg', icono: '📚' },
+    // --- NUEVOS 3 ESPACIOS ---
+    { nombre: 'Laboratorios Edificio Hernán Villamarín', archivo: 'laboratorios.jpg', icono: '🔬' },
+    { nombre: 'Auditorios y salas de conferencias', archivo: 'auditorios.jpg', icono: '🎤' },
+    { nombre: 'Decanaturas', archivo: 'decanaturas.jpg', icono: '👔' }
   ];
 
   // Grupo 2: Otras Sedes
