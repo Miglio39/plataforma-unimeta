@@ -573,6 +573,15 @@ ul {
     flex-direction: column !important;
     height: auto !important;
     min-height: 100vh;
+    padding: 10px !important;
+  }
+
+  /* Liberamos la caja principal para que no corte nada de lo que hay adentro */
+  .main-content {
+    width: 100% !important;
+    height: auto !important; /* Liberamos la altura */
+    overflow: visible !important;
+    order: 1; /* Arriba del menú de sedes */
     padding: 15px !important;
   }
 
@@ -581,38 +590,53 @@ ul {
     display: flex !important;
     flex-direction: column !important;
     height: auto !important;
+    gap: 20px !important;
   }
 
-  /* El menú lateral pasa a la parte inferior y ocupa todo el ancho */
+  /* 1. VISOR 360 (Obligarlo a estar de PRIMERO y con buen tamaño) */
+  .columna-principal {
+    order: 1 !important; /* 1 = Arriba de todo */
+    height: 55vh !important; /* Ocupa más de la mitad de la pantalla */
+    min-height: 350px !important;
+    width: 100% !important;
+  }
+
+  /* 2. VISTA EXTERIOR Y MAPA (Pasan debajo del visor 360) */
+  .columna-lateral {
+    order: 2 !important; /* 2 = Debajo del 360 */
+    height: auto !important;
+  }
+  
+  .tarjeta-lateral {
+    min-height: 220px !important; /* Asegura que no se aplasten el mapa y la foto */
+  }
+
+  /* 3. MENÚ DE SEDES (Pasa hasta abajo) */
   .sidebar, .Sidebar {
     width: 100% !important;
     height: auto !important;
-    order: 2; /* Lo pone debajo del visor */
+    order: 2; /* Debajo del contenido principal */
     padding: 15px !important;
+    margin-bottom: 90px !important; /* Espacio extra para que el búho no lo tape */
   }
 
-  /* El contenido principal (Visor) se pone arriba y ocupa el 55% de la pantalla */
-  .main-content {
-    width: 100% !important;
-    height: 55vh !important;
-    min-height: 400px;
-    order: 1; /* Lo pone arriba */
-    padding: 15px !important;
-  }
-
-  /* Reposicionamos al Búho Rau para que quede fijo en la esquina inferior derecha */
+  /* 4. EL BÚHO RAU (Fijo en la esquina inferior derecha) */
   .chatbot-wrapper {
+    position: fixed !important;
     left: auto !important;
-    right: 20px !important;
-    bottom: 20px !important;
+    right: 15px !important;
+    bottom: 15px !important;
+    z-index: 99999 !important;
   }
 
-  /* Ajustamos la ventana del chat para que no se salga de la pantalla del celular */
+  /* 5. LA VENTANA DEL CHAT */
   .chat-window {
     left: auto !important;
     right: 0 !important;
-    width: calc(100vw - 40px) !important; /* Ocupa casi todo el ancho */
-    max-width: 350px !important;
+    bottom: 85px !important;
+    width: calc(100vw - 30px) !important;
+    max-width: 380px !important;
+    height: 60vh !important;
   }
   
   .chat-bubble-preview {
