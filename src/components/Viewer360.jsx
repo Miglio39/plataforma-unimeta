@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react'; // 🛑 1. Importamos useState
 import 'aframe';
 
 const Viewer360 = ({ foto, setEscenaActual }) => {
+  // 🛑 2. Creamos el "interruptor" que controla el giro (empieza encendido)
+  const [girar, setGirar] = useState(true);
+
+  // 🛑 3. Función que apaga el interruptor
+  const detenerGiro = () => {
+    if (girar) setGirar(false);
+  };
+
   return (
-    // 🔴 key={foto} es obligatorio para evitar la pantalla negra al "caminar"
-    <div key={foto} style={{ width: '100%', height: '100%', position: 'relative' }}>
+    // 🛑 4. Agregamos los detectores de clic (PC) y toque (Celular) al div principal
+    <div 
+      key={foto} 
+      style={{ width: '100%', height: '100%', position: 'relative' }}
+      onMouseDown={detenerGiro} 
+      onTouchStart={detenerGiro}
+    >
       <a-scene 
         embedded 
         vr-mode-ui="enabled: false"
@@ -16,11 +29,11 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           <img id="panorama" src={`/assets/panoramas/${foto}`} crossOrigin="anonymous" alt="360" />
         </a-assets>
 
-        {/* 🔴 Quitamos la animación de rotación para que no te marees y puedas hacer clic */}
-       <a-sky 
-        src={`/assets/panoramas/${foto}`}
-        animation="property: rotation; to: 0 360 0; loop: true; dur: 120000; easing: linear;"
-      ></a-sky>
+        {/* 🛑 5. Vinculamos el interruptor a la propiedad "enabled" de la animación */}
+        <a-sky 
+          src={`/assets/panoramas/${foto}`}
+          animation={`property: rotation; to: 0 360 0; loop: true; dur: 120000; easing: linear; enabled: ${girar}`}
+        ></a-sky>
 
         {/* =========================================
             FLECHAS DE NAVEGACIÓN (Solo salen en Rectoría)
@@ -54,7 +67,7 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           </a-entity>
         )}
 
-        {/* 🔴 Cámara con el "láser" activado para detectar el clic en las flechas */}
+        {/* Cámara con el "láser" activado para detectar el clic en las flechas */}
         <a-entity camera look-controls="enabled: true; mouseEnabled: true" position="0 0 0">
           <a-entity cursor="rayOrigin: mouse;" raycaster="objects: .clickable"></a-entity>
         </a-entity>
