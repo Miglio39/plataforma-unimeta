@@ -27,7 +27,7 @@ const ChatBot = ({ mensaje, setEscenaActual }) => {
 
     try {
       // URL de Producción 
-      const webhookUrl = 'https://globalgps.app.n8n.cloud/webhook/chatbot';
+      const webhookUrl = 'https://backend-unimeta-n8n.8cmtsr.easypanel.host/webhook/chatbot';
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
