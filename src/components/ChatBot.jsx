@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, X, Search, MapPin, Compass, Home } from 'lucide-react';
 
 const ChatBot = ({ setEscenaActual }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  // 🔴 CAMBIO 1: Inicia en false para que el bot empiece cerrado
+  const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   
   // Iniciamos con el historial vacío para mostrar el diseño inicial
@@ -22,6 +23,7 @@ const ChatBot = ({ setEscenaActual }) => {
       if (chatBody) chatBody.scrollTop = 0;
     }
   }, [historial, isOpen, isTyping]);
+
   const enviarMensaje = async (e, textoDirecto = null) => {
     if (e) e.preventDefault();
     const textoUsuario = textoDirecto || input;
@@ -53,42 +55,84 @@ const ChatBot = ({ setEscenaActual }) => {
   };
 
   const formatearMensaje = (texto) => {
-    const regexEnlace = /\[([^\]]+)\]\(([^)]+)\)/g;
+    // 🔴 NUEVA MAGIA: Detecta tanto Imágenes ![alt](url) como Enlaces [texto](url)
+    const regex = /(!?)\[([^\]]+)\]\(([^)]+)\)/g;
     const partes = [];
     let ultimoIndice = 0;
     let match;
 
-    while ((match = regexEnlace.exec(texto)) !== null) {
+    while ((match = regex.exec(texto)) !== null) {
       if (match.index > ultimoIndice) {
         partes.push(texto.substring(ultimoIndice, match.index));
       }
-      const etiqueta = match[1];
-      const url = match[2];
+      
+      const esImagen = match[1] === '!'; // Si empieza con '!', es una foto
+      const textoOAlt = match[2];
+      const url = match[3];
 
-      if (url.startsWith('#ESCENA:')) {
+      if (esImagen) {
+        // Si es una imagen, la dibuja elegante dentro del chat
+        partes.push(
+          <img 
+            key={match.index} 
+            src={url} 
+            alt={textoOAlt} 
+            style={{ 
+              width: '100%', 
+              borderRadius: '10px', 
+              marginTop: '10px', 
+              border: '1px solid rgba(255,255,255,0.1)' 
+            }} 
+          />
+        );
+      } else if (url.startsWith('#ESCENA:')) {
+        // Si es un comando de escena, crea el botón de teletransporte
         const nombreImagen = url.replace('#ESCENA:', '');
         partes.push(
           <button key={match.index} className="chat-link-btn" onClick={() => setEscenaActual && setEscenaActual(nombreImagen)}>
-            {etiqueta}
+            {textoOAlt}
           </button>
         );
       } else {
+        // Si es un enlace normal (ej. a la página de admisiones)
         partes.push(
-          <a key={match.index} href={url} target="_blank" rel="noopener noreferrer" className="chat-link-btn">{etiqueta}</a>
+          <a key={match.index} href={url} target="_blank" rel="noopener noreferrer" className="chat-link-btn">{textoOAlt}</a>
         );
       }
-      ultimoIndice = regexEnlace.lastIndex;
+      ultimoIndice = regex.lastIndex;
     }
     
     if (ultimoIndice < texto.length) partes.push(texto.substring(ultimoIndice));
     return partes.length > 0 ? partes : texto;
   };
 
-  // Botón flotante cuando el chat está cerrado
+  // =========================================
+  // 🔴 CAMBIO 2: Botón flotante cerrado (Imagen cubriendo el 100%)
+  // =========================================
   if (!isOpen) {
     return (
-      <div className="chatbot-toggle-btn" onClick={() => setIsOpen(true)}>
-        <img src="/assets/icons/avatar-bot.png" alt="IA" className="chatbot-toggle-img" />
+      <div 
+        className="chatbot-toggle-btn" 
+        onClick={() => setIsOpen(true)}
+        style={{
+          padding: 0, 
+          overflow: 'hidden', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center'
+        }}
+      >
+        <img 
+          src="/assets/icons/avatar-bot.png" 
+          alt="IA" 
+          className="chatbot-toggle-img" 
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            transform: 'scale(1.15)' // Hace un ligero zoom para quitar cualquier borde vacío
+          }}
+        />
       </div>
     );
   }
@@ -112,7 +156,6 @@ const ChatBot = ({ setEscenaActual }) => {
           <div className="chat-empty-state">
             <div className="robot-hero-container">
               <div className="glow-rings"></div>
-              {/* 🔴 Aquí también actualizamos a avatar-bot.png */}
               <img src="/assets/icons/avatar-bot.png" alt="Avatar IA" className="robot-hero-img" onError={(e) => e.target.src = 'https://cdn-icons-png.flaticon.com/512/8943/8943377.png'} />
             </div>
             
