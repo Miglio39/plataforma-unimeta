@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X, Play, MapPin, Info, Landmark } from 'lucide-react';
 import 'aframe';
 
-// 🔴 EL TOOLTIP INDEPENDIENTE (Para no recargar el 3D)
+// 🔴 EL TOOLTIP INDEPENDIENTE (Para no recargar el 3D)2
 const TooltipFlotante = () => {
   const [lugarHover, setLugarHover] = useState(null);
 
