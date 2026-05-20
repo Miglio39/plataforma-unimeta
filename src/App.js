@@ -5,6 +5,7 @@ import ChatBot from './components/ChatBot';
 import { Sun, Volume2, Maximize, Play, Pause, MapPin, Info, Target, Compass, Trophy, Star, Home } from 'lucide-react';
 import './styles/App.css';
 
+
 const mapaUnimetaReal = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.6015521943896!2d-73.63004462413532!3d4.140889046252994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2dd3971e44a5%3A0x6b4fb6c17b5f25a7!2sUniversidad%20del%20Meta!5e0!3m2!1ses!2sco!4v1715000000000!5m2!1ses!2sco";
 
 // 🔴 LOS 11 LUGARES EXACTOS DEL PROYECTO
