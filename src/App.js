@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Viewer360 from './components/Viewer360';
 import ChatBot from './components/ChatBot'; 
-import { Sun, Volume2, Maximize, Play, Pause, MapPin, Info, Target, Compass, Trophy, Star, Home } from 'lucide-react';
+import { Sun, Volume2, Maximize, Play, Pause, MapPin, Info, Target, Compass, Trophy, Star, Home, Smartphone } from 'lucide-react';
 import './styles/App.css';
-
 
 const mapaUnimetaReal = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.6015521943896!2d-73.63004462413532!3d4.140889046252994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2dd3971e44a5%3A0x6b4fb6c17b5f25a7!2sUniversidad%20del%20Meta!5e0!3m2!1ses!2sco!4v1715000000000!5m2!1ses!2sco";
 
@@ -64,7 +63,6 @@ function App() {
   const [lugaresVisitados, setLugaresVisitados] = useState(['inicio.jpg']);
 
   useEffect(() => {
-    // Evitamos registrar sub-escenas que no están en el diccionario (ej. rectoria1a.jpg) para no dañar el conteo
     if (datosSedes[escenaActual] && !lugaresVisitados.includes(escenaActual)) {
       setLugaresVisitados(prev => [...prev, escenaActual]);
     }
@@ -111,18 +109,18 @@ function App() {
   };
 
   // ==========================================
-  // 🎮 MOTOR DE GAMIFICACIÓN (Matemáticas Seguras)
+  // 🎮 MOTOR DE GAMIFICACIÓN
   // ==========================================
-  const totalLugares = 11; // Los 11 lugares oficiales
-  const visitadosReales = Math.min(lugaresVisitados.length, totalLugares); // Nunca pasará de 11
-  const porcentajeExplorado = Math.min(100, Math.round((visitadosReales / totalLugares) * 100)); // Nunca pasará de 100%
+  const totalLugares = 11;
+  const visitadosReales = Math.min(lugaresVisitados.length, totalLugares);
+  const porcentajeExplorado = Math.min(100, Math.round((visitadosReales / totalLugares) * 100));
   
-  const xpTotal = visitadosReales * 150; 
+  const xpTotal = visitadosReales * 150;
   const nivelActual = Math.floor(xpTotal / 1000) + 1; 
   const xpParaSiguienteNivel = nivelActual * 1000;
   const porcentajeNivel = Math.round((xpTotal % 1000) / 1000 * 100);
 
-  const distanciaKm = (visitadosReales * 0.4).toFixed(1); 
+  const distanciaKm = (visitadosReales * 0.4).toFixed(1);
   const tiempoMin = visitadosReales * 8; 
 
   const todosLosLogros = [
@@ -134,7 +132,7 @@ function App() {
 
   const logrosDesbloqueados = todosLosLogros.filter(l => visitadosReales >= l.meta);
   const ultimoLogro = logrosDesbloqueados[logrosDesbloqueados.length - 1] || todosLosLogros[0];
-  const proximoLogro = todosLosLogros.find(l => visitadosReales < l.meta) || todosLosLogros[todosLosLogros.length - 1]; 
+  const proximoLogro = todosLosLogros.find(l => visitadosReales < l.meta) || todosLosLogros[todosLosLogros.length - 1];
   const progresoProximoLogro = Math.min(100, Math.round((visitadosReales / proximoLogro.meta) * 100));
 
   const statsUsuario = {
@@ -143,116 +141,121 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <div className="dashboard-grid-nuevo">
-        
-        <Sidebar setEscenaActual={setEscenaActual} escenaActual={escenaActual} statsUsuario={statsUsuario} />
-        
-        <main className="main-content-wrapper">
-          
-          <header className="top-bar">
-            <div className="location-info">
-              <h1>{infoSede.nombre}</h1>
-              <p><MapPin size={14} /> San Fernando, Meta</p>
-            </div>
-            <div className="top-actions">
-              <button className="icon-btn"><Sun size={18} /> Día</button>
-              <button className="icon-btn"><Volume2 size={18} /></button>
-              <button className="icon-btn" onClick={togglePantallaCompleta}><Maximize size={18} /></button>
-              <button 
-                className="btn-tour" 
-                onClick={() => setAutoPlay(!autoPlay)}
-                style={{ backgroundColor: autoPlay ? '#ef4444' : '#6366f1' }}
-              >
-                {autoPlay ? <Pause size={16} fill="white" /> : <Play size={16} fill="white" />} 
-                {autoPlay ? 'Detener recorrido' : 'Recorrido automático'}
-              </button>
-            </div>
-          </header>
-
-          <section className="columna-principal">
-            <Viewer360 foto={escenaActual} setEscenaActual={setEscenaActual} />
-            <ChatBot setEscenaActual={setEscenaActual} />
-          </section>
-
-          <section className="bottom-cards-grid" style={{ display: visorExpandido ? 'none' : 'grid' }}>
-            
-            <div className="info-card">
-              <div className="card-header">
-                <h3><MapPin size={16} /> Mapa del campus</h3>
-              </div>
-              <div className="mapa-contenedor">
-                <iframe width="100%" height="100%" frameBorder="0" scrolling="no" src={infoSede.mapaUrl} title="Mapa"></iframe>
-              </div>
-            </div>
-
-            <div className="info-card">
-              <div className="card-header">
-                <h3><Info size={16} /> Información del lugar</h3>
-              </div>
-              <div className="card-content-flex">
-                <img src={infoSede.vistaExterior} alt="Exterior" className="thumb-info" onError={(e) => e.target.src = '/assets/panoramas/mapa-unimeta.png'} />
-                <div className="text-info">
-                  <h4>{infoSede.nombre}</h4>
-                  <span className="tag">{infoSede.categoria}</span>
-                  <p>{infoSede.descripcion}</p>
-                  <span className="horario-text">◷ 7:00 a.m. - 9:00 p.m.</span>
-                </div>
-              </div>
-            </div>
-
-            {/* 🔴 TARJETA DE PROGRESO COMPRIMIDA PARA QUE QUEPA PERFECTO */}
-            <div className="info-card">
-              <div className="card-header">
-                <h3><Target size={16} /> Tu progreso</h3>
-              </div>
-              
-              {/* Le quitamos padding y usamos flex1 para que distribuya mejor el espacio */}
-              <div style={{ padding: '8px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, overflow: 'hidden' }}>
-                
-                {/* 1. Parte superior: Círculo y estadísticas */}
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                  <div className="stat-circle" style={{ width: '55px', height: '55px', borderWidth: '4px' }}>
-                    <div className="circle-inner">
-                      <span className="percent" style={{ fontSize: '0.85rem' }}>{porcentajeExplorado}%</span>
-                      <span className="label" style={{ fontSize: '0.4rem' }}>Explorado</span>
-                    </div>
-                  </div>
-                  <ul className="stats-list" style={{ listStyle: 'none', fontSize: '0.65rem', color: 'var(--text-muted)', lineHeight: '1.4', margin: 0, padding: 0 }}>
-                    <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Home size={12}/> Lugares: {visitadosReales} / {totalLugares}</li>
-                    <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MapPin size={12}/> Recorrido: {distanciaKm} km</li>
-                    <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>⏱️ Tiempo: {tiempoMin} min</li>
-                  </ul>
-                </div>
-
-                {/* 2. Parte inferior: Próximo Logro (Más compacta) */}
-                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '8px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                   <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: '600', margin: 0 }}>Logro próximo</p>
-                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <div style={{ background: proximoLogro.bg, padding: '6px', borderRadius: '50%', display: 'flex' }}>
-                         {proximoLogro.icono}
-                      </div>
-                      <div style={{ flex: 1 }}>
-                         <h5 style={{ fontSize: '0.7rem', color: 'white', margin: '0 0 2px 0' }}>{proximoLogro.titulo}</h5>
-                         <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', margin: 0 }}>{proximoLogro.desc}</p>
-                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
-                            <div className="progress-bar-bg" style={{ flex: 1, height: '4px', background: '#1e293b', borderRadius: '2px' }}>
-                               <div className="progress-bar-fill" style={{ width: `${progresoProximoLogro}%`, height: '100%', background: 'var(--accent-blue)', borderRadius: '2px', transition: 'width 0.5s' }}></div>
-                            </div>
-                            <span style={{ fontSize: '0.5rem', color: 'var(--text-muted)' }}>{visitadosReales} / {proximoLogro.meta}</span>
-                            <span style={{ fontSize: '0.5rem', color: '#3b82f6', fontWeight: 'bold' }}>+{proximoLogro.xp} XP</span>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-
-              </div>
-            </div>
-
-          </section>
-        </main> 
+    <>
+      {/* 🔴 CORTINA FÍSICA PARA MÓVILES EN VERTICAL */}
+      <div className="rotate-device-overlay">
+        <Smartphone className="rotate-phone-icon" size={80} strokeWidth={1.5} />
+        <h2>Gira tu dispositivo</h2>
+        <p>Para disfrutar de la experiencia inmersiva 360° de UNIMETA, por favor coloca tu teléfono en posición horizontal.</p>
       </div>
-    </div>
+
+      <div className="app-container">
+        <div className="dashboard-grid-nuevo">
+          
+          <Sidebar setEscenaActual={setEscenaActual} escenaActual={escenaActual} statsUsuario={statsUsuario} />
+          
+          <main className="main-content-wrapper">
+            
+            <header className="top-bar">
+              <div className="location-info">
+                <h1>{infoSede.nombre}</h1>
+                <p><MapPin size={14} /> San Fernando, Meta</p>
+              </div>
+              <div className="top-actions">
+                <button className="icon-btn"><Sun size={18} /> Día</button>
+                <button className="icon-btn"><Volume2 size={18} /></button>
+                <button className="icon-btn" onClick={togglePantallaCompleta}><Maximize size={18} /></button>
+                <button 
+                  className="btn-tour" 
+                  onClick={() => setAutoPlay(!autoPlay)}
+                  style={{ backgroundColor: autoPlay ? '#ef4444' : '#6366f1' }}
+                >
+                  {autoPlay ? <Pause size={16} fill="white" /> : <Play size={16} fill="white" />} 
+                  {autoPlay ? 'Detener recorrido' : 'Recorrido automático'}
+                </button>
+              </div>
+            </header>
+
+            <section className="columna-principal">
+              <Viewer360 foto={escenaActual} setEscenaActual={setEscenaActual} />
+              <ChatBot setEscenaActual={setEscenaActual} />
+            </section>
+
+            <section className="bottom-cards-grid" style={{ display: visorExpandido ? 'none' : 'grid' }}>
+              
+              <div className="info-card">
+                <div className="card-header">
+                  <h3><MapPin size={16} /> Mapa del campus</h3>
+                </div>
+                <div className="mapa-contenedor">
+                  <iframe width="100%" height="100%" frameBorder="0" scrolling="no" src={infoSede.mapaUrl} title="Mapa"></iframe>
+                </div>
+              </div>
+
+              <div className="info-card">
+                <div className="card-header">
+                  <h3><Info size={16} /> Información del lugar</h3>
+                </div>
+                <div className="card-content-flex">
+                  <img src={infoSede.vistaExterior} alt="Exterior" className="thumb-info" onError={(e) => e.target.src = '/assets/panoramas/mapa-unimeta.png'} />
+                  <div className="text-info">
+                    <h4>{infoSede.nombre}</h4>
+                    <span className="tag">{infoSede.categoria}</span>
+                    <p>{infoSede.descripcion}</p>
+                    <span className="horario-text">◷ 7:00 a.m. - 9:00 p.m.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="info-card">
+                <div className="card-header">
+                  <h3><Target size={16} /> Tu progreso</h3>
+                </div>
+                
+                <div style={{ padding: '8px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, overflow: 'hidden' }}>
+                  
+                  <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                    <div className="stat-circle" style={{ width: '55px', height: '55px', borderWidth: '4px' }}>
+                      <div className="circle-inner">
+                        <span className="percent" style={{ fontSize: '0.85rem' }}>{porcentajeExplorado}%</span>
+                        <span className="label" style={{ fontSize: '0.4rem' }}>Explorado</span>
+                      </div>
+                    </div>
+                    <ul className="stats-list" style={{ listStyle: 'none', fontSize: '0.65rem', color: 'var(--text-muted)', lineHeight: '1.4', margin: 0, padding: 0 }}>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Home size={12}/> Lugares: {visitadosReales} / {totalLugares}</li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MapPin size={12}/> Recorrido: {distanciaKm} km</li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>⏱️ Tiempo: {tiempoMin} min</li>
+                    </ul>
+                  </div>
+
+                  <div style={{ background: 'rgba(255,255,255,0.03)', padding: '8px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                     <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: '600', margin: 0 }}>Logro próximo</p>
+                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <div style={{ background: proximoLogro.bg, padding: '6px', borderRadius: '50%', display: 'flex' }}>
+                           {proximoLogro.icono}
+                        </div>
+                        <div style={{ flex: 1 }}>
+                           <h5 style={{ fontSize: '0.7rem', color: 'white', margin: '0 0 2px 0' }}>{proximoLogro.titulo}</h5>
+                           <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', margin: 0 }}>{proximoLogro.desc}</p>
+                           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
+                              <div className="progress-bar-bg" style={{ flex: 1, height: '4px', background: '#1e293b', borderRadius: '2px' }}>
+                                 <div className="progress-bar-fill" style={{ width: `${progresoProximoLogro}%`, height: '100%', background: 'var(--accent-blue)', borderRadius: '2px', transition: 'width 0.5s' }}></div>
+                              </div>
+                              <span style={{ fontSize: '0.5rem', color: 'var(--text-muted)' }}>{visitadosReales} / {proximoLogro.meta}</span>
+                              <span style={{ fontSize: '0.5rem', color: '#3b82f6', fontWeight: 'bold' }}>+{proximoLogro.xp} XP</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </section>
+          </main> 
+        </div>
+      </div>
+    </>
   );
 }
 
