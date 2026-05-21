@@ -52,7 +52,7 @@ ul {
   gap: 10px;
   width: 100%;
   height: 100%;
-  min-height: 0; /* 🔴 MAGIA: Evita que el grid crezca más allá del 100% */
+  min-height: 0; /* Evita que el grid crezca más allá del 100% */
 }
 
 .main-content-wrapper {
@@ -60,7 +60,7 @@ ul {
   flex-direction: column;
   gap: 10px;
   height: 100%;
-  min-height: 0; /* 🔴 MAGIA */
+  min-height: 0; 
   overflow: hidden;
 }
 
@@ -134,7 +134,7 @@ ul {
    ========================================= */
 .columna-principal {
   flex: 1;
-  min-height: 0; /* 🔴 MAGIA */
+  min-height: 0; 
   background: #000;
   border: 1px solid var(--border-glass);
   border-radius: 10px;
@@ -167,24 +167,14 @@ ul {
 
 .a-enter-vr, .a-fullscreen-button { display: none !important; }
 
-.badge-360 {
-  position: absolute; top: 10px; right: 10px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px);
-  padding: 4px 10px; border-radius: 15px; font-size: 0.65rem;
-  font-weight: 500; color: white; z-index: 20;
-  display: flex; align-items: center;
-  gap: 6px; border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 /* =========================================
-   5. TARJETAS INFERIORES (MÁS GRANDES Y PROPORCIONADAS)
+   5. TARJETAS INFERIORES
    ========================================= */
 .bottom-cards-grid {
   display: grid;
   grid-template-columns: 1fr 1.5fr 1fr;
   gap: 12px;
-  height: 200px; /* 🔴 Aumentamos la altura significativamente (antes 140px) */
+  height: 200px; 
   flex-shrink: 0;
 }
 
@@ -228,7 +218,7 @@ ul {
 }
 
 .thumb-info { 
-  width: 85px; /* 🔴 Imagen más grande */
+  width: 85px; 
   height: 85px; 
   border-radius: 8px; 
   object-fit: cover;
@@ -245,7 +235,7 @@ ul {
 }
 
 .text-info h4 { 
-  font-size: 1rem; /* 🔴 Letra más grande */
+  font-size: 1rem; 
   margin-bottom: 4px; 
   color: white; 
   white-space: nowrap;
@@ -281,17 +271,8 @@ ul {
   font-weight: 500;
 }
 
-.progress-stats { 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  padding: 15px; 
-  gap: 20px; 
-  flex: 1;
-}
-
 .stat-circle {
-  width: 80px; /* 🔴 Círculo de progreso más grande */
+  width: 80px; 
   height: 80px; 
   border: 5px solid var(--accent-blue);
   border-radius: 50%;
@@ -323,22 +304,21 @@ ul {
 
 .stats-list { 
   font-size: 0.75rem;
-  /* 🔴 Texto de estadísticas más legible */
   color: var(--text-muted); 
   line-height: 1.6; 
   list-style: none;
 }
 
 /* =========================================
-   6. CHATBOT PANEL (DISEÑO IDÉNTICO AL PROTOTIPO)
+   6. CHATBOT PANEL
    ========================================= */
 .chatbot-panel {
   position: absolute;
   top: 10px; 
   right: 10px;
-  width: 270px; /* 🔴 Reducido para que no se vea gigante */
+  width: 270px; 
   height: calc(100% - 20px);
-  background: #0b0f19; /* Fondo súper oscuro y mate */
+  background: #0b0f19; 
   border: 1px solid rgba(255, 255, 255, 0.05); 
   border-radius: 16px;
   display: flex; 
@@ -349,32 +329,27 @@ ul {
 
 .chatbot-toggle-btn {
   position: absolute;
-  bottom: 20px; /* 🔴 Lo subimos un poquito para que respire */
+  bottom: 20px; 
   right: 20px; 
   width: 70px;
-  /* 🔴 AUMENTADO: Antes era 50px */
-  height: 70px; /* 🔴 AUMENTADO: Antes era 50px */
+  height: 70px; 
   background: var(--bg-card);
-  border: 2px solid #f59e0b; /* 🔴 Le puse borde dorado/naranja para que combine con la chispa ✨ */
+  border: 2px solid #f59e0b; 
   border-radius: 50%;
   display: flex; justify-content: center; align-items: center;
   cursor: pointer; z-index: 50; 
   box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-  /* Sombra más fuerte */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .chatbot-toggle-btn:hover {
   transform: scale(1.08);
-  /* 🔴 Efecto de que crece al pasar el mouse */
   box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
-  /* Sombra dorada al hover */
 }
 
 .chatbot-toggle-img { 
   width: 55px;
-  /* 🔴 AUMENTADO: Antes era 35px */
-  height: 55px; /* 🔴 AUMENTADO: Antes era 35px */
+  height: 55px; 
   object-fit: contain;
 }
 
@@ -383,7 +358,6 @@ ul {
   justify-content: space-between; 
   align-items: center; 
   padding: 15px;
-  /* Eliminada la línea de abajo para un look más limpio */
 }
 
 .chat-title { 
@@ -412,10 +386,8 @@ ul {
   flex-direction: column; 
 }
 .chat-body::-webkit-scrollbar { width: 4px; }
-.chat-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px;
-}
+.chat-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
 
-/* ESTADO INICIAL (HERO Y SUGERENCIAS) */
 .chat-empty-state {
   display: flex;
   flex-direction: column;
@@ -426,9 +398,8 @@ ul {
 
 .robot-hero-container {
   position: relative;
-  width: 140px; /* 🔴 AUMENTADO: Antes era 90px */
+  width: 140px; 
   height: 140px;
-  /* 🔴 AUMENTADO: Antes era 90px */
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
@@ -451,7 +422,7 @@ ul {
 }
 
 .robot-hero-img {
-  width: 95%; /* 🔴 AUMENTADO: Ahora ocupa casi todo el anillo (antes 75%) */
+  width: 95%; 
   height: 95%;
   object-fit: contain; 
   z-index: 2;
@@ -466,17 +437,16 @@ ul {
   margin-bottom: 20px;
 }
 
-/* LISTA DE SUGERENCIAS VERTICAL */
 .chat-suggestions-vertical {
   display: flex; flex-direction: column; gap: 8px; width: 100%;
 }
 
 .chat-suggestions-vertical button {
-  background: #111827; /* 🔴 Fondo oscuro como en la imagen */
+  background: #111827; 
   border: 1px solid rgba(255, 255, 255, 0.05);
   color: #cbd5e1;
   padding: 10px 14px;
-  border-radius: 10px; /* 🔴 Bordes cuadrados redondeados */
+  border-radius: 10px; 
   font-size: 0.75rem;
   text-align: left;
   cursor: pointer;
@@ -493,19 +463,13 @@ ul {
 }
 
 .sugg-icon { color: #64748b; transition: color 0.2s;}
-.chat-suggestions-vertical button:hover .sugg-icon { color: #93c5fd;
-}
+.chat-suggestions-vertical button:hover .sugg-icon { color: #93c5fd; }
 
-/* MENSAJES DEL CHAT (BURBUJAS) */
 .chat-messages-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
-.chat-message { padding: 10px 14px;
-  font-size: 0.75rem; line-height: 1.4; border-radius: 10px; max-width: 85%; animation: fadeInMsg 0.3s ease; }
-.chat-message.bot { background: #111827; border: 1px solid rgba(255,255,255,0.05);
-  color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px;}
-.chat-message.user { background: #2563eb; color: white; align-self: flex-end; border-bottom-right-radius: 2px;
-}
+.chat-message { padding: 10px 14px; font-size: 0.75rem; line-height: 1.4; border-radius: 10px; max-width: 85%; animation: fadeInMsg 0.3s ease; }
+.chat-message.bot { background: #111827; border: 1px solid rgba(255,255,255,0.05); color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px;}
+.chat-message.user { background: #2563eb; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
 
-/* FOOTER (INPUT) */
 .chat-footer { 
   padding: 12px 15px; 
   display: flex; 
@@ -515,11 +479,11 @@ ul {
 
 .chat-footer input {
   flex: 1; 
-  background: #111827; /* 🔴 Fondo oscuro del input */
+  background: #111827; 
   border: 1px solid rgba(255,255,255,0.05);
   color: white; 
   padding: 10px 12px; 
-  border-radius: 10px; /* 🔴 Bordes cuadrados redondeados */
+  border-radius: 10px; 
   outline: none; 
   font-size: 0.75rem;
   transition: border 0.2s;
@@ -529,11 +493,9 @@ ul {
 
 .send-btn {
   background: #2563eb;
-  /* 🔴 Botón azul característico */
   color: white; 
   border: none; 
   border-radius: 10px;
-  /* 🔴 Botón cuadrado redondeado, NO círculo */
   width: 40px; 
   height: 40px; 
   display: flex; 
@@ -544,33 +506,26 @@ ul {
 }
 
 .send-btn:hover:not(:disabled) { background: #1d4ed8; }
-.send-btn:disabled { opacity: 0.5; cursor: not-allowed;
-}
+.send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* =========================================
-   7. SIDEBAR (LA CLAVE DEL ARREGLO)
+   7. SIDEBAR
    ========================================= */
 .sidebar {
   width: 100%;
-  /* Grid controla el ancho de 240px */
   background-color: var(--bg-main); border: 1px solid var(--border-glass);
   border-radius: 10px; padding: 15px 12px;
   display: flex; flex-direction: column; 
   height: 100%; gap: 10px;
   min-height: 0;
-  /* 🔴 MAGIA: Evita que la sidebar estire toda la pantalla */
 }
 
-.logo-section { display: flex; align-items: center; gap: 8px;
-  margin-bottom: 5px; flex-shrink: 0;}
+.logo-section { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; flex-shrink: 0;}
 .logo-icon-wrapper { position: relative; width: 24px; height: 24px; }
-.u-logo-left { color: #ef4444; font-size: 1.3rem; font-weight: 700;
-  position: absolute; left: 0; }
-.u-logo-right { color: #3b82f6; font-size: 1.3rem; font-weight: 700; position: absolute; left: 4px; opacity: 0.7;
-}
+.u-logo-left { color: #ef4444; font-size: 1.3rem; font-weight: 700; position: absolute; left: 0; }
+.u-logo-right { color: #3b82f6; font-size: 1.3rem; font-weight: 700; position: absolute; left: 4px; opacity: 0.7; }
 .unimeta-title { font-size: 1rem; font-weight: 600; line-height: 1; }
-.subtitle { font-size: 0.55rem; color: var(--text-muted); letter-spacing: 1px; font-weight: 500;
-}
+.subtitle { font-size: 0.55rem; color: var(--text-muted); letter-spacing: 1px; font-weight: 500; }
 
 .search-container {
   display: flex; align-items: center; background: var(--bg-input); flex-shrink: 0;
@@ -578,60 +533,45 @@ ul {
   margin-bottom: 0;
 }
 .search-icon { color: #64748b; width: 14px;}
-.search-input { background: transparent; border: none; color: white; width: 100%; margin-left: 6px;
-  outline: none; font-size: 0.75rem; }
+.search-input { background: transparent; border: none; color: white; width: 100%; margin-left: 6px; outline: none; font-size: 0.75rem; }
 
-/* 🔴 El área de navegación ahora tiene permiso para hacer SCROLL INTERNO si no cabe */
-.sidebar-nav { overflow-y: auto;
-  flex-grow: 1; padding-right: 5px; min-height: 0; }
-
+.sidebar-nav { overflow-y: auto; flex-grow: 1; padding-right: 5px; min-height: 0; }
 .menu-section { margin-bottom: 12px; }
-.section-title { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--text-white);
-  margin-bottom: 6px; letter-spacing: 0.5px; }
+.section-title { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--text-white); margin-bottom: 6px; letter-spacing: 0.5px; }
+
 .sidebar-item {
   padding: 5px 8px; margin-bottom: 2px; border-radius: 6px; cursor: pointer;
   color: var(--text-muted);
   transition: all 0.2s ease; font-size: 0.75rem;
   display: flex; align-items: center; justify-content: space-between;
 }
-.item-content { display: flex; align-items: center; gap: 8px;
-}
+.item-content { display: flex; align-items: center; gap: 8px; }
 .sidebar-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
-.sidebar-item.active { background: var(--accent-blue); color: white; font-weight: 500;
-}
+.sidebar-item.active { background: var(--accent-blue); color: white; font-weight: 500; }
 
 .user-profile-card, .achievements-card {
   background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 10px; padding: 10px; margin-top: 5px; flex-shrink: 0;
 }
 .user-info { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.avatar-img { width: 28px; height: 28px; border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.1); }
+.avatar-img { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.1); }
 .user-details h4 { font-size: 0.75rem; }
-.user-details p { font-size: 0.6rem; color: var(--text-muted);
-}
+.user-details p { font-size: 0.6rem; color: var(--text-muted); }
 .xp-label { display: flex; justify-content: space-between; font-size: 0.55rem; margin-bottom: 4px; }
-.level { background: var(--accent-blue); padding: 1px 4px; border-radius: 4px;
-  font-weight: bold; color: white;}
+.level { background: var(--accent-blue); padding: 1px 4px; border-radius: 4px; font-weight: bold; color: white;}
 .progress-bar-bg { width: 100%; height: 4px; background: #1e293b; border-radius: 10px; overflow: hidden; }
-.progress-bar-fill { height: 100%;
-  background: var(--accent-blue); }
+.progress-bar-fill { height: 100%; background: var(--accent-blue); }
 
 .achievements-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.achievements-header h4 { font-size: 0.7rem;
-}
+.achievements-header h4 { font-size: 0.7rem; }
 .achievement-item { display: flex; align-items: center; gap: 8px; }
-.achievement-icon { background: rgba(234, 179, 8, 0.1); width: 24px; height: 24px;
-  border-radius: 50%; display: flex; justify-content: center; align-items: center;}
+.achievement-icon { background: rgba(234, 179, 8, 0.1); width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center;}
 .achievement-details h5 { font-size: 0.65rem; margin-bottom: 2px;}
-.achievement-details p { font-size: 0.55rem; color: var(--text-muted);
-}
+.achievement-details p { font-size: 0.55rem; color: var(--text-muted); }
 .xp-reward { color: var(--accent-blue); font-weight: bold; font-size: 0.55rem; }
 
 /* =========================================
-   NUEVOS ESTILOS DEL VISOR 360 (OVERLAYS)
+   8. VISOR 360 (OVERLAYS)
    ========================================= */
-
-/* Capa invisible que cubre el 360, no bloquea clics gracias a pointer-events: none */
 .viewer-ui-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -643,118 +583,22 @@ ul {
   z-index: 10;
 }
 
-/* Cualquier cosa dentro de los menús sí debe ser clickeable */
 .pointer-auto {
   pointer-events: auto;
 }
 
-/* MINIMAPA (Arriba Izquierda) */
 .overlay-top {
   display: flex;
   justify-content: flex-start;
 }
 
-.v-minimap {
-  width: 140px;
-  height: 140px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-glass);
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-}
-
-.v-minimap-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 6px 10px; background: rgba(0,0,0,0.3);
-  font-size: 0.6rem; color: var(--text-white); font-weight: 500;
-}
-
-.v-minimap-body {
-  flex: 1; position: relative;
-}
-
-.v-minimap-body img {
-  width: 100%; height: 100%; object-fit: cover; opacity: 0.7;
-}
-
-.v-map-pin {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 10px; height: 10px;
-  background: var(--accent-blue);
-  border: 2px solid white;
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-blue);
-}
-
-/* SECCIÓN INFERIOR (Controles, Carrusel, VR) */
-.overlay-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-/* D-PAD CONTROLES (Abajo Izquierda) */
-.v-controls {
-  position: relative; width: 70px; height: 70px;
-  background: rgba(11, 15, 25, 0.6);
-  backdrop-filter: blur(5px);
-  border-radius: 50%; border: 1px solid var(--border-glass);
-}
-
-.ctrl-btn {
-  position: absolute; background: transparent; border: none; color: white;
-  cursor: pointer; display: flex; justify-content: center; align-items: center;
-  width: 24px; height: 24px; border-radius: 50%; transition: background 0.2s;
-}
-.ctrl-btn:hover { background: rgba(255,255,255,0.2); }
-
-.ctrl-btn.up { top: 2px; left: 23px; }
-.ctrl-btn.down { bottom: 2px; left: 23px; }
-.ctrl-btn.left { top: 23px;
-  left: 2px; }
-.ctrl-btn.right { top: 23px; right: 2px; }
-
-.ctrl-center {
-  position: absolute; top: 27px; left: 27px;
-  width: 16px;
-  height: 16px; background: rgba(255,255,255,0.2); border-radius: 50%;
-}
-
-/* CARRUSEL DE MINIATURAS (Abajo Centro) */
-.v-carousel {
-  display: flex; gap: 8px;
-  background: rgba(11, 15, 25, 0.5);
-  backdrop-filter: blur(5px); padding: 6px; border-radius: 12px;
-  border: 1px solid var(--border-glass);
-}
-
-.carousel-item {
-  width: 45px;
-  height: 35px; border-radius: 6px; overflow: hidden;
-  cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
-}
-
-.carousel-item img { width: 100%;
-  height: 100%; object-fit: cover; opacity: 0.6; }
-.carousel-item:hover img { opacity: 0.9; }
-
-.carousel-item.active { border-color: var(--accent-blue); }
-.carousel-item.active img { opacity: 1;
-}
-
-/* =========================================
-   ACTUALIZACIÓN: MINIMAPA TIPO RADAR
-   ========================================= */
+/* RADAR */
 .v-minimap {
   width: 140px;
   height: 140px;
   background: var(--bg-card);
   border: 3px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50%; /* 🔴 Forma circular para el radar */
+  border-radius: 50%; 
   overflow: hidden;
   position: relative;
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
@@ -772,10 +616,8 @@ ul {
   object-fit: cover; 
   opacity: 0.6;
   filter: grayscale(80%) sepia(50%) hue-rotate(180deg) saturate(200%);
-  /* Efecto visual de mapa táctico */
 }
 
-/* El pin central del jugador */
 .v-map-pin {
   position: absolute; 
   top: 50%;
@@ -787,7 +629,6 @@ ul {
   z-index: 5;
 }
 
-/* 🔴 LA ANIMACIÓN DE BARRIDO DE RADAR */
 .radar-sweep {
   position: absolute;
   top: 50%;
@@ -802,12 +643,62 @@ ul {
 }
 
 @keyframes radarSpin {
-  100% { transform: rotate(360deg);
-  }
+  100% { transform: rotate(360deg); }
 }
 
+/* CÁMARA D-PAD */
+.overlay-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.v-controls {
+  position: relative; width: 70px; height: 70px;
+  background: rgba(11, 15, 25, 0.6);
+  backdrop-filter: blur(5px);
+  border-radius: 50%; border: 1px solid var(--border-glass);
+}
+
+.ctrl-btn {
+  position: absolute; background: transparent; border: none; color: white;
+  cursor: pointer; display: flex; justify-content: center; align-items: center;
+  width: 24px; height: 24px; border-radius: 50%; transition: background 0.2s;
+}
+.ctrl-btn:hover { background: rgba(255,255,255,0.2); }
+
+.ctrl-btn.up { top: 2px; left: 23px; }
+.ctrl-btn.down { bottom: 2px; left: 23px; }
+.ctrl-btn.left { top: 23px; left: 2px; }
+.ctrl-btn.right { top: 23px; right: 2px; }
+
+.ctrl-center {
+  position: absolute; top: 27px; left: 27px;
+  width: 16px;
+  height: 16px; background: rgba(255,255,255,0.2); border-radius: 50%;
+}
+
+/* CARRUSEL MINIATURAS */
+.v-carousel {
+  display: flex; gap: 8px;
+  background: rgba(11, 15, 25, 0.5);
+  backdrop-filter: blur(5px); padding: 6px; border-radius: 12px;
+  border: 1px solid var(--border-glass);
+}
+
+.carousel-item {
+  width: 45px;
+  height: 35px; border-radius: 6px; overflow: hidden;
+  cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
+}
+
+.carousel-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+.carousel-item:hover img { opacity: 0.9; }
+.carousel-item.active { border-color: var(--accent-blue); }
+.carousel-item.active img { opacity: 1; }
+
 /* =========================================
-   POPUP DE INFORMACIÓN DEL HOTSPOT
+   9. POPUPS DE INFORMACIÓN GENERAL
    ========================================= */
 .hotspot-popup-modal {
   position: absolute;
@@ -827,8 +718,7 @@ ul {
 
 @keyframes popIn {
   from { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
-  to { opacity: 1;
-  transform: translate(-50%, -50%) scale(1); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 .close-popup {
@@ -841,40 +731,24 @@ ul {
   cursor: pointer;
   transition: color 0.2s;
 }
-
 .close-popup:hover { color: white; }
 
-.popup-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.popup-header h3 {
-  font-size: 1.1rem;
-  color: white;
-  margin: 0;
-}
-
-.hotspot-popup-modal p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin: 0;
-}
+.popup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.popup-header h3 { font-size: 1.1rem; color: white; margin: 0; }
+.hotspot-popup-modal p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
 
 /* =========================================
-   DISEÑO RESPONSIVE Y BLOQUEO MÓVIL (NUEVO Y SEGURO)
+   10. PANTALLA DE BLOQUEO VERTICAL (MÓVILES)
    ========================================= */
-
-/* Pantalla de bloqueo (Por defecto oculta en PC) */
 .rotate-device-overlay {
-  display: none;
+  display: none; 
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background-color: #0b0f19;
-  z-index: 999999;
+  z-index: 999999; 
   color: white;
   flex-direction: column;
   align-items: center;
@@ -895,42 +769,42 @@ ul {
   100% { transform: rotate(-90deg); }
 }
 
-/* 🔴 MÓVILES EN VERTICAL (PORTRAIT) */
 @media screen and (max-width: 900px) and (orientation: portrait) {
   .rotate-device-overlay {
-    display: flex; /* Enciende la cortina sobre todo el resto de la app */
+    display: flex; 
   }
-  
-  /* IMPORTANTE: NO usamos display:none en .app-container. 
-     Lo dejamos vivo debajo de la cortina para evitar pantallas negras en A-Frame */
 }
 
-/* 🔴 MÓVILES EN HORIZONTAL (LANDSCAPE) */
+/* =========================================
+   11. DISEÑO RESPONSIVE: MÓVILES EN HORIZONTAL
+   (SOLUCIÓN DEFINITIVA A LA PANTALLA CORTADA)
+   ========================================= */
 @media screen and (max-width: 950px) and (max-height: 600px) and (orientation: landscape) {
   
-  /* Ocultamos paneles que roban espacio vertical para dejarle el 100% al Visor 360 */
-  .bottom-cards-grid { display: none !important; }
-  .top-bar { display: none !important; }
+  /* 1. OCULTAMOS TODOS LOS ESTORBOS PARA DARLE EL 100% DE LA PANTALLA AL VISOR 360 */
+  .bottom-cards-grid,
+  .top-bar,
+  .sidebar,            /* Adiós menú lateral en móviles horizontales */
+  .v-minimap,          /* Adiós radar gigante */
+  .v-controls {        /* Adiós flechas (en móvil se mueve con el dedo) */
+    display: none !important; 
+  }
   
-  /* Reducimos el ancho del sidebar para darle más espacio al 3D */
+  /* 2. EL CONTENEDOR PRINCIPAL AHORA OCUPA TODA LA PANTALLA */
   .dashboard-grid-nuevo {
-    grid-template-columns: 180px 1fr !important;
-    gap: 5px !important;
+    display: block !important; 
   }
   
   .app-container {
-    padding: 5px !important;
+    padding: 0 !important; /* Quitamos bordes negros */
+  }
+
+  .columna-principal {
+    border-radius: 0 !important; /* Esquinas cuadradas inmersivas */
+    border: none !important;
   }
   
-  .sidebar {
-    padding: 10px 5px !important;
-  }
-  
-  /* Ajustes menores de texto en sidebar para que quepan */
-  .unimeta-title { font-size: 0.8rem !important; }
-  .subtitle { font-size: 0.5rem !important; }
-  
-  /* Hacemos el botón del ChatBot más pequeño para que no estorbe */
+  /* 3. PEQUEÑOS AJUSTES PARA EL BOTÓN DEL CHATBOT Y EL CARRUSEL */
   .chatbot-toggle-btn {
     width: 50px !important;
     height: 50px !important;
@@ -941,5 +815,21 @@ ul {
   .chatbot-toggle-img {
     width: 40px !important;
     height: 40px !important;
+  }
+
+  .v-carousel {
+    margin-bottom: 5px !important;
+  }
+
+  /* 4. LA MAGIA: EL CHATBOT EN PANTALLA COMPLETA 100% PARA MÓVILES */
+  .chatbot-panel {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    z-index: 999999 !important; /* Por encima de absolutamente todo */
+    border: none !important;
   }
 }
