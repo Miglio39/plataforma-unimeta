@@ -236,7 +236,6 @@ ul { list-style: none; }
 
   .dashboard-grid-nuevo { grid-template-columns: 180px 1fr !important; gap: 5px !important; }
   
-  /* 🔴 MÁS MARGEN INFERIOR PARA QUE NO LO CORTE EL CELULAR */
   .app-container { padding: 5px 5px 10px 5px !important; }
   .sidebar { padding: 10px 8px !important; }
   .sidebar-item { padding: 4px 8px !important; font-size: 0.7rem !important; }
@@ -271,16 +270,20 @@ ul { list-style: none; }
     align-items: center; justify-content: center;
   }
 
+  /* 🔴 EL CHATBOT AHORA SE ENCOGE CUANDO EL TECLADO SUBE */
   .chatbot-panel {
-    position: fixed !important; top: 0 !important; right: 0 !important;
+    position: fixed !important; 
+    top: 0 !important; 
+    bottom: 0 !important; /* MAGIA: Se pega al fondo visible. Si el teclado sube, lo empuja hacia arriba. */
+    right: 0 !important;
+    height: auto !important; /* MAGIA: Quitamos el 100dvh para que pueda encogerse flexiblemente */
     width: 320px !important; 
-    height: 100vh !important; 
-    height: 100dvh !important; /* 🔴 Se asegura de usar la altura real */
     border-radius: 0 !important;
-    border: none !important; border-left: 1px solid var(--border-glass) !important; z-index: 99999 !important;
+    border: none !important; 
+    border-left: 1px solid var(--border-glass) !important; 
+    z-index: 99999 !important;
   }
 
-  /* 🔴 SUBIMOS EL BOTÓN PARA QUE NO TOQUE LA BARRA DE NAVEGACIÓN ANDROID */
   .chatbot-toggle-btn { width: 45px !important; height: 45px !important; bottom: 20px !important; right: 10px !important; }
   .chatbot-toggle-img { width: 35px !important; height: 35px !important; }
 
