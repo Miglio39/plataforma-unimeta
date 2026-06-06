@@ -7,7 +7,7 @@ const ChatBot = ({ setEscenaActual }) => {
   const [historial, setHistorial] = useState([]);
   const [isTyping, setIsTyping] = useState(false); 
   
-  // 🔴 NUEVO ESTADO: Controla la imagen en pantalla completa
+  // Estado: Controla la imagen en pantalla completa
   const [imagenAmpliada, setImagenAmpliada] = useState(null);
   
   const messagesEndRef = useRef(null);
@@ -67,7 +67,7 @@ const ChatBot = ({ setEscenaActual }) => {
       const url = match[3];
 
       if (esImagen) {
-        // 🔴 IMAGEN CLICKEABLE: Agregamos onClick y cursor de lupa
+        // IMAGEN CLICKEABLE
         partes.push(
           <div key={match.index} style={{ position: 'relative', marginTop: '10px', cursor: 'zoom-in' }} onClick={() => setImagenAmpliada(url)}>
             <img 
@@ -88,7 +88,7 @@ const ChatBot = ({ setEscenaActual }) => {
           </button>
         );
       } else {
-        // 🔴 ENLACES NORMALES AZULES: Para calendarios o links externos
+        // ENLACES NORMALES AZULES
         partes.push(
           <a key={match.index} href={url} target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', textDecoration: 'underline', fontWeight: 'bold' }}>
             {textoOAlt}
@@ -113,16 +113,21 @@ const ChatBot = ({ setEscenaActual }) => {
 
   return (
     <>
-      {/* 🔴 MODAL DE IMAGEN PANTALLA COMPLETA */}
+      {/* 🔴 MODAL DE IMAGEN PANTALLA COMPLETA (Z-Index Extremo para superar al ChatBot) */}
       {imagenAmpliada && (
         <div 
-          style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out' }}
+          style={{ 
+            position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', 
+            backgroundColor: 'rgba(0,0,0,0.9)', 
+            zIndex: 9999999, /* MAGIA: Ahora es imposible que el chat lo tape */
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out' 
+          }}
           onClick={() => setImagenAmpliada(null)}
         >
-          <button style={{ position: 'absolute', top: '20px', right: '30px', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>
+          <button style={{ position: 'absolute', top: '20px', right: '30px', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', zIndex: 9999999 }}>
              <X size={32} />
           </button>
-          <img src={imagenAmpliada} alt="Ampliación" style={{ maxWidth: '90%', maxHeight: '90%', borderRadius: '15px', boxShadow: '0 0 40px rgba(0,0,0,0.8)', objectFit: 'contain' }} />
+          <img src={imagenAmpliada} alt="Ampliación" style={{ maxWidth: '95%', maxHeight: '95%', borderRadius: '15px', boxShadow: '0 0 40px rgba(0,0,0,0.8)', objectFit: 'contain' }} />
         </div>
       )}
 

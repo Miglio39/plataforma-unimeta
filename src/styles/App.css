@@ -125,36 +125,59 @@ ul { list-style: none; }
 /* =========================================
    6. CHATBOT PANEL
    ========================================= */
-.chatbot-panel { position: absolute; top: 10px; right: 10px; width: 270px; height: calc(100% - 20px); background: #0b0f19; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; display: flex; flex-direction: column; z-index: 50; box-shadow: -5px 10px 30px rgba(0, 0, 0, 0.6); }
+/* =========================================
+   6. CHATBOT PANEL
+   ========================================= */
+/* Ampliamos el ancho de 270px a 340px para mayor comodidad visual */
+.chatbot-panel { position: absolute; top: 10px; right: 10px; width: 340px; height: calc(100% - 20px); background: #0b0f19; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; display: flex; flex-direction: column; z-index: 50; box-shadow: -5px 10px 30px rgba(0, 0, 0, 0.6); }
+
 .chatbot-toggle-btn { position: absolute; bottom: 20px; right: 20px; width: 70px; height: 70px; background: var(--bg-card); border: 2px solid #f59e0b; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 50; box-shadow: 0 8px 25px rgba(0,0,0,0.6); transition: transform 0.2s ease, box-shadow 0.2s ease; }
 .chatbot-toggle-btn:hover { transform: scale(1.08); box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4); }
 .chatbot-toggle-img { width: 55px; height: 55px; object-fit: contain; }
+
 .chat-panel-header { display: flex; justify-content: space-between; align-items: center; padding: 15px; }
-.chat-title { color: white; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }
+.chat-title { color: white; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
 .chat-close { background: transparent; border: none; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
 .chat-close:hover { color: white; }
+
 .chat-body { flex: 1; padding: 0 15px 10px 15px; overflow-y: auto; display: flex; flex-direction: column; }
 .chat-body::-webkit-scrollbar { width: 4px; }
 .chat-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
 .chat-empty-state { display: flex; flex-direction: column; align-items: center; height: 100%; margin-top: 10px; }
 .robot-hero-container { position: relative; width: 140px; height: 140px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, rgba(11,15,25,0) 70%); border-radius: 50%; }
 .glow-rings { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 0 20px rgba(37, 99, 235, 0.05); }
 .glow-rings::before { content: ''; position: absolute; top: -12px; left: -12px; right: -12px; bottom: -12px; border-radius: 50%; border: 1px dashed rgba(255, 255, 255, 0.1); }
 .robot-hero-img { width: 95%; height: 95%; object-fit: contain; z-index: 2; }
-.chat-welcome-text { text-align: center; color: white; font-weight: 600; font-size: 0.8rem; line-height: 1.4; margin-bottom: 20px; }
+.chat-welcome-text { text-align: center; color: white; font-weight: 600; font-size: 0.85rem; line-height: 1.5; margin-bottom: 20px; }
+
 .chat-suggestions-vertical { display: flex; flex-direction: column; gap: 8px; width: 100%; }
-.chat-suggestions-vertical button { background: #111827; border: 1px solid rgba(255, 255, 255, 0.05); color: #cbd5e1; padding: 10px 14px; border-radius: 10px; font-size: 0.75rem; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.2s ease; }
+.chat-suggestions-vertical button { background: #111827; border: 1px solid rgba(255, 255, 255, 0.05); color: #cbd5e1; padding: 10px 14px; border-radius: 10px; font-size: 0.8rem; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.2s ease; }
 .chat-suggestions-vertical button:hover { background: rgba(37, 99, 235, 0.15); border-color: rgba(37, 99, 235, 0.5); color: white; }
 .sugg-icon { color: #64748b; transition: color 0.2s;}
 .chat-suggestions-vertical button:hover .sugg-icon { color: #93c5fd; }
+
 .chat-messages-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
-.chat-message { padding: 10px 14px; font-size: 0.75rem; line-height: 1.4; border-radius: 10px; max-width: 85%; animation: fadeInMsg 0.3s ease; }
+
+/* 🔴 AQUÍ OCURRE LA MAGIA DEL TEXTO ORGANIZADO */
+.chat-message { 
+  padding: 12px 16px; 
+  font-size: 0.8rem; 
+  line-height: 1.6; /* Interlineado más limpio */
+  border-radius: 12px; 
+  max-width: 85%; 
+  animation: fadeInMsg 0.3s ease; 
+  white-space: pre-wrap; /* Respeta los saltos de línea de la IA */
+  word-wrap: break-word;
+}
+
 .chat-message.bot { background: #111827; border: 1px solid rgba(255,255,255,0.05); color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px;}
 .chat-message.user { background: #2563eb; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+
 .chat-footer { padding: 12px 15px; display: flex; gap: 8px; background: transparent; }
-.chat-footer input { flex: 1; background: #111827; border: 1px solid rgba(255,255,255,0.05); color: white; padding: 10px 12px; border-radius: 10px; outline: none; font-size: 0.75rem; transition: border 0.2s; }
+.chat-footer input { flex: 1; background: #111827; border: 1px solid rgba(255,255,255,0.05); color: white; padding: 10px 12px; border-radius: 10px; outline: none; font-size: 0.8rem; transition: border 0.2s; }
 .chat-footer input:focus { border-color: #2563eb; }
-.send-btn { background: #2563eb; color: white; border: none; border-radius: 10px; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
+.send-btn { background: #2563eb; color: white; border: none; border-radius: 10px; width: 42px; height: 42px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
 .send-btn:hover:not(:disabled) { background: #1d4ed8; }
 .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
