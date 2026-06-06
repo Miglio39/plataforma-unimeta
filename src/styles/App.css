@@ -198,6 +198,27 @@ ul { list-style: none; }
 .item-content { display: flex; align-items: center; gap: 8px; }
 .sidebar-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
 .sidebar-item.active { background: var(--accent-blue); color: white; font-weight: 500; }
+/* 🔴 ESTILOS PARA EL SUBMENÚ DE LABORATORIOS */
+.submenu-list {
+  padding-left: 20px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  margin-left: 18px;
+}
+.submenu-item {
+  padding: 6px 8px !important;
+  font-size: 0.7rem !important;
+  color: var(--text-muted);
+}
+.submenu-item.active {
+  background: transparent !important;
+  color: #3b82f6 !important; /* Texto azul cuando está seleccionado */
+  font-weight: 600;
+}
+.active-submenu {
+  background: rgba(255, 255, 255, 0.05); /* Resalta el botón padre cuando está abierto */
+}
 
 /* =========================================
    8. VISOR 360 OVERLAYS

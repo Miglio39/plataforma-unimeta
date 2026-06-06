@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X, Play, MapPin, Info, Landmark } from 'lucide-react';
 import 'aframe';
 
-// 🔴 EL TOOLTIP INDEPENDIENTE (Para no recargar el 3D)2
+// 🔴 EL TOOLTIP INDEPENDIENTE (Para no recargar el 3D)
 const TooltipFlotante = () => {
   const [lugarHover, setLugarHover] = useState(null);
 
@@ -169,35 +169,41 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
       
       {/* CAPA 3D (A-FRAME) */}
       <a-scene embedded vr-mode-ui="enabled: false" renderer="antialias: true; colorManagement: true; highResolution: true;" cursor="rayOrigin: mouse">
-        <a-sky src={`/assets/panoramas/${foto}`} color="#ffffff" rotation="0 -90 0"></a-sky>
+        
+        {/* 🔴 ENVOLTORIO MÁGICO: Agrupa el cielo y los marcadores para que giren juntos */}
+        <a-entity animation={foto === 'inicio.jpg' ? "property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 90000; easing: linear" : undefined}>
+          
+          <a-sky src={`/assets/panoramas/${foto}`} color="#ffffff" rotation="0 -90 0"></a-sky>
 
-        {/* =========================================
-            🚁 MARCADORES: SOLO EN LA VISTA DRON
-            ========================================= */}
-        <a-entity visible={foto === 'inicio.jpg'} position={foto === 'inicio.jpg' ? "0 0 0" : "0 -9999 0"}>
-          <Hotspot 
-            tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#9333ea" 
-            titulo="Biblioteca" onClick={() => setEscenaActual('biblioteca.jpg')} 
-            distancia="A 35m" instruccion="Clic para entrar" 
-          />
-          <Hotspot 
-            tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#10b981" 
-            titulo="Laboratorios" onClick={() => setEscenaActual('tech-laboratorio.jpg')} 
-            distancia="A 25m" instruccion="Clic para entrar"
-          />
-          <Hotspot 
-            tipo="nav" position="5 -1 2" rotation="0 -110 0" color="#f59e0b" 
-            titulo="Rectoría" onClick={() => setEscenaActual('rectoria.jpg')} 
-            distancia="A 18m" instruccion="Clic para entrar"
-          />
-          <Hotspot 
-            tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#ea580c" 
-            titulo="Auditorios" onClick={() => setEscenaActual('auditorios.jpg')} 
-            distancia="A 40m" instruccion="Clic para entrar"
-          />
+          {/* =========================================
+              🚁 MARCADORES: AHORA ESTÁN DENTRO DEL ENVOLTORIO
+              ========================================= */}
+          <a-entity visible={foto === 'inicio.jpg'} position={foto === 'inicio.jpg' ? "0 0 0" : "0 -9999 0"}>
+            <Hotspot 
+              tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#9333ea" 
+              titulo="Biblioteca" onClick={() => setEscenaActual('biblioteca.jpg')} 
+              distancia="A 35m" instruccion="Clic para entrar" 
+            />
+            <Hotspot 
+              tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#10b981" 
+              titulo="Laboratorios" onClick={() => setEscenaActual('tech-laboratorio.jpg')} 
+              distancia="A 25m" instruccion="Clic para entrar"
+            />
+            <Hotspot 
+              tipo="nav" position="5 -1 2" rotation="0 -110 0" color="#f59e0b" 
+              titulo="Rectoría" onClick={() => setEscenaActual('rectoria.jpg')} 
+              distancia="A 18m" instruccion="Clic para entrar"
+            />
+            <Hotspot 
+              tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#ea580c" 
+              titulo="Auditorios" onClick={() => setEscenaActual('auditorios.jpg')} 
+              distancia="A 40m" instruccion="Clic para entrar"
+            />
+          </a-entity>
+
         </a-entity>
 
-        {/* 🔴 CÁMARA: Desactivamos el WASD nativo (caminar) para usar nuestro script de rotación */}
+        {/* 🔴 CÁMARA */}
         <a-entity camera look-controls="enabled: true; mouseEnabled: true" wasd-controls="enabled: false" position="0 0 0">
           <a-entity cursor="rayOrigin: mouse;" raycaster="objects: .clickable"></a-entity>
         </a-entity>

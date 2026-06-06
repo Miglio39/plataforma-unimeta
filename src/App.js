@@ -1,31 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Viewer360 from './components/Viewer360';
-import ChatBot from './components/ChatBot'; 
-import { Sun, Volume2, Maximize, Play, Pause, MapPin, Info, Target, Compass, Trophy, Star, Home, Smartphone, User, ChevronUp, ChevronDown, ChevronRight } from 'lucide-react';
+import ChatBot from './components/ChatBot';
+import { Sun, Volume2, Maximize, Play, Pause, MapPin, Info, Target, Compass, Trophy, Star, Home, Smartphone, ChevronUp, ChevronDown } from 'lucide-react';
 import './styles/App.css';
 
 const mapaUnimetaReal = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.6015521943896!2d-73.63004462413532!3d4.140889046252994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2dd3971e44a5%3A0x6b4fb6c17b5f25a7!2sUniversidad%20del%20Meta!5e0!3m2!1ses!2sco!4v1715000000000!5m2!1ses!2sco";
 
-const datosSedes = {
-  'inicio.jpg': { nombre: 'Campus UNIMETA (Vista Dron)', categoria: 'General', descripcion: 'Vista aérea general del campus universitario y sus alrededores.', vistaExterior: '/assets/panoramas/inicio.jpg', mapaUrl: mapaUnimetaReal },
-  'paraninfo.jpg': { nombre: 'Paraninfo', categoria: 'Académico', descripcion: 'Espacio principal para eventos, grados y asambleas importantes.', vistaExterior: '/assets/panoramas/exterior-paraninfo.jpg', mapaUrl: mapaUnimetaReal },
-  'consultorio.jpg': { nombre: 'Consultorio Jurídico', categoria: 'Servicios', descripcion: 'Atención y asesoría legal gratuita a la comunidad por parte de la facultad de Derecho.', vistaExterior: '/assets/panoramas/exterior-consultorio.jpg', mapaUrl: mapaUnimetaReal },
-  'audiencias.jpg': { nombre: 'Sala de Audiencias', categoria: 'Académico', descripcion: 'Simulador de juzgados para las prácticas de los estudiantes de Derecho.', vistaExterior: '/assets/panoramas/exterior-audiencias.jpg', mapaUrl: mapaUnimetaReal },
-  'rectoria.jpg': { nombre: 'Rectoría UNIMETA', categoria: 'Administrativo', descripcion: 'Sede administrativa principal de la Corporación Universitaria del Meta.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: mapaUnimetaReal },
-  'biblioteca.jpg': { nombre: 'Biblioteca', categoria: 'Académico', descripcion: 'Espacio para el aprendizaje, investigación y consulta de recursos en alta resolución.', vistaExterior: '/assets/panoramas/exterior-biblioteca.jpg', mapaUrl: mapaUnimetaReal },
-  'tech-laboratorio.jpg': { nombre: 'Laboratorios Edificio Hernán Villamarín', categoria: 'Académico', descripcion: 'Laboratorios equipados para prácticas y experimentación científica.', vistaExterior: '/assets/panoramas/exterior-laboratorios.jpg', mapaUrl: mapaUnimetaReal },
-  'auditorios.jpg': { nombre: 'Auditorios y conferencias', categoria: 'Académico', descripcion: 'Salas equipadas para charlas, exposiciones y cátedras.', vistaExterior: '/assets/panoramas/exterior-auditorios.jpg', mapaUrl: mapaUnimetaReal },
-  'decanaturas.jpg': { nombre: 'Decanaturas', categoria: 'Administrativo', descripcion: 'Oficinas de atención y gestión de las diferentes facultades.', vistaExterior: '/assets/panoramas/exterior-decanaturas.jpg', mapaUrl: mapaUnimetaReal },
-  'parque.jpg': { nombre: 'Parque Metropolitano', categoria: 'Zonas Externas', descripcion: 'Amplias zonas verdes para el esparcimiento y bienestar universitario.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: mapaUnimetaReal },
-  'unimeta-tech.jpg': { nombre: 'Unimeta Tech', categoria: 'Tecnología', descripcion: 'Centro de innovación tecnológica con laboratorios de sistemas e ingeniería.', vistaExterior: '/assets/panoramas/exterior-unimeta-tech.jpg', mapaUrl: mapaUnimetaReal }
-};
+const enlaceSanFernando = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco";
+// Cuando tengas los de las otras sedes, los puedes poner aquí:
+const enlaceParqueMetropolitano = "ENLACE_DEL_PARQUE_AQUI"; 
+const enlaceUnimetaTech = "ENLACE_DE_UNIMETA_TECH_AQUI";
 
-// 🔴 DEFINICIÓN DE PERFILES CENTRALIZADA
-const perfilesDisponibles = {
-  estudiante: { nombre: 'Miguel Acevedo', rol: 'Estudiante Ing. Sistemas', color: '2563eb', avatarName: 'Miguel+Acevedo' },
-  funcionario: { nombre: 'Docente / Administrativo', rol: 'Funcionario UNIMETA', color: '9333ea', avatarName: 'Funcionario+Unimeta' },
-  visitante: { nombre: 'Invitado Externo', rol: 'Explorador Novato', color: '10b981', avatarName: 'Invitado' }
+const datosSedes = {
+  // --- SEDE SAN FERNANDO ---
+  'inicio.jpg': { nombre: 'Campus UNIMETA (Vista Dron)', categoria: 'General', descripcion: 'Vista aérea general del campus universitario y sus alrededores.', vistaExterior: '/assets/panoramas/inicio.jpg', mapaUrl: enlaceSanFernando },
+  'paraninfo.jpg': { nombre: 'Paraninfo', categoria: 'Académico', descripcion: 'Espacio principal para eventos, grados y asambleas importantes.', vistaExterior: '/assets/panoramas/exterior-paraninfo.jpg', mapaUrl: enlaceSanFernando },
+  'consultorio.jpg': { nombre: 'Consultorio Jurídico', categoria: 'Servicios', descripcion: 'Atención y asesoría legal gratuita a la comunidad por parte de la facultad de Derecho.', vistaExterior: '/assets/panoramas/exterior-consultorio.jpg', mapaUrl: enlaceSanFernando },
+  'audiencias.jpg': { nombre: 'Sala de Audiencias', categoria: 'Académico', descripcion: 'Simulador de juzgados para las prácticas de los estudiantes de Derecho.', vistaExterior: '/assets/panoramas/exterior-audiencias.jpg', mapaUrl: enlaceSanFernando },
+  'rectoria.jpg': { nombre: 'Rectoría UNIMETA', categoria: 'Administrativo', descripcion: 'Sede administrativa principal de la Corporación Universitaria del Meta.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
+  'biblioteca.jpg': { nombre: 'Biblioteca', categoria: 'Académico', descripcion: 'Espacio para el aprendizaje, investigación y consulta de recursos en alta resolución.', vistaExterior: '/assets/panoramas/exterior-biblioteca.jpg', mapaUrl: enlaceSanFernando },
+  'auditorios.jpg': { nombre: 'Auditorios y conferencias', categoria: 'Académico', descripcion: 'Salas equipadas para charlas, exposiciones y cátedras.', vistaExterior: '/assets/panoramas/exterior-auditorios.jpg', mapaUrl: enlaceSanFernando },
+  'decanaturas.jpg': { nombre: 'Decanaturas', categoria: 'Administrativo', descripcion: 'Oficinas de atención y gestión de las diferentes facultades.', vistaExterior: '/assets/panoramas/exterior-decanaturas.jpg', mapaUrl: enlaceSanFernando },
+  
+  // --- LABORATORIOS (Sede San Fernando / Unimeta Tech) ---
+  'lab-fisica.jpg': { nombre: 'Laboratorio de Física', categoria: 'Laboratorios', descripcion: 'Espacio equipado para prácticas de física experimental y electromagnetismo.', vistaExterior: '/assets/panoramas/thumb-fisica.jpg', mapaUrl: enlaceSanFernando },
+  'lab-redes.jpg': { nombre: 'Laboratorio de Redes', categoria: 'Laboratorios', descripcion: 'Infraestructura y equipos para prácticas de conectividad y redes CISCO.', vistaExterior: '/assets/panoramas/thumb-redes.jpg', mapaUrl: enlaceSanFernando },
+  'lab-software.jpg': { nombre: 'Laboratorio de Software', categoria: 'Laboratorios', descripcion: 'Salas de cómputo especializadas para desarrollo y programación.', vistaExterior: '/assets/panoramas/thumb-software.jpg', mapaUrl: enlaceSanFernando },
+  'lab-suelos.jpg': { nombre: 'Laboratorio de Suelos', categoria: 'Laboratorios', descripcion: 'Análisis de materiales y mecánica de suelos para Ingeniería Civil.', vistaExterior: '/assets/panoramas/thumb-suelos.jpg', mapaUrl: enlaceSanFernando },
+  'lab-hidraulica.jpg': { nombre: 'Laboratorio de Hidráulica', categoria: 'Laboratorios', descripcion: 'Estudio de fluidos y canales para proyectos de ingeniería.', vistaExterior: '/assets/panoramas/thumb-hidraulica.jpg', mapaUrl: enlaceSanFernando },
+  'lab-materiales.jpg': { nombre: 'Laboratorio de Materiales', categoria: 'Laboratorios', descripcion: 'Pruebas de resistencia y calidad de materiales de construcción.', vistaExterior: '/assets/panoramas/thumb-materiales.jpg', mapaUrl: enlaceSanFernando },
+  'lab-electronica.jpg': { nombre: 'Laboratorio de Electrónica', categoria: 'Laboratorios', descripcion: 'Equipos y componentes para el diseño de circuitos y sistemas integrados.', vistaExterior: '/assets/panoramas/thumb-electronica.jpg', mapaUrl: enlaceSanFernando },
+  'lab-telematica.jpg': { nombre: 'Laboratorio de Telemática', categoria: 'Laboratorios', descripcion: 'Integración de telecomunicaciones y sistemas informáticos.', vistaExterior: '/assets/panoramas/thumb-telematica.jpg', mapaUrl: enlaceSanFernando },
+  'lab-arquitectura.jpg': { nombre: 'Taller de Arquitectura', categoria: 'Laboratorios', descripcion: 'Espacio creativo para el diseño, maquetación y urbanismo.', vistaExterior: '/assets/panoramas/thumb-arquitectura.jpg', mapaUrl: enlaceSanFernando },
+  'lab-topografia.jpg': { nombre: 'Laboratorio de Topografía', categoria: 'Laboratorios', descripcion: 'Equipos de medición, teodolitos y estaciones totales.', vistaExterior: '/assets/panoramas/thumb-topografia.jpg', mapaUrl: enlaceSanFernando },
+  'lab-pavimentos.jpg': { nombre: 'Laboratorio de Pavimentos', categoria: 'Laboratorios', descripcion: 'Análisis y diseño de mezclas asfálticas y estructuras viales.', vistaExterior: '/assets/panoramas/thumb-pavimentos.jpg', mapaUrl: enlaceSanFernando },
+  'lab-idiomas.jpg': { nombre: 'Laboratorio de Idiomas', categoria: 'Laboratorios', descripcion: 'Prácticas de listening y speaking con software especializado.', vistaExterior: '/assets/panoramas/thumb-idiomas.jpg', mapaUrl: enlaceSanFernando },
+  'lab-sistemas.jpg': { nombre: 'Centro de Cómputo', categoria: 'Laboratorios', descripcion: 'Salas informáticas de acceso general para estudiantes.', vistaExterior: '/assets/panoramas/thumb-sistemas.jpg', mapaUrl: enlaceSanFernando },
+  'lab-quimica.jpg': { nombre: 'Laboratorio de Química', categoria: 'Laboratorios', descripcion: 'Espacio para prácticas y reacciones químicas controladas.', vistaExterior: '/assets/panoramas/thumb-quimica.jpg', mapaUrl: enlaceSanFernando },
+  'lab-biologia.jpg': { nombre: 'Laboratorio de Biología', categoria: 'Laboratorios', descripcion: 'Microscopía y estudio de ecosistemas y microorganismos.', vistaExterior: '/assets/panoramas/thumb-biologia.jpg', mapaUrl: enlaceSanFernando },
+
+  // --- SEDES EXTERNAS ---
+  'parque.jpg': { nombre: 'Parque Metropolitano', categoria: 'Zonas Externas', descripcion: 'Amplias zonas verdes para el esparcimiento y bienestar universitario.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano },
+  'unimeta-tech.jpg': { nombre: 'Unimeta Tech', categoria: 'Tecnología', descripcion: 'Centro de innovación tecnológica con laboratorios de sistemas e ingeniería.', vistaExterior: '/assets/panoramas/exterior-unimeta-tech.jpg', mapaUrl: enlaceUnimetaTech }
 };
 
 function App() {
@@ -34,8 +51,6 @@ function App() {
   const [autoPlay, setAutoPlay] = useState(false);
   const [lugaresVisitados, setLugaresVisitados] = useState(['inicio.jpg']);
   
-  const [tipoPerfil, setTipoPerfil] = useState('estudiante');
-  const [mostrarModos, setMostrarModos] = useState(false);
   const [mostrarPanelInferior, setMostrarPanelInferior] = useState(false);
 
   useEffect(() => {
@@ -83,10 +98,6 @@ function App() {
   const totalLugares = 11;
   const visitadosReales = Math.min(lugaresVisitados.length, totalLugares);
   const porcentajeExplorado = Math.min(100, Math.round((visitadosReales / totalLugares) * 100));
-  const xpTotal = visitadosReales * 150;
-  const nivelActual = Math.floor(xpTotal / 1000) + 1; 
-  const xpParaSiguienteNivel = nivelActual * 1000;
-  const porcentajeNivel = Math.round((xpTotal % 1000) / 1000 * 100);
   const distanciaKm = (visitadosReales * 0.4).toFixed(1);
   const tiempoMin = visitadosReales * 8; 
 
@@ -97,13 +108,8 @@ function App() {
     { id: '4', titulo: 'Guía Maestro', desc: 'Visita los 11 lugares', meta: totalLugares, xp: 500, icono: <Trophy size={16} color="#a855f7"/>, bg: 'rgba(168, 85, 247, 0.15)' }
   ];
 
-  const logrosDesbloqueados = todosLosLogros.filter(l => visitadosReales >= l.meta);
-  const ultimoLogro = logrosDesbloqueados[logrosDesbloqueados.length - 1] || todosLosLogros[0];
   const proximoLogro = todosLosLogros.find(l => visitadosReales < l.meta) || todosLosLogros[todosLosLogros.length - 1];
   const progresoProximoLogro = Math.min(100, Math.round((visitadosReales / proximoLogro.meta) * 100));
-
-  const statsUsuario = { xp: xpTotal, nivel: nivelActual, metaXp: xpParaSiguienteNivel, porcentajeNivel: porcentajeNivel, visitados: visitadosReales, total: totalLugares, ultimoLogro: ultimoLogro };
-  const perfilActual = perfilesDisponibles[tipoPerfil];
 
   return (
     <>
@@ -116,7 +122,6 @@ function App() {
       <div className="app-container">
         <div className="dashboard-grid-nuevo">
           
-          {/* El Sidebar ahora es súper ligero */}
           <Sidebar setEscenaActual={setEscenaActual} escenaActual={escenaActual} />
           
           <main className="main-content-wrapper">
@@ -127,69 +132,6 @@ function App() {
                 <p className="hide-mobile"><MapPin size={14} /> San Fernando, Meta</p>
               </div>
               <div className="top-actions">
-                
-                {/* 🔴 NUEVO MENÚ DE USUARIO DESPLEGABLE */}
-                <div style={{ position: 'relative' }}>
-                  <button className="icon-btn" onClick={() => setMostrarModos(!mostrarModos)} style={{ borderColor: `#${perfilActual.color}`, color: `#${perfilActual.color}` }}>
-                    <User size={16} /> <span className="hide-mobile">Perfil</span>
-                  </button>
-                  
-                  {mostrarModos && (
-                    <div className="user-menu-dropdown slide-in-top">
-                      
-                      {/* Selector de Modo */}
-                      <select 
-                        className="perfil-selector-dropdown"
-                        value={tipoPerfil} 
-                        onChange={(e) => setTipoPerfil(e.target.value)}
-                      >
-                        <option value="estudiante">👨‍🎓 Modo: Estudiante</option>
-                        <option value="funcionario">💼 Modo: Funcionario</option>
-                        <option value="visitante">🚶‍♂️ Modo: Visitante Externo</option>
-                      </select>
-
-                      {/* Tarjeta de Perfil y Nivel */}
-                      <div className="user-profile-card" style={{ borderColor: `#${perfilActual.color}40`, margin: '10px 0' }}>
-                        <div className="user-info">
-                          <img src={`https://ui-avatars.com/api/?name=${perfilActual.avatarName}&background=${perfilActual.color}&color=fff`} alt="Avatar" className="avatar-img" style={{ border: `2px solid #${perfilActual.color}` }} />
-                          <div className="user-details">
-                            <h4>{perfilActual.nombre}</h4>
-                            <p>{perfilActual.rol}</p>
-                          </div>
-                        </div>
-                        <div className="xp-container">
-                          <div className="xp-label">
-                            <span className="level" style={{ backgroundColor: `#${perfilActual.color}` }}>NIVEL {statsUsuario.nivel}</span>
-                            <span className="xp-text">{statsUsuario.xp} / {statsUsuario.metaXp} XP</span>
-                          </div>
-                          <div className="progress-bar-bg">
-                            <div className="progress-bar-fill" style={{width: `${statsUsuario.porcentajeNivel}%`, backgroundColor: `#${perfilActual.color}`, transition: 'width 0.5s ease'}}></div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Tarjeta de Logros */}
-                      <div className="achievements-card">
-                        <div className="achievements-header">
-                          <h4>Logros recientes</h4>
-                          <ChevronRight size={16} className="arrow-icon" />
-                        </div>
-                        <div className="achievement-item">
-                          <div className="achievement-icon" style={{ background: statsUsuario.ultimoLogro.bg }}>
-                            {statsUsuario.ultimoLogro.icono}
-                          </div>
-                          <div className="achievement-details">
-                            <h5>{statsUsuario.ultimoLogro.titulo}</h5>
-                            <p>{statsUsuario.ultimoLogro.desc}</p>
-                            <span className="xp-reward" style={{ color: `#${perfilActual.color}` }}>Desbloqueado</span>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                  )}
-                </div>
-
                 <button className="icon-btn hide-mobile"><Sun size={18} /> Día</button>
                 <button className="icon-btn hide-mobile"><Volume2 size={18} /></button>
                 <button className="icon-btn hide-mobile" onClick={togglePantallaCompleta}><Maximize size={18} /></button>
