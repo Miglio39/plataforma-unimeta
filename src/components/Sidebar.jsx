@@ -1,37 +1,46 @@
 import React, { useState } from 'react';
 import { 
-  Presentation, Scale, Gavel, Landmark, 
+  Presentation, Scale, Gavel, Dumbbell, 
   Library, FlaskConical, Mic, Briefcase, 
   TreePine, MonitorPlay, Home, ChevronRight, ChevronDown 
 } from 'lucide-react';
 
 const Sidebar = ({ setEscenaActual, escenaActual }) => {
 
-  // 🔴 ESTADO: Controla si la carpeta de laboratorios está abierta o cerrada
   const [labsOpen, setLabsOpen] = useState(false);
 
   const menuInicio = [
     { nombre: 'Inicio (Vista Dron)', archivo: 'inicio.jpg', icono: <Home size={18} /> }
   ];
 
-  // 🔴 AQUÍ AGREGAS TUS 15 LABORATORIOS
   const listaLaboratorios = [
+    { nombre: 'Lab. de Física', archivo: 'lab-fisica.jpg' },
     { nombre: 'Lab. de Redes', archivo: 'lab-redes.jpg' },
     { nombre: 'Lab. de Software', archivo: 'lab-software.jpg' },
-    { nombre: 'Lab. de Física', archivo: 'lab-fisica.jpg' },
+    { nombre: 'Lab. de Suelos', archivo: 'lab-suelos.jpg' },
+    { nombre: 'Lab. de Hidráulica', archivo: 'lab-hidraulica.jpg' },
+    { nombre: 'Lab. de Materiales', archivo: 'lab-materiales.jpg' },
+    { nombre: 'Lab. de Electrónica', archivo: 'lab-electronica.jpg' },
+    { nombre: 'Lab. de Telemática', archivo: 'lab-telematica.jpg' },
+    { nombre: 'Taller de Arquitectura', archivo: 'lab-arquitectura.jpg' },
+    { nombre: 'Lab. de Topografía', archivo: 'lab-topografia.jpg' },
+    { nombre: 'Lab. de Pavimentos', archivo: 'lab-pavimentos.jpg' },
+    { nombre: 'Lab. de Idiomas', archivo: 'lab-idiomas.jpg' },
+    { nombre: 'Centro de Cómputo', archivo: 'lab-sistemas.jpg' },
     { nombre: 'Lab. de Química', archivo: 'lab-quimica.jpg' },
-    { nombre: 'Lab. de Sistemas Avanzados', archivo: 'lab-sistemas2.jpg' },
-    // ... agrega los demás aquí ...
+    { nombre: 'Lab. de Biología', archivo: 'lab-biologia.jpg' }
   ];
 
   const menuSanFernando = [
     { nombre: 'Paraninfo', archivo: 'paraninfo.jpg', icono: <Presentation size={18} /> },
     { nombre: 'Consultorio Jurídico', archivo: 'consultorio.jpg', icono: <Scale size={18} /> },
     { nombre: 'Sala de Audiencias', archivo: 'audiencias.jpg', icono: <Gavel size={18} /> },
-    { nombre: 'Rectoría', archivo: 'rectoria.jpg', icono: <Landmark size={18} /> },
+    
+    // GIMNASIO (Enlaza directamente al piso 1)
+    { nombre: 'Gimnasio', archivo: 'gimnasio.jpg', icono: <Dumbbell size={18} /> },
+    
     { nombre: 'Biblioteca', archivo: 'biblioteca.jpg', icono: <Library size={18} /> },
     
-    // 🔴 ESTE ES EL BOTÓN DESPLEGABLE
     { 
       esSubmenu: true, 
       nombre: 'Laboratorios', 
@@ -50,11 +59,9 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
 
   const renderItem = (lugar, index) => {
     
-    // 🔴 LÓGICA PARA RENDERIZAR EL SUBMENÚ DE LABORATORIOS
     if (lugar.esSubmenu) {
       return (
         <React.Fragment key={`submenu-${index}`}>
-          {/* El botón principal que abre/cierra */}
           <li 
             className={`sidebar-item ${labsOpen ? 'active-submenu' : ''}`}
             onClick={() => setLabsOpen(!labsOpen)}
@@ -66,11 +73,9 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
                 {lugar.nombre}
               </span>
             </div>
-            {/* Cambia la flechita si está abierto o cerrado */}
             {labsOpen ? <ChevronDown size={14} color="white" /> : <ChevronRight size={14} />}
           </li>
           
-          {/* La lista interna que aparece cuando se abre */}
           {labsOpen && (
             <ul className="submenu-list">
               {lugar.subItems.map((subItem) => (
@@ -90,7 +95,6 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
       );
     }
 
-    // Lógica normal para los demás botones
     return (
       <li 
         key={lugar.archivo} 

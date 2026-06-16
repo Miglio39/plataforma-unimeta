@@ -5,12 +5,10 @@ import ChatBot from './components/ChatBot';
 import { Sun, Volume2, Maximize, Play, Pause, MapPin, Info, Target, Compass, Trophy, Star, Home, Smartphone, ChevronUp, ChevronDown } from 'lucide-react';
 import './styles/App.css';
 
-const mapaUnimetaReal = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.6015521943896!2d-73.63004462413532!3d4.140889046252994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2dd3971e44a5%3A0x6b4fb6c17b5f25a7!2sUniversidad%20del%20Meta!5e0!3m2!1ses!2sco!4v1715000000000!5m2!1ses!2sco";
-
+// 🔴 ENLACES DE GOOGLE MAPS EMBEBIDOS
 const enlaceSanFernando = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco";
-// Cuando tengas los de las otras sedes, los puedes poner aquí:
-const enlaceParqueMetropolitano = "ENLACE_DEL_PARQUE_AQUI"; 
-const enlaceUnimetaTech = "ENLACE_DE_UNIMETA_TECH_AQUI";
+const enlaceParqueMetropolitano = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco"; // Cambiar cuando tengas el link real
+const enlaceUnimetaTech = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco"; // Cambiar cuando tengas el link real
 
 const datosSedes = {
   // --- SEDE SAN FERNANDO ---
@@ -18,19 +16,23 @@ const datosSedes = {
   'paraninfo.jpg': { nombre: 'Paraninfo', categoria: 'Académico', descripcion: 'Espacio principal para eventos, grados y asambleas importantes.', vistaExterior: '/assets/panoramas/exterior-paraninfo.jpg', mapaUrl: enlaceSanFernando },
   'consultorio.jpg': { nombre: 'Consultorio Jurídico', categoria: 'Servicios', descripcion: 'Atención y asesoría legal gratuita a la comunidad por parte de la facultad de Derecho.', vistaExterior: '/assets/panoramas/exterior-consultorio.jpg', mapaUrl: enlaceSanFernando },
   'audiencias.jpg': { nombre: 'Sala de Audiencias', categoria: 'Académico', descripcion: 'Simulador de juzgados para las prácticas de los estudiantes de Derecho.', vistaExterior: '/assets/panoramas/exterior-audiencias.jpg', mapaUrl: enlaceSanFernando },
-  'rectoria.jpg': { nombre: 'Rectoría UNIMETA', categoria: 'Administrativo', descripcion: 'Sede administrativa principal de la Corporación Universitaria del Meta.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
+  
+  // 🔴 GIMNASIO (2 PISOS)
+  'gimnasio.jpg': { nombre: 'Gimnasio - Piso 1', categoria: 'Bienestar', descripcion: 'Primer nivel del complejo deportivo. Zona de pesas, máquinas de fuerza y acondicionamiento físico.', vistaExterior: '/assets/panoramas/exterior-gimnasio.jpg', mapaUrl: enlaceSanFernando },
+  'gimnasio-piso2.jpg': { nombre: 'Gimnasio - Piso 2', categoria: 'Bienestar', descripcion: 'Segundo nivel. Zona dedicada a ejercicios cardiovasculares, aeróbicos y clases grupales.', vistaExterior: '/assets/panoramas/exterior-gimnasio.jpg', mapaUrl: enlaceSanFernando },
+  
   'biblioteca.jpg': { nombre: 'Biblioteca', categoria: 'Académico', descripcion: 'Espacio para el aprendizaje, investigación y consulta de recursos en alta resolución.', vistaExterior: '/assets/panoramas/exterior-biblioteca.jpg', mapaUrl: enlaceSanFernando },
   'auditorios.jpg': { nombre: 'Auditorios y conferencias', categoria: 'Académico', descripcion: 'Salas equipadas para charlas, exposiciones y cátedras.', vistaExterior: '/assets/panoramas/exterior-auditorios.jpg', mapaUrl: enlaceSanFernando },
   'decanaturas.jpg': { nombre: 'Decanaturas', categoria: 'Administrativo', descripcion: 'Oficinas de atención y gestión de las diferentes facultades.', vistaExterior: '/assets/panoramas/exterior-decanaturas.jpg', mapaUrl: enlaceSanFernando },
   
   // --- LABORATORIOS (Sede San Fernando / Unimeta Tech) ---
-  'lab-fisica.jpg': { nombre: 'Laboratorio de Física', categoria: 'Laboratorios', descripcion: 'Espacio equipado para prácticas de física experimental y electromagnetismo.', vistaExterior: '/assets/panoramas/thumb-fisica.jpg', mapaUrl: enlaceSanFernando },
-  'lab-redes.jpg': { nombre: 'Laboratorio de Redes', categoria: 'Laboratorios', descripcion: 'Infraestructura y equipos para prácticas de conectividad y redes CISCO.', vistaExterior: '/assets/panoramas/thumb-redes.jpg', mapaUrl: enlaceSanFernando },
+  'lab-fisica.jpg': { nombre: 'Laboratorio de Física', categoria: 'Laboratorios', descripcion: 'Espacio equipado para prácticas de física experimental.', vistaExterior: '/assets/panoramas/thumb-fisica.jpg', mapaUrl: enlaceSanFernando },
+  'lab-redes.jpg': { nombre: 'Laboratorio de Redes', categoria: 'Laboratorios', descripcion: 'Infraestructura y equipos para conectividad y redes CISCO.', vistaExterior: '/assets/panoramas/thumb-redes.jpg', mapaUrl: enlaceSanFernando },
   'lab-software.jpg': { nombre: 'Laboratorio de Software', categoria: 'Laboratorios', descripcion: 'Salas de cómputo especializadas para desarrollo y programación.', vistaExterior: '/assets/panoramas/thumb-software.jpg', mapaUrl: enlaceSanFernando },
   'lab-suelos.jpg': { nombre: 'Laboratorio de Suelos', categoria: 'Laboratorios', descripcion: 'Análisis de materiales y mecánica de suelos para Ingeniería Civil.', vistaExterior: '/assets/panoramas/thumb-suelos.jpg', mapaUrl: enlaceSanFernando },
   'lab-hidraulica.jpg': { nombre: 'Laboratorio de Hidráulica', categoria: 'Laboratorios', descripcion: 'Estudio de fluidos y canales para proyectos de ingeniería.', vistaExterior: '/assets/panoramas/thumb-hidraulica.jpg', mapaUrl: enlaceSanFernando },
   'lab-materiales.jpg': { nombre: 'Laboratorio de Materiales', categoria: 'Laboratorios', descripcion: 'Pruebas de resistencia y calidad de materiales de construcción.', vistaExterior: '/assets/panoramas/thumb-materiales.jpg', mapaUrl: enlaceSanFernando },
-  'lab-electronica.jpg': { nombre: 'Laboratorio de Electrónica', categoria: 'Laboratorios', descripcion: 'Equipos y componentes para el diseño de circuitos y sistemas integrados.', vistaExterior: '/assets/panoramas/thumb-electronica.jpg', mapaUrl: enlaceSanFernando },
+  'lab-electronica.jpg': { nombre: 'Laboratorio de Electrónica', categoria: 'Laboratorios', descripcion: 'Equipos y componentes para el diseño de circuitos y sistemas.', vistaExterior: '/assets/panoramas/thumb-electronica.jpg', mapaUrl: enlaceSanFernando },
   'lab-telematica.jpg': { nombre: 'Laboratorio de Telemática', categoria: 'Laboratorios', descripcion: 'Integración de telecomunicaciones y sistemas informáticos.', vistaExterior: '/assets/panoramas/thumb-telematica.jpg', mapaUrl: enlaceSanFernando },
   'lab-arquitectura.jpg': { nombre: 'Taller de Arquitectura', categoria: 'Laboratorios', descripcion: 'Espacio creativo para el diseño, maquetación y urbanismo.', vistaExterior: '/assets/panoramas/thumb-arquitectura.jpg', mapaUrl: enlaceSanFernando },
   'lab-topografia.jpg': { nombre: 'Laboratorio de Topografía', categoria: 'Laboratorios', descripcion: 'Equipos de medición, teodolitos y estaciones totales.', vistaExterior: '/assets/panoramas/thumb-topografia.jpg', mapaUrl: enlaceSanFernando },
@@ -50,7 +52,6 @@ function App() {
   const [visorExpandido, setVisorExpandido] = useState(false);
   const [autoPlay, setAutoPlay] = useState(false);
   const [lugaresVisitados, setLugaresVisitados] = useState(['inicio.jpg']);
-  
   const [mostrarPanelInferior, setMostrarPanelInferior] = useState(false);
 
   useEffect(() => {
@@ -93,9 +94,10 @@ function App() {
     }
   };
 
-  const infoSede = datosSedes[escenaActual] || { nombre: 'Campus San Fernando', categoria: 'General', descripcion: 'Campus principal.', vistaExterior: '/assets/panoramas/mapa-unimeta.png', mapaUrl: mapaUnimetaReal };
+  const infoSede = datosSedes[escenaActual] || { nombre: 'Campus San Fernando', categoria: 'General', descripcion: 'Campus principal.', vistaExterior: '/assets/panoramas/mapa-unimeta.png', mapaUrl: enlaceSanFernando };
 
-  const totalLugares = 11;
+  // Progreso Automático
+  const totalLugares = Object.keys(datosSedes).length; 
   const visitadosReales = Math.min(lugaresVisitados.length, totalLugares);
   const porcentajeExplorado = Math.min(100, Math.round((visitadosReales / totalLugares) * 100));
   const distanciaKm = (visitadosReales * 0.4).toFixed(1);
@@ -104,8 +106,8 @@ function App() {
   const todosLosLogros = [
     { id: '1', titulo: 'Primeros Pasos', desc: 'Iniciaste tu recorrido', meta: 1, xp: 50, icono: <Compass size={16} color="#3b82f6"/>, bg: 'rgba(59, 130, 246, 0.15)' },
     { id: '2', titulo: 'Conoce tu universidad', desc: 'Visita 5 lugares del campus', meta: 5, xp: 150, icono: <Star size={16} color="#eab308"/>, bg: 'rgba(234, 179, 8, 0.15)' },
-    { id: '3', titulo: 'Explorador Avanzado', desc: 'Visita 8 lugares del campus', meta: 8, xp: 300, icono: <MapPin size={16} color="#10b981"/>, bg: 'rgba(16, 185, 129, 0.15)' },
-    { id: '4', titulo: 'Guía Maestro', desc: 'Visita los 11 lugares', meta: totalLugares, xp: 500, icono: <Trophy size={16} color="#a855f7"/>, bg: 'rgba(168, 85, 247, 0.15)' }
+    { id: '3', titulo: 'Explorador Avanzado', desc: 'Visita 10 lugares del campus', meta: 10, xp: 300, icono: <MapPin size={16} color="#10b981"/>, bg: 'rgba(16, 185, 129, 0.15)' },
+    { id: '4', titulo: 'Guía Maestro', desc: `Visita los ${totalLugares} lugares`, meta: totalLugares, xp: 500, icono: <Trophy size={16} color="#a855f7"/>, bg: 'rgba(168, 85, 247, 0.15)' }
   ];
 
   const proximoLogro = todosLosLogros.find(l => visitadosReales < l.meta) || todosLosLogros[todosLosLogros.length - 1];
@@ -125,7 +127,6 @@ function App() {
           <Sidebar setEscenaActual={setEscenaActual} escenaActual={escenaActual} />
           
           <main className="main-content-wrapper">
-            
             <header className="top-bar">
               <div className="location-info">
                 <h1>{infoSede.nombre}</h1>
@@ -147,7 +148,6 @@ function App() {
               <ChatBot setEscenaActual={setEscenaActual} />
             </section>
 
-            {/* PANEL INFERIOR RETRÁCTIL (Móvil) / ESTÁTICO (PC) */}
             <div className={`bottom-panel-wrapper ${mostrarPanelInferior ? 'open' : ''}`}>
               <button className="toggle-bottom-btn" onClick={() => setMostrarPanelInferior(!mostrarPanelInferior)}>
                  {mostrarPanelInferior ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
@@ -156,7 +156,9 @@ function App() {
               <section className="bottom-cards-grid" style={{ display: visorExpandido ? 'none' : 'grid' }}>
                 <div className="info-card">
                   <div className="card-header"><h3><MapPin size={16} /> Mapa del campus</h3></div>
-                  <div className="mapa-contenedor"><iframe width="100%" height="100%" frameBorder="0" scrolling="no" src={infoSede.mapaUrl} title="Mapa"></iframe></div>
+                  <div className="mapa-contenedor">
+                    <iframe width="100%" height="100%" frameBorder="0" scrolling="no" src={infoSede.mapaUrl} title="Mapa"></iframe>
+                  </div>
                 </div>
 
                 <div className="info-card">

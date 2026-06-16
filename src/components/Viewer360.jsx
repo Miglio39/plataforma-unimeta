@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X, Play, MapPin, Info, Landmark } from 'lucide-react';
 import 'aframe';
 
-// 🔴 EL TOOLTIP INDEPENDIENTE (Para no recargar el 3D)
 const TooltipFlotante = () => {
   const [lugarHover, setLugarHover] = useState(null);
 
@@ -48,10 +47,6 @@ const TooltipFlotante = () => {
   );
 };
 
-
-// ==========================================
-// 1. HOTSPOT ANTI-CRASHES
-// ==========================================
 const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, instruccion }) => {
   const entityRef = useRef(null);
 
@@ -106,21 +101,16 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, 
   );
 };
 
-
-// ==========================================
-// 2. COMPONENTE PRINCIPAL
-// ==========================================
 const Viewer360 = ({ foto, setEscenaActual }) => {
   const [infoEmergente, setInfoEmergente] = useState(null);
 
-  // 🔴 FUNCIÓN DE GIRO CENTRALIZADA
   const moverCamara = (direccion) => {
     const camara = document.querySelector('[camera]');
     if (!camara || !camara.components['look-controls']) return;
 
     const lookControls = camara.components['look-controls'];
     if (lookControls.yawObject && lookControls.pitchObject) {
-      const velocidadGiro = 0.15; // Velocidad suave
+      const velocidadGiro = 0.15; 
       if (direccion === 'left') lookControls.yawObject.rotation.y += velocidadGiro;
       if (direccion === 'right') lookControls.yawObject.rotation.y -= velocidadGiro;
       if (direccion === 'up') lookControls.pitchObject.rotation.x += velocidadGiro;
@@ -128,10 +118,8 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
     }
   };
 
-  // 🔴 ESCUCHADOR DE TECLADO (WASD y Flechas)
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Ignorar si el usuario está escribiendo en el chat o en un input
       if (e.target.tagName.toLowerCase() === 'input' || e.target.tagName.toLowerCase() === 'textarea') return;
 
       switch(e.key) {
@@ -170,14 +158,12 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
       {/* CAPA 3D (A-FRAME) */}
       <a-scene embedded vr-mode-ui="enabled: false" renderer="antialias: true; colorManagement: true; highResolution: true;" cursor="rayOrigin: mouse">
         
-        {/* 🔴 ENVOLTORIO MÁGICO: Agrupa el cielo y los marcadores para que giren juntos */}
+        {/* ENVOLTORIO DRON */}
         <a-entity animation={foto === 'inicio.jpg' ? "property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 90000; easing: linear" : undefined}>
           
           <a-sky src={`/assets/panoramas/${foto}`} color="#ffffff" rotation="0 -90 0"></a-sky>
 
-          {/* =========================================
-              🚁 MARCADORES: AHORA ESTÁN DENTRO DEL ENVOLTORIO
-              ========================================= */}
+          {/* MARCADORES VISTA AÉREA */}
           <a-entity visible={foto === 'inicio.jpg'} position={foto === 'inicio.jpg' ? "0 0 0" : "0 -9999 0"}>
             <Hotspot 
               tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#9333ea" 
@@ -186,12 +172,12 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
             />
             <Hotspot 
               tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#10b981" 
-              titulo="Laboratorios" onClick={() => setEscenaActual('tech-laboratorio.jpg')} 
+              titulo="Laboratorios" onClick={() => setEscenaActual('lab-software.jpg')} 
               distancia="A 25m" instruccion="Clic para entrar"
             />
             <Hotspot 
               tipo="nav" position="5 -1 2" rotation="0 -110 0" color="#f59e0b" 
-              titulo="Rectoría" onClick={() => setEscenaActual('rectoria.jpg')} 
+              titulo="Gimnasio" onClick={() => setEscenaActual('gimnasio.jpg')} 
               distancia="A 18m" instruccion="Clic para entrar"
             />
             <Hotspot 
@@ -200,23 +186,36 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
               distancia="A 40m" instruccion="Clic para entrar"
             />
           </a-entity>
-
         </a-entity>
 
-        {/* 🔴 CÁMARA */}
+        {/* 🔴 ESCALERAS VIRTUALES: GIMNASIO PISO 1 (Sube al Piso 2) */}
+        <a-entity visible={foto === 'gimnasio.jpg'} position={foto === 'gimnasio.jpg' ? "0 0 0" : "0 -9999 0"}>
+          <Hotspot 
+            tipo="nav" position="3 -0.5 -4" rotation="0 -30 0" color="#3b82f6" 
+            titulo="Subir al Segundo Piso" onClick={() => setEscenaActual('gimnasio-piso2.jpg')} 
+            distancia="Escaleras" instruccion="Clic para subir" 
+          />
+        </a-entity>
+
+        {/* 🔴 ESCALERAS VIRTUALES: GIMNASIO PISO 2 (Baja al Piso 1) */}
+        <a-entity visible={foto === 'gimnasio-piso2.jpg'} position={foto === 'gimnasio-piso2.jpg' ? "0 0 0" : "0 -9999 0"}>
+          <Hotspot 
+            tipo="back" position="-3 -1 4" rotation="0 150 0" color="#ef4444" 
+            titulo="Bajar al Primer Piso" onClick={() => setEscenaActual('gimnasio.jpg')} 
+            distancia="Escaleras" instruccion="Clic para bajar" 
+          />
+        </a-entity>
+
         <a-entity camera look-controls="enabled: true; mouseEnabled: true" wasd-controls="enabled: false" position="0 0 0">
           <a-entity cursor="rayOrigin: mouse;" raycaster="objects: .clickable"></a-entity>
         </a-entity>
       </a-scene>
 
-      {/* =========================================
-          CAPA HTML (INTERFAZ SUPERPUESTA)
-          ========================================= */}
+      {/* CAPA HTML (INTERFAZ) */}
       <div className="viewer-ui-overlay" style={{ pointerEvents: 'none' }}>
         
         <TooltipFlotante />
 
-        {/* POPUP DE INFO EMERGENTE */}
         {infoEmergente && (
           <div className="hotspot-popup-modal pointer-auto" style={{ pointerEvents: 'auto' }}>
             <button className="close-popup" onClick={() => setInfoEmergente(null)}><X size={16}/></button>
@@ -225,7 +224,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           </div>
         )}
 
-        {/* MINIMAPA RADAR */}
         <div className="overlay-top">
           <div className="v-minimap pointer-auto" style={{ pointerEvents: 'auto' }}>
             <div className="v-minimap-body">
@@ -236,7 +234,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           </div>
         </div>
 
-        {/* CONTROLES INFERIORES Y CARRUSEL */}
         <div className="overlay-bottom">
           <div className="v-controls pointer-auto" style={{ pointerEvents: 'auto' }}>
             <button className="ctrl-btn up" onClick={() => moverCamara('up')}><ChevronUp size={16} /></button>
@@ -253,11 +250,15 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
             <div className={`carousel-item ${foto === 'biblioteca.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('biblioteca.jpg')} title="Biblioteca">
               <img src="/assets/panoramas/biblioteca.jpg" alt="Biblio" onError={(e) => e.target.style.display = 'none'}/>
             </div>
-            <div className={`carousel-item ${foto === 'rectoria.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('rectoria.jpg')} title="Rectoría">
-              <img src="/assets/panoramas/rectoria.jpg" alt="Rectoria" onError={(e) => e.target.style.display = 'none'}/>
+            {/* 🔴 LOS 2 PISOS DEL GIMNASIO EN EL CARRUSEL INFERIOR */}
+            <div className={`carousel-item ${foto === 'gimnasio.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('gimnasio.jpg')} title="Gimnasio Piso 1">
+              <img src="/assets/panoramas/gimnasio.jpg" alt="Gym P1" onError={(e) => e.target.style.display = 'none'}/>
             </div>
-            <div className={`carousel-item ${foto === 'tech-laboratorio.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('tech-laboratorio.jpg')} title="Laboratorios">
-              <img src="/assets/panoramas/tech-laboratorio.jpg" alt="Tech" onError={(e) => e.target.style.display = 'none'}/>
+            <div className={`carousel-item ${foto === 'gimnasio-piso2.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('gimnasio-piso2.jpg')} title="Gimnasio Piso 2">
+              <img src="/assets/panoramas/gimnasio-piso2.jpg" alt="Gym P2" onError={(e) => e.target.style.display = 'none'}/>
+            </div>
+            <div className={`carousel-item ${foto === 'lab-software.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('lab-software.jpg')} title="Laboratorios">
+              <img src="/assets/panoramas/thumb-software.jpg" alt="Tech" onError={(e) => e.target.style.display = 'none'}/>
             </div>
           </div>
 
