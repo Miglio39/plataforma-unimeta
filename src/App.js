@@ -7,8 +7,8 @@ import './styles/App.css';
 
 // 🔴 ENLACES DE GOOGLE MAPS EMBEBIDOS
 const enlaceSanFernando = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco";
-const enlaceParqueMetropolitano = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco"; // Cambiar cuando tengas el link real
-const enlaceUnimetaTech = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco"; // Cambiar cuando tengas el link real
+const enlaceParqueMetropolitano = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco"; 
+const enlaceUnimetaTech = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco"; 
 
 const datosSedes = {
   // --- SEDE SAN FERNANDO ---
@@ -17,14 +17,18 @@ const datosSedes = {
   'consultorio.jpg': { nombre: 'Consultorio Jurídico', categoria: 'Servicios', descripcion: 'Atención y asesoría legal gratuita a la comunidad por parte de la facultad de Derecho.', vistaExterior: '/assets/panoramas/exterior-consultorio.jpg', mapaUrl: enlaceSanFernando },
   'audiencias.jpg': { nombre: 'Sala de Audiencias', categoria: 'Académico', descripcion: 'Simulador de juzgados para las prácticas de los estudiantes de Derecho.', vistaExterior: '/assets/panoramas/exterior-audiencias.jpg', mapaUrl: enlaceSanFernando },
   
-  // 🔴 GIMNASIO (2 PISOS)
+  // GIMNASIO (2 PISOS)
   'gimnasio.jpg': { nombre: 'Gimnasio - Piso 1', categoria: 'Bienestar', descripcion: 'Primer nivel del complejo deportivo. Zona de pesas, máquinas de fuerza y acondicionamiento físico.', vistaExterior: '/assets/panoramas/exterior-gimnasio.jpg', mapaUrl: enlaceSanFernando },
   'gimnasio-piso2.jpg': { nombre: 'Gimnasio - Piso 2', categoria: 'Bienestar', descripcion: 'Segundo nivel. Zona dedicada a ejercicios cardiovasculares, aeróbicos y clases grupales.', vistaExterior: '/assets/panoramas/exterior-gimnasio.jpg', mapaUrl: enlaceSanFernando },
   
   'biblioteca.jpg': { nombre: 'Biblioteca', categoria: 'Académico', descripcion: 'Espacio para el aprendizaje, investigación y consulta de recursos en alta resolución.', vistaExterior: '/assets/panoramas/exterior-biblioteca.jpg', mapaUrl: enlaceSanFernando },
-  'auditorios.jpg': { nombre: 'Auditorios y conferencias', categoria: 'Académico', descripcion: 'Salas equipadas para charlas, exposiciones y cátedras.', vistaExterior: '/assets/panoramas/exterior-auditorios.jpg', mapaUrl: enlaceSanFernando },
   'decanaturas.jpg': { nombre: 'Decanaturas', categoria: 'Administrativo', descripcion: 'Oficinas de atención y gestión de las diferentes facultades.', vistaExterior: '/assets/panoramas/exterior-decanaturas.jpg', mapaUrl: enlaceSanFernando },
   
+  // 🔴 NUEVOS: LOS AUDITORIOS DISTRIBUIDOS
+  'auditorio-mayor.jpg': { nombre: 'Auditorio Principal (Aula Magna)', categoria: 'Auditorios', descripcion: 'Espacio de gran capacidad destinado a ceremonias solemnes, conferencias magistrales y actos culturales centrales.', vistaExterior: '/assets/panoramas/exterior-auditorio-mayor.jpg', mapaUrl: enlaceSanFernando },
+  'auditorio-bloquea.jpg': { nombre: 'Auditorio Bloque A', categoria: 'Auditorios', descripcion: 'Auditorio alterno equipado con sistemas de proyección acústica para ponencias y eventos de facultades.', vistaExterior: '/assets/panoramas/exterior-auditorio-a.jpg', mapaUrl: enlaceSanFernando },
+  'auditorio-juridico.jpg': { nombre: 'Auditorio de Ciencias Jurídicas', categoria: 'Auditorios', descripcion: 'Sala especializada de conferencias y debates adscrita a la facultad de Derecho y Ciencias Sociales.', vistaExterior: '/assets/panoramas/exterior-auditorio-juridico.jpg', mapaUrl: enlaceSanFernando },
+
   // --- LABORATORIOS (Sede San Fernando / Unimeta Tech) ---
   'lab-fisica.jpg': { nombre: 'Laboratorio de Física', categoria: 'Laboratorios', descripcion: 'Espacio equipado para prácticas de física experimental.', vistaExterior: '/assets/panoramas/thumb-fisica.jpg', mapaUrl: enlaceSanFernando },
   'lab-redes.jpg': { nombre: 'Laboratorio de Redes', categoria: 'Laboratorios', descripcion: 'Infraestructura y equipos para conectividad y redes CISCO.', vistaExterior: '/assets/panoramas/thumb-redes.jpg', mapaUrl: enlaceSanFernando },
@@ -43,7 +47,7 @@ const datosSedes = {
   'lab-biologia.jpg': { nombre: 'Laboratorio de Biología', categoria: 'Laboratorios', descripcion: 'Microscopía y estudio de ecosistemas y microorganismos.', vistaExterior: '/assets/panoramas/thumb-biologia.jpg', mapaUrl: enlaceSanFernando },
 
   // --- SEDES EXTERNAS ---
-  'parque.jpg': { nombre: 'Parque Metropolitano', categoria: 'Zonas Externas', descripcion: 'Amplias zonas verdes para el esparcimiento y bienestar universitario.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano },
+  'parque.jpg': { nombre: 'Parque Metropolitano', categoria: 'Zonas Externas', descripcion: 'Amplias zonas verdes para el esparcimiento y bienestar universitario.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceSanFernando },
   'unimeta-tech.jpg': { nombre: 'Unimeta Tech', categoria: 'Tecnología', descripcion: 'Centro de innovación tecnológica con laboratorios de sistemas e ingeniería.', vistaExterior: '/assets/panoramas/exterior-unimeta-tech.jpg', mapaUrl: enlaceUnimetaTech }
 };
 
@@ -96,7 +100,6 @@ function App() {
 
   const infoSede = datosSedes[escenaActual] || { nombre: 'Campus San Fernando', categoria: 'General', descripcion: 'Campus principal.', vistaExterior: '/assets/panoramas/mapa-unimeta.png', mapaUrl: enlaceSanFernando };
 
-  // Progreso Automático
   const totalLugares = Object.keys(datosSedes).length; 
   const visitadosReales = Math.min(lugaresVisitados.length, totalLugares);
   const porcentajeExplorado = Math.min(100, Math.round((visitadosReales / totalLugares) * 100));

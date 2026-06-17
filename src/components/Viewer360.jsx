@@ -180,15 +180,16 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
               titulo="Gimnasio" onClick={() => setEscenaActual('gimnasio.jpg')} 
               distancia="A 18m" instruccion="Clic para entrar"
             />
+            {/* ENLAZADO DIRECTAMENTE AL AUDITORIO PRINCIPAL */}
             <Hotspot 
               tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#ea580c" 
-              titulo="Auditorios" onClick={() => setEscenaActual('auditorios.jpg')} 
+              titulo="Auditorios" onClick={() => setEscenaActual('auditorio-mayor.jpg')} 
               distancia="A 40m" instruccion="Clic para entrar"
             />
           </a-entity>
         </a-entity>
 
-        {/* 🔴 ESCALERAS VIRTUALES: GIMNASIO PISO 1 (Sube al Piso 2) */}
+        {/* ESCALERAS VIRTUALES: GIMNASIO PISO 1 */}
         <a-entity visible={foto === 'gimnasio.jpg'} position={foto === 'gimnasio.jpg' ? "0 0 0" : "0 -9999 0"}>
           <Hotspot 
             tipo="nav" position="3 -0.5 -4" rotation="0 -30 0" color="#3b82f6" 
@@ -197,7 +198,7 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           />
         </a-entity>
 
-        {/* 🔴 ESCALERAS VIRTUALES: GIMNASIO PISO 2 (Baja al Piso 1) */}
+        {/* ESCALERAS VIRTUALES: GIMNASIO PISO 2 */}
         <a-entity visible={foto === 'gimnasio-piso2.jpg'} position={foto === 'gimnasio-piso2.jpg' ? "0 0 0" : "0 -9999 0"}>
           <Hotspot 
             tipo="back" position="-3 -1 4" rotation="0 150 0" color="#ef4444" 
@@ -250,12 +251,12 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
             <div className={`carousel-item ${foto === 'biblioteca.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('biblioteca.jpg')} title="Biblioteca">
               <img src="/assets/panoramas/biblioteca.jpg" alt="Biblio" onError={(e) => e.target.style.display = 'none'}/>
             </div>
-            {/* 🔴 LOS 2 PISOS DEL GIMNASIO EN EL CARRUSEL INFERIOR */}
             <div className={`carousel-item ${foto === 'gimnasio.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('gimnasio.jpg')} title="Gimnasio Piso 1">
               <img src="/assets/panoramas/gimnasio.jpg" alt="Gym P1" onError={(e) => e.target.style.display = 'none'}/>
             </div>
-            <div className={`carousel-item ${foto === 'gimnasio-piso2.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('gimnasio-piso2.jpg')} title="Gimnasio Piso 2">
-              <img src="/assets/panoramas/gimnasio-piso2.jpg" alt="Gym P2" onError={(e) => e.target.style.display = 'none'}/>
+            {/* CARUSEL: AHORA MUESTRA EL AUDITORIO PRINCIPAL */}
+            <div className={`carousel-item ${foto === 'auditorio-mayor.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('auditorio-mayor.jpg')} title="Auditorio Principal">
+              <img src="/assets/panoramas/auditorio-mayor.jpg" alt="Auditorio" onError={(e) => e.target.style.display = 'none'}/>
             </div>
             <div className={`carousel-item ${foto === 'lab-software.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('lab-software.jpg')} title="Laboratorios">
               <img src="/assets/panoramas/thumb-software.jpg" alt="Tech" onError={(e) => e.target.style.display = 'none'}/>

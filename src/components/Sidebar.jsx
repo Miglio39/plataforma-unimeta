@@ -7,12 +7,15 @@ import {
 
 const Sidebar = ({ setEscenaActual, escenaActual }) => {
 
+  // Estados independientes para controlar cada menú desplegable
   const [labsOpen, setLabsOpen] = useState(false);
+  const [auditoriosOpen, setAuditoriosOpen] = useState(false);
 
   const menuInicio = [
     { nombre: 'Inicio (Vista Dron)', archivo: 'inicio.jpg', icono: <Home size={18} /> }
   ];
 
+  // ARRAY DE LOS 15 LABORATORIOS
   const listaLaboratorios = [
     { nombre: 'Lab. de Física', archivo: 'lab-fisica.jpg' },
     { nombre: 'Lab. de Redes', archivo: 'lab-redes.jpg' },
@@ -31,24 +34,38 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
     { nombre: 'Lab. de Biología', archivo: 'lab-biologia.jpg' }
   ];
 
+  // 🔴 NUEVO ARRAY CON LOS DIFERENTES AUDITORIOS
+  const listaAuditorios = [
+    { nombre: 'Auditorio Principal', archivo: 'auditorio-mayor.jpg' },
+    { nombre: 'Auditorio Bloque A', archivo: 'auditorio-bloquea.jpg' },
+    { nombre: 'Auditorio Cs. Jurídicas', archivo: 'auditorio-juridico.jpg' }
+  ];
+
   const menuSanFernando = [
     { nombre: 'Paraninfo', archivo: 'paraninfo.jpg', icono: <Presentation size={18} /> },
     { nombre: 'Consultorio Jurídico', archivo: 'consultorio.jpg', icono: <Scale size={18} /> },
     { nombre: 'Sala de Audiencias', archivo: 'audiencias.jpg', icono: <Gavel size={18} /> },
-    
-    // GIMNASIO (Enlaza directamente al piso 1)
     { nombre: 'Gimnasio', archivo: 'gimnasio.jpg', icono: <Dumbbell size={18} /> },
-    
     { nombre: 'Biblioteca', archivo: 'biblioteca.jpg', icono: <Library size={18} /> },
     
+    // ACORDEÓN 1: LABORATORIOS
     { 
       esSubmenu: true, 
+      identificador: 'labs',
       nombre: 'Laboratorios', 
       icono: <FlaskConical size={18} />, 
       subItems: listaLaboratorios 
     },
     
-    { nombre: 'Auditorios y conferencias', archivo: 'auditorios.jpg', icono: <Mic size={18} /> },
+    // 🔴 ACORDEÓN 2: AUDITORIOS (Actualizado de botón plano a menú desplegable)
+    { 
+      esSubmenu: true, 
+      identificador: 'auditorios',
+      nombre: 'Auditorios y Conferencias', 
+      icono: <Mic size={18} />, 
+      subItems: listaAuditorios 
+    },
+    
     { nombre: 'Decanaturas', archivo: 'decanaturas.jpg', icono: <Briefcase size={18} /> }
   ];
 
@@ -59,24 +76,29 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
 
   const renderItem = (lugar, index) => {
     
+    // LÓGICA DINÁMICA PARA CUALQUIER ACORDEÓN DESPLEGABLE
     if (lugar.esSubmenu) {
+      const esDeLabs = lugar.identificador === 'labs';
+      const isOpen = esDeLabs ? labsOpen : auditoriosOpen;
+      const toggleMenu = esDeLabs ? () => setLabsOpen(!labsOpen) : () => setAuditoriosOpen(!auditoriosOpen);
+
       return (
-        <React.Fragment key={`submenu-${index}`}>
+        <React.Fragment key={`submenu-${lugar.identificador}-${index}`}>
           <li 
-            className={`sidebar-item ${labsOpen ? 'active-submenu' : ''}`}
-            onClick={() => setLabsOpen(!labsOpen)}
+            className={`sidebar-item ${isOpen ? 'active-submenu' : ''}`}
+            onClick={toggleMenu}
             style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
           >
             <div className="item-content">
               <span className="icon-container">{lugar.icono}</span>
-              <span className="text" style={{ fontWeight: labsOpen ? '600' : 'normal', color: labsOpen ? 'white' : 'inherit' }}>
+              <span className="text" style={{ fontWeight: isOpen ? '600' : 'normal', color: isOpen ? 'white' : 'inherit' }}>
                 {lugar.nombre}
               </span>
             </div>
-            {labsOpen ? <ChevronDown size={14} color="white" /> : <ChevronRight size={14} />}
+            {isOpen ? <ChevronDown size={14} color="white" /> : <ChevronRight size={14} />}
           </li>
           
-          {labsOpen && (
+          {isOpen && (
             <ul className="submenu-list">
               {lugar.subItems.map((subItem) => (
                 <li
@@ -95,6 +117,7 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
       );
     }
 
+    // Botones normales estándar
     return (
       <li 
         key={lugar.archivo} 
