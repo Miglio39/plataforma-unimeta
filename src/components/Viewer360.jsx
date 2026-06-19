@@ -285,7 +285,7 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
               <img loading="lazy" src="/assets/panoramas/auditorio-mayor.jpg" alt="Auditorio" onError={(e) => e.target.style.display = 'none'}/>
             </div>
             
-            {/* 🔴 REEMPLAZO: 'Parque Metropolitano' en lugar de 'Laboratorios' (Sigue siendo el último slot) */}
+            {/* 🔴 REEMPLAZO: 'Parque ect Metropolitano' en lugar de 'Laboratorios' (Sigue siendo el último slot) */}
             <div className={`carousel-item ${foto === 'parque.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('parque.jpg')} title="Parque Metropolitano">
               <img loading="lazy" src="/assets/panoramas/exterior-parque.jpg" alt="Parque" onError={(e) => e.target.style.display = 'none'}/>
             </div>
