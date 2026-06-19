@@ -103,10 +103,7 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, 
 
 const Viewer360 = ({ foto, setEscenaActual }) => {
   const [infoEmergente, setInfoEmergente] = useState(null);
-  
-  // 🔴 ESTADO: Controla si la rotación automática está activada
   const [isAutoRotating, setIsAutoRotating] = useState(true);
-
   const sceneRef = useRef(null);
 
   const moverCamara = (direccion) => {
@@ -121,7 +118,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
       if (direccion === 'up') lookControls.pitchObject.rotation.x += velocidadGiro;
       if (direccion === 'down') lookControls.pitchObject.rotation.x -= velocidadGiro;
       
-      // 🔴 Detener rotación al usar controles manuales
       if (isAutoRotating) {
         setIsAutoRotating(false);
       }
@@ -160,9 +156,8 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isAutoRotating]); // 🔴 Dependencia actualizada
+  }, [isAutoRotating]);
 
-  // 🔴 EFECTO: Escucha la interacción del usuario en la escena
   useEffect(() => {
     const sceneEl = sceneRef.current;
     if (!sceneEl) return;
@@ -174,7 +169,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
       }
     };
 
-    // Escuchar mousedown (PC) y touchstart (Móvil)
     sceneEl.addEventListener('mousedown', stopAutoRotate);
     sceneEl.addEventListener('touchstart', stopAutoRotate);
 
@@ -187,24 +181,20 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
   return (
     <div className="viewer-container">
       
-      {/* CAPA 3D (A-FRAME) */}
       <a-scene 
-        ref={sceneRef} // 🔴 Referencia a la escena
+        ref={sceneRef}
         embedded 
         vr-mode-ui="enabled: false" 
         renderer="antialias: true; colorManagement: true; highResolution: true;" 
         cursor="rayOrigin: mouse"
       >
         
-        {/* ENVOLTORIO DRON CON ROTACIÓN CONDICIONAL */}
         <a-entity 
-          // 🔴 Animación controlada por el estado React
           animation={foto === 'inicio.jpg' ? `property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 90000; easing: linear; enabled: ${isAutoRotating}` : undefined}
         >
           
           <a-sky src={`/assets/panoramas/${foto}`} color="#ffffff" rotation="0 -90 0"></a-sky>
 
-          {/* MARCADORES VISTA AÉREA */}
           <a-entity visible={foto === 'inicio.jpg'} position={foto === 'inicio.jpg' ? "0 0 0" : "0 -9999 0"}>
             <Hotspot 
               tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#9333ea" 
@@ -229,7 +219,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           </a-entity>
         </a-entity>
 
-        {/* ESCALERAS VIRTUALES: GIMNASIO PISO 1 */}
         <a-entity visible={foto === 'gimnasio.jpg'} position={foto === 'gimnasio.jpg' ? "0 0 0" : "0 -9999 0"}>
           <Hotspot 
             tipo="nav" position="3 -0.5 -4" rotation="0 -30 0" color="#3b82f6" 
@@ -238,7 +227,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           />
         </a-entity>
 
-        {/* ESCALERAS VIRTUALES: GIMNASIO PISO 2 */}
         <a-entity visible={foto === 'gimnasio-piso2.jpg'} position={foto === 'gimnasio-piso2.jpg' ? "0 0 0" : "0 -9999 0"}>
           <Hotspot 
             tipo="back" position="-3 -1 4" rotation="0 150 0" color="#ef4444" 
@@ -247,17 +235,11 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           />
         </a-entity>
 
-        <a-entity 
-          camera 
-          look-controls="enabled: true; mouseEnabled: true" 
-          wasd-controls="enabled: false" 
-          position="0 0 0"
-        >
+        <a-entity camera look-controls="enabled: true; mouseEnabled: true" wasd-controls="enabled: false" position="0 0 0">
           <a-entity cursor="rayOrigin: mouse;" raycaster="objects: .clickable"></a-entity>
         </a-entity>
       </a-scene>
 
-      {/* CAPA HTML (INTERFAZ) */}
       <div className="viewer-ui-overlay" style={{ pointerEvents: 'none' }}>
         
         <TooltipFlotante />
@@ -302,8 +284,10 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
             <div className={`carousel-item ${foto === 'auditorio-mayor.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('auditorio-mayor.jpg')} title="Auditorio Principal">
               <img loading="lazy" src="/assets/panoramas/auditorio-mayor.jpg" alt="Auditorio" onError={(e) => e.target.style.display = 'none'}/>
             </div>
-            <div className={`carousel-item ${foto === 'lab-software.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('lab-software.jpg')} title="Laboratorios">
-              <img loading="lazy" src="/assets/panoramas/thumb-software.jpg" alt="Tech" onError={(e) => e.target.style.display = 'none'}/>
+            
+            {/* 🔴 REEMPLAZO: 'Parque Metropolitano' en lugar de 'Laboratorios' (Sigue siendo el último slot) */}
+            <div className={`carousel-item ${foto === 'parque.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('parque.jpg')} title="Parque Metropolitano">
+              <img loading="lazy" src="/assets/panoramas/exterior-parque.jpg" alt="Parque" onError={(e) => e.target.style.display = 'none'}/>
             </div>
           </div>
 
