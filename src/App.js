@@ -5,7 +5,6 @@ import ChatBot from './components/ChatBot';
 import { Sun, Volume2, Maximize, Play, Pause, MapPin, Info, Target, Compass, Trophy, Star, Home, Smartphone, ChevronUp, ChevronDown } from 'lucide-react';
 import './styles/App.css';
 
-// 🔴 ENLACES DE GOOGLE MAPS EMBEBIDOS
 const enlaceSanFernando = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco";
 const enlaceParqueMetropolitano = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco"; 
 const enlaceUnimetaTech = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7938.832908522663!2d-73.63390566206988!3d4.145896234876116!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2de42f7bd1cd%3A0x52170e5bb949f588!2sCorporaci%C3%B3n%20Universitaria%20del%20Meta%20-%20UNIMETA!5e0!3m2!1ses!2sco!4v1780778060746!5m2!1ses!2sco"; 
@@ -22,14 +21,16 @@ const datosSedes = {
   'gimnasio-piso2.jpg': { nombre: 'Gimnasio - Piso 2', categoria: 'Bienestar', descripcion: 'Segundo nivel. Zona dedicada a ejercicios cardiovasculares, aeróbicos y clases grupales.', vistaExterior: '/assets/panoramas/exterior-gimnasio.jpg', mapaUrl: enlaceSanFernando },
   
   'biblioteca.jpg': { nombre: 'Biblioteca', categoria: 'Académico', descripcion: 'Espacio para el aprendizaje, investigación y consulta de recursos en alta resolución.', vistaExterior: '/assets/panoramas/exterior-biblioteca.jpg', mapaUrl: enlaceSanFernando },
-  'decanaturas.jpg': { nombre: 'Decanaturas', categoria: 'Administrativo', descripcion: 'Oficinas de atención y gestión de las diferentes facultades.', vistaExterior: '/assets/panoramas/exterior-decanaturas.jpg', mapaUrl: enlaceSanFernando },
   
-  // 🔴 NUEVOS: LOS AUDITORIOS DISTRIBUIDOS
+  // 🔴 REEMPLAZO DEFINITIVO: SALA DE RADIO
+  'sala-radio.jpg': { nombre: 'Sala de Radio', categoria: 'Comunicaciones', descripcion: 'Estudio de radiodifusión equipado con tecnología profesional para prácticas de comunicación y periodismo.', vistaExterior: '/assets/panoramas/exterior-radio.jpg', mapaUrl: enlaceSanFernando },
+  
+  // AUDITORIOS DISTRIBUIDOS
   'auditorio-mayor.jpg': { nombre: 'Auditorio Principal (Aula Magna)', categoria: 'Auditorios', descripcion: 'Espacio de gran capacidad destinado a ceremonias solemnes, conferencias magistrales y actos culturales centrales.', vistaExterior: '/assets/panoramas/exterior-auditorio-mayor.jpg', mapaUrl: enlaceSanFernando },
   'auditorio-bloquea.jpg': { nombre: 'Auditorio Bloque A', categoria: 'Auditorios', descripcion: 'Auditorio alterno equipado con sistemas de proyección acústica para ponencias y eventos de facultades.', vistaExterior: '/assets/panoramas/exterior-auditorio-a.jpg', mapaUrl: enlaceSanFernando },
-  'auditorio-juridico.jpg': { nombre: 'Auditorio de Ciencias Jurídicas', categoria: 'Auditorios', descripcion: 'Sala especializada de conferencias y debates adscrita a la facultad de Derecho y Ciencias Sociales.', vistaExterior: '/assets/panoramas/exterior-auditorio-juridico.jpg', mapaUrl: enlaceSanFernando },
+  'auditorio-juridico.jpg': { nombre: 'Auditorio de Ciencias Jurídicas', categoria: 'Auditorios', descripcion: 'Sala especializada de conferencias and debates adscrita a la facultad de Derecho y Ciencias Sociales.', vistaExterior: '/assets/panoramas/exterior-auditorio-juridico.jpg', mapaUrl: enlaceSanFernando },
 
-  // --- LABORATORIOS (Sede San Fernando / Unimeta Tech) ---
+  // --- LABORATORIOS ---
   'lab-fisica.jpg': { nombre: 'Laboratorio de Física', categoria: 'Laboratorios', descripcion: 'Espacio equipado para prácticas de física experimental.', vistaExterior: '/assets/panoramas/thumb-fisica.jpg', mapaUrl: enlaceSanFernando },
   'lab-redes.jpg': { nombre: 'Laboratorio de Redes', categoria: 'Laboratorios', descripcion: 'Infraestructura y equipos para conectividad y redes CISCO.', vistaExterior: '/assets/panoramas/thumb-redes.jpg', mapaUrl: enlaceSanFernando },
   'lab-software.jpg': { nombre: 'Laboratorio de Software', categoria: 'Laboratorios', descripcion: 'Salas de cómputo especializadas para desarrollo y programación.', vistaExterior: '/assets/panoramas/thumb-software.jpg', mapaUrl: enlaceSanFernando },
@@ -42,7 +43,7 @@ const datosSedes = {
   'lab-topografia.jpg': { nombre: 'Laboratorio de Topografía', categoria: 'Laboratorios', descripcion: 'Equipos de medición, teodolitos y estaciones totales.', vistaExterior: '/assets/panoramas/thumb-topografia.jpg', mapaUrl: enlaceSanFernando },
   'lab-pavimentos.jpg': { nombre: 'Laboratorio de Pavimentos', categoria: 'Laboratorios', descripcion: 'Análisis y diseño de mezclas asfálticas y estructuras viales.', vistaExterior: '/assets/panoramas/thumb-pavimentos.jpg', mapaUrl: enlaceSanFernando },
   'lab-idiomas.jpg': { nombre: 'Laboratorio de Idiomas', categoria: 'Laboratorios', descripcion: 'Prácticas de listening y speaking con software especializado.', vistaExterior: '/assets/panoramas/thumb-idiomas.jpg', mapaUrl: enlaceSanFernando },
-  'lab-sistemas.jpg': { nombre: 'Centro de Cómputo', categoria: 'Laboratorios', descripcion: 'Salas informáticas de acceso general para estudiantes.', vistaExterior: '/assets/panoramas/thumb-sistemas.jpg', mapaUrl: enlaceSanFernando },
+  'lab-sistemas.jpg': { nombre: 'Centro de Cómputo', archivo: 'lab-sistemas.jpg' },
   'lab-quimica.jpg': { nombre: 'Laboratorio de Química', categoria: 'Laboratorios', descripcion: 'Espacio para prácticas y reacciones químicas controladas.', vistaExterior: '/assets/panoramas/thumb-quimica.jpg', mapaUrl: enlaceSanFernando },
   'lab-biologia.jpg': { nombre: 'Laboratorio de Biología', categoria: 'Laboratorios', descripcion: 'Microscopía y estudio de ecosistemas y microorganismos.', vistaExterior: '/assets/panoramas/thumb-biologia.jpg', mapaUrl: enlaceSanFernando },
 
@@ -160,14 +161,16 @@ function App() {
                 <div className="info-card">
                   <div className="card-header"><h3><MapPin size={16} /> Mapa del campus</h3></div>
                   <div className="mapa-contenedor">
-                    <iframe width="100%" height="100%" frameBorder="0" scrolling="no" src={infoSede.mapaUrl} title="Mapa"></iframe>
+                    {/* ⚡ OPTIMIZACIÓN: Carga diferida en iframe */}
+                    <iframe loading="lazy" width="100%" height="100%" frameBorder="0" scrolling="no" src={infoSede.mapaUrl} title="Mapa"></iframe>
                   </div>
                 </div>
 
                 <div className="info-card">
                   <div className="card-header"><h3><Info size={16} /> Información del lugar</h3></div>
                   <div className="card-content-flex">
-                    <img src={infoSede.vistaExterior} alt="Exterior" className="thumb-info" onError={(e) => e.target.src = '/assets/panoramas/mapa-unimeta.png'} />
+                    {/* ⚡ OPTIMIZACIÓN: Carga diferida en imagen descriptiva */}
+                    <img loading="lazy" src={infoSede.vistaExterior} alt="Exterior" className="thumb-info" onError={(e) => e.target.src = '/assets/panoramas/mapa-unimeta.png'} />
                     <div className="text-info">
                       <h4>{infoSede.nombre}</h4>
                       <span className="tag">{infoSede.categoria}</span>

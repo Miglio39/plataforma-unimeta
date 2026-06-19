@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { 
   Presentation, Scale, Gavel, Dumbbell, 
-  Library, FlaskConical, Mic, Briefcase, 
+  Library, FlaskConical, Mic, Radio, 
   TreePine, MonitorPlay, Home, ChevronRight, ChevronDown 
 } from 'lucide-react';
 
 const Sidebar = ({ setEscenaActual, escenaActual }) => {
 
-  // Estados independientes para controlar cada menú desplegable
   const [labsOpen, setLabsOpen] = useState(false);
   const [auditoriosOpen, setAuditoriosOpen] = useState(false);
 
@@ -15,7 +14,6 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
     { nombre: 'Inicio (Vista Dron)', archivo: 'inicio.jpg', icono: <Home size={18} /> }
   ];
 
-  // ARRAY DE LOS 15 LABORATORIOS
   const listaLaboratorios = [
     { nombre: 'Lab. de Física', archivo: 'lab-fisica.jpg' },
     { nombre: 'Lab. de Redes', archivo: 'lab-redes.jpg' },
@@ -34,7 +32,6 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
     { nombre: 'Lab. de Biología', archivo: 'lab-biologia.jpg' }
   ];
 
-  // 🔴 NUEVO ARRAY CON LOS DIFERENTES AUDITORIOS
   const listaAuditorios = [
     { nombre: 'Auditorio Principal', archivo: 'auditorio-mayor.jpg' },
     { nombre: 'Auditorio Bloque A', archivo: 'auditorio-bloquea.jpg' },
@@ -48,7 +45,9 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
     { nombre: 'Gimnasio', archivo: 'gimnasio.jpg', icono: <Dumbbell size={18} /> },
     { nombre: 'Biblioteca', archivo: 'biblioteca.jpg', icono: <Library size={18} /> },
     
-    // ACORDEÓN 1: LABORATORIOS
+    // 🔴 REEMPLAZO LOGRADO: SALA DE RADIO CON ÍCONO DE MICROFONO DE EMISORA
+    { nombre: 'Sala de Radio', archivo: 'sala-radio.jpg', icono: <Radio size={18} /> },
+    
     { 
       esSubmenu: true, 
       identificador: 'labs',
@@ -57,16 +56,13 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
       subItems: listaLaboratorios 
     },
     
-    // 🔴 ACORDEÓN 2: AUDITORIOS (Actualizado de botón plano a menú desplegable)
     { 
       esSubmenu: true, 
       identificador: 'auditorios',
       nombre: 'Auditorios y Conferencias', 
       icono: <Mic size={18} />, 
       subItems: listaAuditorios 
-    },
-    
-    { nombre: 'Decanaturas', archivo: 'decanaturas.jpg', icono: <Briefcase size={18} /> }
+    }
   ];
 
   const menuSedesExternas = [
@@ -76,7 +72,6 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
 
   const renderItem = (lugar, index) => {
     
-    // LÓGICA DINÁMICA PARA CUALQUIER ACORDEÓN DESPLEGABLE
     if (lugar.esSubmenu) {
       const esDeLabs = lugar.identificador === 'labs';
       const isOpen = esDeLabs ? labsOpen : auditoriosOpen;
@@ -117,7 +112,6 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
       );
     }
 
-    // Botones normales estándar
     return (
       <li 
         key={lugar.archivo} 

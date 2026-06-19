@@ -180,7 +180,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
               titulo="Gimnasio" onClick={() => setEscenaActual('gimnasio.jpg')} 
               distancia="A 18m" instruccion="Clic para entrar"
             />
-            {/* ENLAZADO DIRECTAMENTE AL AUDITORIO PRINCIPAL */}
             <Hotspot 
               tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#ea580c" 
               titulo="Auditorios" onClick={() => setEscenaActual('auditorio-mayor.jpg')} 
@@ -228,7 +227,8 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
         <div className="overlay-top">
           <div className="v-minimap pointer-auto" style={{ pointerEvents: 'auto' }}>
             <div className="v-minimap-body">
-              <img src="/assets/panoramas/mapa-unimeta1.png" alt="Radar" onError={(e) => e.target.style.background = '#1e293b'} />
+              {/* ⚡ OPTIMIZACIÓN: LAZY LOAD EN MAPA RADAR */}
+              <img loading="lazy" src="/assets/panoramas/mapa-unimeta1.png" alt="Radar" onError={(e) => e.target.style.background = '#1e293b'} />
               <div className="radar-sweep"></div>
               <div className="v-map-pin"><MapPin size={12} fill="#ef4444" color="white"/></div>
             </div>
@@ -245,21 +245,21 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           </div>
 
           <div className="v-carousel pointer-auto" style={{ pointerEvents: 'auto' }}>
+            {/* ⚡ OPTIMIZACIÓN: LAZY LOAD EN TODAS LAS MINIATURAS DEL CARRUSEL */}
             <div className={`carousel-item ${foto === 'inicio.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('inicio.jpg')} title="Inicio (Dron)">
-              <img src="/assets/panoramas/inicio.jpg" alt="Inicio" onError={(e) => e.target.style.display = 'none'}/>
+              <img loading="lazy" src="/assets/panoramas/inicio.jpg" alt="Inicio" onError={(e) => e.target.style.display = 'none'}/>
             </div>
             <div className={`carousel-item ${foto === 'biblioteca.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('biblioteca.jpg')} title="Biblioteca">
-              <img src="/assets/panoramas/biblioteca.jpg" alt="Biblio" onError={(e) => e.target.style.display = 'none'}/>
+              <img loading="lazy" src="/assets/panoramas/biblioteca.jpg" alt="Biblio" onError={(e) => e.target.style.display = 'none'}/>
             </div>
             <div className={`carousel-item ${foto === 'gimnasio.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('gimnasio.jpg')} title="Gimnasio Piso 1">
-              <img src="/assets/panoramas/gimnasio.jpg" alt="Gym P1" onError={(e) => e.target.style.display = 'none'}/>
+              <img loading="lazy" src="/assets/panoramas/gimnasio.jpg" alt="Gym P1" onError={(e) => e.target.style.display = 'none'}/>
             </div>
-            {/* CARUSEL: AHORA MUESTRA EL AUDITORIO PRINCIPAL */}
             <div className={`carousel-item ${foto === 'auditorio-mayor.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('auditorio-mayor.jpg')} title="Auditorio Principal">
-              <img src="/assets/panoramas/auditorio-mayor.jpg" alt="Auditorio" onError={(e) => e.target.style.display = 'none'}/>
+              <img loading="lazy" src="/assets/panoramas/auditorio-mayor.jpg" alt="Auditorio" onError={(e) => e.target.style.display = 'none'}/>
             </div>
             <div className={`carousel-item ${foto === 'lab-software.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('lab-software.jpg')} title="Laboratorios">
-              <img src="/assets/panoramas/thumb-software.jpg" alt="Tech" onError={(e) => e.target.style.display = 'none'}/>
+              <img loading="lazy" src="/assets/panoramas/thumb-software.jpg" alt="Tech" onError={(e) => e.target.style.display = 'none'}/>
             </div>
           </div>
 
