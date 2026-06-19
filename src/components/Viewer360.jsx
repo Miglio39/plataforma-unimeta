@@ -103,6 +103,11 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, 
 
 const Viewer360 = ({ foto, setEscenaActual }) => {
   const [infoEmergente, setInfoEmergente] = useState(null);
+  
+  // 🔴 ESTADO: Controla si la rotación automática está activada
+  const [isAutoRotating, setIsAutoRotating] = useState(true);
+
+  const sceneRef = useRef(null);
 
   const moverCamara = (direccion) => {
     const camara = document.querySelector('[camera]');
@@ -115,6 +120,11 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
       if (direccion === 'right') lookControls.yawObject.rotation.y -= velocidadGiro;
       if (direccion === 'up') lookControls.pitchObject.rotation.x += velocidadGiro;
       if (direccion === 'down') lookControls.pitchObject.rotation.x -= velocidadGiro;
+      
+      // 🔴 Detener rotación al usar controles manuales
+      if (isAutoRotating) {
+        setIsAutoRotating(false);
+      }
     }
   };
 
@@ -150,16 +160,47 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isAutoRotating]); // 🔴 Dependencia actualizada
+
+  // 🔴 EFECTO: Escucha la interacción del usuario en la escena
+  useEffect(() => {
+    const sceneEl = sceneRef.current;
+    if (!sceneEl) return;
+
+    const stopAutoRotate = () => {
+      if (isAutoRotating) {
+        console.log("Interacción detectada, deteniendo rotación automática.");
+        setIsAutoRotating(false);
+      }
+    };
+
+    // Escuchar mousedown (PC) y touchstart (Móvil)
+    sceneEl.addEventListener('mousedown', stopAutoRotate);
+    sceneEl.addEventListener('touchstart', stopAutoRotate);
+
+    return () => {
+      sceneEl.removeEventListener('mousedown', stopAutoRotate);
+      sceneEl.removeEventListener('touchstart', stopAutoRotate);
+    };
+  }, [isAutoRotating]);
 
   return (
     <div className="viewer-container">
       
       {/* CAPA 3D (A-FRAME) */}
-      <a-scene embedded vr-mode-ui="enabled: false" renderer="antialias: true; colorManagement: true; highResolution: true;" cursor="rayOrigin: mouse">
+      <a-scene 
+        ref={sceneRef} // 🔴 Referencia a la escena
+        embedded 
+        vr-mode-ui="enabled: false" 
+        renderer="antialias: true; colorManagement: true; highResolution: true;" 
+        cursor="rayOrigin: mouse"
+      >
         
-        {/* ENVOLTORIO DRON */}
-        <a-entity animation={foto === 'inicio.jpg' ? "property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 90000; easing: linear" : undefined}>
+        {/* ENVOLTORIO DRON CON ROTACIÓN CONDICIONAL */}
+        <a-entity 
+          // 🔴 Animación controlada por el estado React
+          animation={foto === 'inicio.jpg' ? `property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 90000; easing: linear; enabled: ${isAutoRotating}` : undefined}
+        >
           
           <a-sky src={`/assets/panoramas/${foto}`} color="#ffffff" rotation="0 -90 0"></a-sky>
 
@@ -206,7 +247,12 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           />
         </a-entity>
 
-        <a-entity camera look-controls="enabled: true; mouseEnabled: true" wasd-controls="enabled: false" position="0 0 0">
+        <a-entity 
+          camera 
+          look-controls="enabled: true; mouseEnabled: true" 
+          wasd-controls="enabled: false" 
+          position="0 0 0"
+        >
           <a-entity cursor="rayOrigin: mouse;" raycaster="objects: .clickable"></a-entity>
         </a-entity>
       </a-scene>
@@ -227,7 +273,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
         <div className="overlay-top">
           <div className="v-minimap pointer-auto" style={{ pointerEvents: 'auto' }}>
             <div className="v-minimap-body">
-              {/* ⚡ OPTIMIZACIÓN: LAZY LOAD EN MAPA RADAR */}
               <img loading="lazy" src="/assets/panoramas/mapa-unimeta1.png" alt="Radar" onError={(e) => e.target.style.background = '#1e293b'} />
               <div className="radar-sweep"></div>
               <div className="v-map-pin"><MapPin size={12} fill="#ef4444" color="white"/></div>
@@ -245,7 +290,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           </div>
 
           <div className="v-carousel pointer-auto" style={{ pointerEvents: 'auto' }}>
-            {/* ⚡ OPTIMIZACIÓN: LAZY LOAD EN TODAS LAS MINIATURAS DEL CARRUSEL */}
             <div className={`carousel-item ${foto === 'inicio.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('inicio.jpg')} title="Inicio (Dron)">
               <img loading="lazy" src="/assets/panoramas/inicio.jpg" alt="Inicio" onError={(e) => e.target.style.display = 'none'}/>
             </div>
