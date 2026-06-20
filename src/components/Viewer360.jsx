@@ -31,7 +31,7 @@ const TooltipFlotante = () => {
         {lugarHover.tipo === 'nav' ? <Landmark size={24} color="white"/> :
          lugarHover.tipo === 'back' ? <MapPin size={24} color="white"/> :
          lugarHover.tipo === 'info' ? <Info size={24} color="white"/> :
-         lugarHover.tipo === 'up' ? <ArrowUp size={24} color="white"/> : // 🔴 Ícono para tooltip
+         lugarHover.tipo === 'up' ? <ArrowUp size={24} color="white"/> : 
          <Play size={24} color="white"/>}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', flex: 1 }}>
@@ -56,7 +56,6 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, 
     info: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'/%3E%3C/svg%3E",
     media: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E",
     back: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/%3E%3C/svg%3E",
-    // 🔴 NUEVO ÍCONO: Flecha hacia arriba SVG
     up: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M12 2l-8 8h6v12h4v-12h6z'/%3E%3C/svg%3E"
   };
 
@@ -95,11 +94,12 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, 
       animation__mouseenter="property: scale; to: 0.55 0.55 0.55; dur: 200; easing: easeOutQuad; startEvents: mouseenter"
       animation__mouseleave="property: scale; to: 0.5 0.5 0.5; dur: 200; easing: easeOutQuad; startEvents: mouseleave"
     >
-      <a-circle radius="0.5" color="#000000" material="shader: flat; opacity: 0.4" position="0 0 -0.01" segments="64"></a-circle>
-      <a-circle radius="0.45" color={color} material="shader: flat; opacity: 0.95" segments="64"></a-circle>
-      <a-image src={iconoActual} position="0 0 0.01" width="0.45" height="0.45" material="shader: flat; transparent: true"></a-image>
-      <a-ring radius-inner="0.6" radius-outer="0.65" color="#ffffff" material="shader: flat; opacity: 0.8" segments="64"
-              animation="property: scale; to: 1.2 1.2 1.2; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-ring>
+      <a-circle radius="0.5" color="#0b0f19" material="shader: flat; opacity: 0.5; transparent: true" position="0 0 -0.01" segments="64"></a-circle>
+      <a-circle radius="0.45" color={color} material="shader: flat; opacity: 0.4; transparent: true" segments="64"></a-circle>
+      <a-ring radius-inner="0.44" radius-outer="0.46" color={color} material="shader: flat; opacity: 0.9; transparent: true" segments="64"></a-ring>
+      <a-image src={iconoActual} position="0 0 0.01" width="0.40" height="0.40" material="shader: flat; transparent: true"></a-image>
+      <a-ring radius-inner="0.55" radius-outer="0.58" color={color} material="shader: flat; opacity: 0.5; transparent: true" segments="64"
+              animation="property: scale; to: 1.15 1.15 1.15; dir: alternate; dur: 1200; loop: true; easing: easeInOutSine"></a-ring>
     </a-entity>
   );
 };
@@ -188,55 +188,38 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
         ref={sceneRef}
         embedded 
         vr-mode-ui="enabled: false" 
-        renderer="antialias: true; colorManagement: true; highResolution: true;" 
+        renderer="antialias: true; colorManagement: true;" 
         cursor="rayOrigin: mouse"
       >
         
+        {/* PRECARGA NATIVA DE A-FRAME (Latencia Cero) */}
+        <a-assets timeout="10000">
+          <img id="tex-inicio" src="/assets/panoramas/inicio.jpg" crossOrigin="anonymous" alt="Inicio" />
+          <img id="tex-biblioteca" src="/assets/panoramas/biblioteca.jpg" crossOrigin="anonymous" alt="Biblioteca" />
+          <img id="tex-gimnasio" src="/assets/panoramas/gimnasio.jpg" crossOrigin="anonymous" alt="Gimnasio" />
+          <img id="tex-auditorio" src="/assets/panoramas/auditorio-mayor.jpg" crossOrigin="anonymous" alt="Auditorio" />
+          <img id="tex-parque" src="/assets/panoramas/parque.jpg" crossOrigin="anonymous" alt="Parque" />
+        </a-assets>
+
         <a-entity 
           animation={foto === 'inicio.jpg' ? `property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 90000; easing: linear; enabled: ${isAutoRotating}` : undefined}
         >
-          
           <a-sky src={`/assets/panoramas/${foto}`} color="#ffffff" rotation="0 -90 0"></a-sky>
 
           <a-entity visible={foto === 'inicio.jpg'} position={foto === 'inicio.jpg' ? "0 0 0" : "0 -9999 0"}>
-            <Hotspot 
-              tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#9333ea" 
-              titulo="Biblioteca" onClick={() => setEscenaActual('biblioteca.jpg')} 
-              distancia="A 35m" instruccion="Clic para entrar" 
-            />
-            <Hotspot 
-              tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#10b981" 
-              titulo="Laboratorios" onClick={() => setEscenaActual('lab-software.jpg')} 
-              distancia="A 25m" instruccion="Clic para entrar"
-            />
-            <Hotspot 
-              tipo="nav" position="5 -1 2" rotation="0 -110 0" color="#f59e0b" 
-              titulo="Gimnasio" onClick={() => setEscenaActual('gimnasio.jpg')} 
-              distancia="A 18m" instruccion="Clic para entrar"
-            />
-            <Hotspot 
-              tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#ea580c" 
-              titulo="Auditorios" onClick={() => setEscenaActual('auditorio-mayor.jpg')} 
-              distancia="A 40m" instruccion="Clic para entrar"
-            />
+            <Hotspot tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#3b82f6" titulo="Biblioteca" onClick={() => setEscenaActual('biblioteca.jpg')} distancia="A 35m" instruccion="Clic para entrar" />
+            <Hotspot tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#3b82f6" titulo="Laboratorios" onClick={() => setEscenaActual('lab-software.jpg')} distancia="A 25m" instruccion="Clic para entrar"/>
+            <Hotspot tipo="nav" position="5 -1 2" rotation="0 -110 0" color="#9333ea" titulo="Gimnasio" onClick={() => setEscenaActual('gimnasio.jpg')} distancia="A 18m" instruccion="Clic para entrar"/>
+            <Hotspot tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#3b82f6" titulo="Auditorios" onClick={() => setEscenaActual('auditorio-mayor.jpg')} distancia="A 40m" instruccion="Clic para entrar"/>
           </a-entity>
         </a-entity>
 
-        {/* 🔴 ESCENA: GIMNASIO PISO 1 (Modificada con Flecha Arriba) */}
         <a-entity visible={foto === 'gimnasio.jpg'} position={foto === 'gimnasio.jpg' ? "0 0 0" : "0 -9999 0"}>
           <Hotspot 
-            // Cambiado tipo a 'up' para usar el nuevo ícono
             tipo="up" 
-            
-            // 🔴 COORDENADAS ESPECÍFICAS (Ajustar según la imagen)
-            // position="X Y Z"
-            // X: Izquierda(-) / Derecha(+)
-            // Y: Abajo(-) / Arriba(+) -> Subido a 1.5 para estar "en el techo/escaleras"
-            // Z: Atrás(+) / Adelante(-)
-            position="0.5 -0.5 3" 
-            
-            rotation="0 190 0"
-            color="#67D75C" // Cambiado a verde para indicar "subida"
+            position="-3 1.5 4" 
+            rotation="0 150 0" 
+            color="#3b82f6" 
             titulo="Subir al Segundo Piso" 
             onClick={() => setEscenaActual('gimnasio-piso2.jpg')} 
             distancia="Escaleras" 
@@ -246,8 +229,8 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
 
         <a-entity visible={foto === 'gimnasio-piso2.jpg'} position={foto === 'gimnasio-piso2.jpg' ? "0 0 0" : "0 -9999 0"}>
           <Hotspot 
-            tipo="back"  position="0.8 -0.5 4"             
-            rotation="1 190 88" color="#F35377" 
+            tipo="back" position="-3 -1 4" rotation="0 150 0" 
+            color="#ef4444" 
             titulo="Bajar al Primer Piso" onClick={() => setEscenaActual('gimnasio.jpg')} 
             distancia="Escaleras" instruccion="Clic para bajar" 
           />
@@ -280,7 +263,8 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           </div>
         </div>
 
-        <div className="overlay-bottom">
+        {/* 🔴 INTERFAZ INFERIOR LIMPIA (Sin el carrusel de fotos) */}
+        <div className="overlay-bottom" style={{ justifyContent: 'flex-start' }}>
           <div className="v-controls pointer-auto" style={{ pointerEvents: 'auto' }}>
             <button className="ctrl-btn up" onClick={() => moverCamara('up')}><ChevronUp size={16} /></button>
             <button className="ctrl-btn left" onClick={() => moverCamara('left')}><ChevronLeft size={16} /></button>
@@ -288,28 +272,8 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
             <button className="ctrl-btn right" onClick={() => moverCamara('right')}><ChevronRight size={16} /></button>
             <button className="ctrl-btn down" onClick={() => moverCamara('down')}><ChevronDown size={16} /></button>
           </div>
-
-          <div className="v-carousel pointer-auto" style={{ pointerEvents: 'auto' }}>
-            <div className={`carousel-item ${foto === 'inicio.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('inicio.jpg')} title="Inicio (Dron)">
-              <img loading="lazy" src="/assets/panoramas/inicio.jpg" alt="Inicio" onError={(e) => e.target.style.display = 'none'}/>
-            </div>
-            <div className={`carousel-item ${foto === 'biblioteca.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('biblioteca.jpg')} title="Biblioteca">
-              <img loading="lazy" src="/assets/panoramas/biblioteca.jpg" alt="Biblio" onError={(e) => e.target.style.display = 'none'}/>
-            </div>
-            <div className={`carousel-item ${foto === 'gimnasio.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('gimnasio.jpg')} title="Gimnasio Piso 1">
-              <img loading="lazy" src="/assets/panoramas/gimnasio.jpg" alt="Gym P1" onError={(e) => e.target.style.display = 'none'}/>
-            </div>
-            <div className={`carousel-item ${foto === 'auditorio-mayor.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('auditorio-mayor.jpg')} title="Auditorio Principal">
-              <img loading="lazy" src="/assets/panoramas/auditorio-mayor.jpg" alt="Auditorio" onError={(e) => e.target.style.display = 'none'}/>
-            </div>
-            <div className={`carousel-item ${foto === 'lab-software.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('lab-software.jpg')} title="Laboratorios">
-              <img loading="lazy" src="/assets/panoramas/thumb-software.jpg" alt="Tech" onError={(e) => e.target.style.display = 'none'}/>
-            </div>
-          </div>
-
-          <div style={{ width: '70px', height: '70px' }}></div>
-          
         </div>
+        
       </div>
     </div>
   );
