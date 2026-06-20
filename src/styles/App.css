@@ -328,6 +328,8 @@ ul { list-style: none; }
     z-index: 99999 !important;
   }
 
+  
+
   .chatbot-toggle-btn { width: 45px !important; height: 45px !important; bottom: 20px !important; right: 10px !important; }
   .chatbot-toggle-img { width: 35px !important; height: 35px !important; }
 

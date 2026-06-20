@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X, Play, MapPin, Info, Landmark } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X, Play, MapPin, Info, Landmark, ArrowUp } from 'lucide-react';
 import 'aframe';
 
 const TooltipFlotante = () => {
@@ -31,6 +31,7 @@ const TooltipFlotante = () => {
         {lugarHover.tipo === 'nav' ? <Landmark size={24} color="white"/> :
          lugarHover.tipo === 'back' ? <MapPin size={24} color="white"/> :
          lugarHover.tipo === 'info' ? <Info size={24} color="white"/> :
+         lugarHover.tipo === 'up' ? <ArrowUp size={24} color="white"/> : // 🔴 Ícono para tooltip
          <Play size={24} color="white"/>}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', flex: 1 }}>
@@ -54,7 +55,9 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, 
     nav: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
     info: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'/%3E%3C/svg%3E",
     media: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E",
-    back: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/%3E%3C/svg%3E"
+    back: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/%3E%3C/svg%3E",
+    // 🔴 NUEVO ÍCONO: Flecha hacia arriba SVG
+    up: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M12 2l-8 8h6v12h4v-12h6z'/%3E%3C/svg%3E"
   };
 
   const iconoActual = iconosRaw[tipo] || iconosRaw.nav;
@@ -219,17 +222,32 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           </a-entity>
         </a-entity>
 
+        {/* 🔴 ESCENA: GIMNASIO PISO 1 (Modificada con Flecha Arriba) */}
         <a-entity visible={foto === 'gimnasio.jpg'} position={foto === 'gimnasio.jpg' ? "0 0 0" : "0 -9999 0"}>
           <Hotspot 
-            tipo="nav" position="3 -0.5 -4" rotation="0 -30 0" color="#3b82f6" 
-            titulo="Subir al Segundo Piso" onClick={() => setEscenaActual('gimnasio-piso2.jpg')} 
-            distancia="Escaleras" instruccion="Clic para subir" 
+            // Cambiado tipo a 'up' para usar el nuevo ícono
+            tipo="up" 
+            
+            // 🔴 COORDENADAS ESPECÍFICAS (Ajustar según la imagen)
+            // position="X Y Z"
+            // X: Izquierda(-) / Derecha(+)
+            // Y: Abajo(-) / Arriba(+) -> Subido a 1.5 para estar "en el techo/escaleras"
+            // Z: Atrás(+) / Adelante(-)
+            position="0.5 -0.5 3" 
+            
+            rotation="0 190 0"
+            color="#67D75C" // Cambiado a verde para indicar "subida"
+            titulo="Subir al Segundo Piso" 
+            onClick={() => setEscenaActual('gimnasio-piso2.jpg')} 
+            distancia="Escaleras" 
+            instruccion="Clic para subir" 
           />
         </a-entity>
 
         <a-entity visible={foto === 'gimnasio-piso2.jpg'} position={foto === 'gimnasio-piso2.jpg' ? "0 0 0" : "0 -9999 0"}>
           <Hotspot 
-            tipo="back" position="-3 -1 4" rotation="0 150 0" color="#ef4444" 
+            tipo="back"  position="0.8 -0.5 4"             
+            rotation="1 190 88" color="#F35377" 
             titulo="Bajar al Primer Piso" onClick={() => setEscenaActual('gimnasio.jpg')} 
             distancia="Escaleras" instruccion="Clic para bajar" 
           />
@@ -284,10 +302,8 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
             <div className={`carousel-item ${foto === 'auditorio-mayor.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('auditorio-mayor.jpg')} title="Auditorio Principal">
               <img loading="lazy" src="/assets/panoramas/auditorio-mayor.jpg" alt="Auditorio" onError={(e) => e.target.style.display = 'none'}/>
             </div>
-            
-            {/* 🔴 REEMPLAZO: 'Parque ect Metropolitano' en lugar de 'Laboratorios' (Sigue siendo el último slot) */}
-            <div className={`carousel-item ${foto === 'parque.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('parque.jpg')} title="Parque Metropolitano">
-              <img loading="lazy" src="/assets/panoramas/exterior-parque.jpg" alt="Parque" onError={(e) => e.target.style.display = 'none'}/>
+            <div className={`carousel-item ${foto === 'lab-software.jpg' ? 'active' : ''}`} onClick={() => setEscenaActual('lab-software.jpg')} title="Laboratorios">
+              <img loading="lazy" src="/assets/panoramas/thumb-software.jpg" alt="Tech" onError={(e) => e.target.style.display = 'none'}/>
             </div>
           </div>
 
