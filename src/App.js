@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Viewer360 from './components/Viewer360';
 import ChatBot from './components/ChatBot';
-import { Maximize, Play, Pause, MapPin, Info, Home, Smartphone, ChevronUp, ChevronDown, BookOpen, Clock, Mail, Phone } from 'lucide-react';
+import { Maximize, Play, Pause, MapPin, Info, Home, Smartphone, ChevronUp, ChevronDown, BookOpen, Clock, Mail } from 'lucide-react';
 import './styles/App.css';
 
 // 🔴 ENLACES DE GOOGLE MAPS ACTUALIZADOS
@@ -22,7 +22,7 @@ const datosSedes = {
   'sala-radio.jpg': { nombre: 'Sala de Radio', categoria: 'Comunicaciones', descripcion: 'Estudio de radiodifusión equipado con tecnología profesional para prácticas de comunicación y periodismo.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
   'auditorio-mayor.jpg': { nombre: 'Auditorio Principal (Aula Magna)', categoria: 'Auditorios', descripcion: 'Espacio de gran capacidad destinado a ceremonias solemnes, conferencias magistrales y actos culturales centrales.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
   'auditorio-bloquea.jpg': { nombre: 'Auditorio Bloque A', categoria: 'Auditorios', descripcion: 'Auditorio alterno equipado con sistemas de proyección acústica para ponencias y eventos de facultades.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
-  'auditorio-juridico.jpg': { nombre: 'Auditorio de Ciencias Jurídicas', categoria: 'Auditorios', descripcion: 'Sala especializada de conferencias y debates adscrita a la facultad de Derecho y Ciencias Sociales.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
+  'auditorio-juridico.jpg': { nombre: 'Auditorio de Ciencias Jurídicas', categoria: 'Auditorios', descripcion: 'Sala especializada de conferencias and debates adscrita a la facultad de Derecho y Ciencias Sociales.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
   
   // --- LABORATORIOS (Ubicados dentro del Campus San Fernando) ---
   'lab-fisica.jpg': { nombre: 'Laboratorio de Física', categoria: 'Laboratorios', descripcion: 'Espacio equipado para prácticas de física experimental.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
@@ -41,32 +41,32 @@ const datosSedes = {
   'lab-quimica.jpg': { nombre: 'Laboratorio de Química', categoria: 'Laboratorios', descripcion: 'Espacio para prácticas y reacciones químicas controladas.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
   'lab-biologia.jpg': { nombre: 'Laboratorio de Biología', categoria: 'Laboratorios', descripcion: 'Microscopía y estudio de ecosistemas y microorganismos.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
 
-  // --- SEDES EXTERNAS (Usan sus respectivos mapas) ---
-  'parque.jpg': { nombre: 'Parque Metropolitano', categoria: 'Zonas Externas', descripcion: 'Amplias zonas verdes para el esparcimiento y bienestar universitario.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano }, // 🔴 Corregido a su propio mapa
+  // --- SEDES EXTERNAS ---
+  'parque.jpg': { nombre: 'Parque Metropolitano', categoria: 'Zonas Externas', descripcion: 'Amplias zonas verdes para el esparcimiento y bienestar universitario.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano },
   'unimeta-tech.jpg': { nombre: 'Unimeta Tech', categoria: 'Tecnología', descripcion: 'Centro de innovación tecnológica con laboratorios de sistemas e ingeniería.', vistaExterior: '/assets/panoramas/exterior-unimeta-tech.jpg', mapaUrl: enlaceUnimetaTech }
 };
 
 const obtenerDirectorio = (escena) => {
   const directorio = {
-    'paraninfo.jpg': { encargado: 'Eventos Institucionales', horario: '8:00 a.m. - 6:00 p.m.', email: 'eventos@unimeta.edu.co', ext: '101' },
-    'consultorio.jpg': { encargado: 'Facultad de Derecho', horario: '8:00 a.m. - 12:00 p.m. / 2:00 p.m. - 5:00 p.m.', email: 'consultorio@unimeta.edu.co', ext: '102' },
-    'audiencias.jpg': { encargado: 'Prácticas Jurídicas', horario: '8:00 a.m. - 5:00 p.m.', email: 'derecho@unimeta.edu.co', ext: '103' },
-    'biblioteca.jpg': { encargado: 'Dirección de Biblioteca', horario: '7:00 a.m. - 9:00 p.m. (L-V)', email: 'biblioteca@unimeta.edu.co', ext: '104' },
-    'gimnasio.jpg': { encargado: 'Bienestar Universitario', horario: '6:00 a.m. - 9:00 p.m.', email: 'bienestar@unimeta.edu.co', ext: '105' },
-    'gimnasio-piso2.jpg': { encargado: 'Bienestar Universitario', horario: '6:00 a.m. - 9:00 p.m.', email: 'bienestar@unimeta.edu.co', ext: '105' },
-    'sala-radio.jpg': { encargado: 'Comunicaciones y Periodismo', horario: '8:00 a.m. - 6:00 p.m.', email: 'radio@unimeta.edu.co', ext: '106' },
+    'paraninfo.jpg': { horario: '8:00 a.m. - 6:00 p.m.', email: 'eventos@unimeta.edu.co' },
+    'consultorio.jpg': { horario: '8:00 a.m. - 12:00 p.m. / 2:00 p.m. - 5:00 p.m.', email: 'consultorio@unimeta.edu.co' },
+    'audiencias.jpg': { horario: '8:00 a.m. - 5:00 p.m.', email: 'derecho@unimeta.edu.co' },
+    'biblioteca.jpg': { horario: '7:00 a.m. - 9:00 p.m. (L-V)', email: 'biblioteca@unimeta.edu.co' },
+    'gimnasio.jpg': { horario: '6:00 a.m. - 9:00 p.m.', email: 'bienestar@unimeta.edu.co' },
+    'gimnasio-piso2.jpg': { horario: '6:00 a.m. - 9:00 p.m.', email: 'bienestar@unimeta.edu.co' },
+    'sala-radio.jpg': { horario: '8:00 a.m. - 6:00 p.m.', email: 'radio@unimeta.edu.co' },
   };
 
   if (directorio[escena]) return directorio[escena];
   
   if (escena.includes('lab-') || escena.includes('tech')) {
-     return { encargado: 'Coordinación de Laboratorios', horario: '7:00 a.m. - 8:00 p.m.', email: 'laboratorios@unimeta.edu.co', ext: '201' };
+     return { horario: '7:00 a.m. - 8:00 p.m.', email: 'laboratorios@unimeta.edu.co' };
   }
   if (escena.includes('auditorio')) {
-     return { encargado: 'Coordinación Académica', horario: '8:00 a.m. - 6:00 p.m.', email: 'auditorios@unimeta.edu.co', ext: '202' };
+     return { horario: '8:00 a.m. - 6:00 p.m.', email: 'auditorios@unimeta.edu.co' };
   }
   
-  return { encargado: 'Atención al Estudiante', horario: '8:00 a.m. - 6:00 p.m.', email: 'info@unimeta.edu.co', ext: '100' };
+  return { horario: '8:00 a.m. - 6:00 p.m.', email: 'info@unimeta.edu.co' };
 };
 
 function App() {
@@ -157,7 +157,6 @@ function App() {
                 <div className="info-card">
                   <div className="card-header"><h3><MapPin size={16} /> Mapa del campus</h3></div>
                   <div className="mapa-contenedor">
-                    {/* 🔴 Aquí el iframe dinámico ahora lee correctamente el mapa de la sede actual */}
                     <iframe loading="lazy" width="100%" height="100%" frameBorder="0" scrolling="no" src={infoSede.mapaUrl} title="Mapa"></iframe>
                   </div>
                 </div>
@@ -175,39 +174,34 @@ function App() {
                   </div>
                 </div>
 
+                {/* 🔴 MÓDULO ULTRA OPTIMIZADO: Solo Horario y Correo alineados horizontalmente, sin scroll */}
                 <div className="info-card">
-                  <div className="card-header"><h3><BookOpen size={16} /> Directorio de Contacto</h3></div>
-                  <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: '14px', flex: 1, overflow: 'auto' }}>
+                  <div className="card-header"><h3><BookOpen size={15} /> Directorio de Contacto</h3></div>
+                  <div style={{ 
+                    padding: '12px 14px', 
+                    display: 'grid', 
+                    gridTemplateColumns: '1fr', /* Una sola columna vertical para dar ancho máximo a los textos */
+                    gap: '16px', /* Mayor separación para que se vea ordenado y respire */
+                    flex: 1, 
+                    justifyContent: 'center',
+                    overflow: 'hidden' 
+                  }}>
                     
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                       <div style={{ background: 'rgba(59, 130, 246, 0.15)', padding: '8px', borderRadius: '50%' }}><Info size={16} color="#3b82f6"/></div>
-                       <div>
-                          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Dependencia</p>
-                          <p style={{ fontSize: '0.85rem', color: 'white', margin: '2px 0 0 0', fontWeight: '600' }}>{dirInfo.encargado}</p>
+                    {/* Item 1: Horario */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
+                       <div style={{ background: 'rgba(16, 185, 129, 0.12)', padding: '8px', borderRadius: '50%', flexShrink: 0 }}><Clock size={15} color="#10b981"/></div>
+                       <div style={{ minWidth: 0, flex: 1 }}>
+                          <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Horario de Atención</p>
+                          <p style={{ fontSize: '0.78rem', color: 'white', margin: '2px 0 0 0', fontWeight: '600', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={dirInfo.horario}>{dirInfo.horario}</p>
                        </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                       <div style={{ background: 'rgba(16, 185, 129, 0.15)', padding: '8px', borderRadius: '50%' }}><Clock size={16} color="#10b981"/></div>
-                       <div>
-                          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Horario de Atención</p>
-                          <p style={{ fontSize: '0.85rem', color: 'white', margin: '2px 0 0 0', fontWeight: '600' }}>{dirInfo.horario}</p>
-                       </div>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                       <div style={{ background: 'rgba(245, 158, 11, 0.15)', padding: '8px', borderRadius: '50%' }}><Mail size={16} color="#f59e0b"/></div>
-                       <div>
-                          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Correo Electrónico</p>
-                          <p style={{ fontSize: '0.85rem', color: 'white', margin: '2px 0 0 0', fontWeight: '600' }}>{dirInfo.email}</p>
-                       </div>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                       <div style={{ background: 'rgba(168, 85, 247, 0.15)', padding: '8px', borderRadius: '50%' }}><Phone size={16} color="#a855f7"/></div>
-                       <div>
-                          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Línea Institucional</p>
-                          <p style={{ fontSize: '0.85rem', color: 'white', margin: '2px 0 0 0', fontWeight: '600' }}>PBX: 608 6818181 - Ext. {dirInfo.ext}</p>
+                    {/* Item 2: Correo */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
+                       <div style={{ background: 'rgba(245, 158, 11, 0.12)', padding: '8px', borderRadius: '50%', flexShrink: 0 }}><Mail size={15} color="#f59e0b"/></div>
+                       <div style={{ minWidth: 0, flex: 1 }}>
+                          <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Correo Electrónico</p>
+                          <p style={{ fontSize: '0.78rem', color: 'white', margin: '2px 0 0 0', fontWeight: '600', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={dirInfo.email}>{dirInfo.email}</p>
                        </div>
                     </div>
 
