@@ -42,7 +42,10 @@ const datosSedes = {
   'lab-biologia.jpg': { nombre: 'Laboratorio de Biología', categoria: 'Laboratorios', descripcion: 'Microscopía y estudio de ecosistemas y microorganismos.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
 
   // --- SEDES EXTERNAS ---
-  'parque.jpg': { nombre: 'Parque Metropolitano', categoria: 'Zonas Externas', descripcion: 'Amplias zonas verdes para el esparcimiento y bienestar universitario.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano },
+  // --- SEDES EXTERNAS ---
+  'parque.jpg': { nombre: 'Parque Metropolitano - Entrada', categoria: 'Zonas Externas', descripcion: 'Entrada principal y zonas verdes del parque.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano },
+  'parque-centro.jpg': { nombre: 'Parque Metropolitano - Zona Central', categoria: 'Zonas Externas', descripcion: 'Punto de encuentro central del parque.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano },
+  'parque-canchas.jpg': { nombre: 'Parque Metropolitano - Canchas', categoria: 'Zonas Externas', descripcion: 'Zona de esparcimiento deportivo.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano },
   'unimeta-tech.jpg': { nombre: 'Unimeta Tech', categoria: 'Tecnología', descripcion: 'Centro de innovación tecnológica con laboratorios de sistemas e ingeniería.', vistaExterior: '/assets/panoramas/exterior-unimeta-tech.jpg', mapaUrl: enlaceUnimetaTech }
 };
 

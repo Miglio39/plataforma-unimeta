@@ -107,7 +107,21 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, 
 const Viewer360 = ({ foto, setEscenaActual }) => {
   const [infoEmergente, setInfoEmergente] = useState(null);
   const [isAutoRotating, setIsAutoRotating] = useState(true);
+  const [fadeOpacity, setFadeOpacity] = useState(0); // 🔴 ESTADO DEL FUNDIDO
   const sceneRef = useRef(null);
+
+  // 🔴 FUNCIÓN PARA MANEJAR LA TRANSICIÓN SUAVE
+  const manejarCambioEscena = (nuevaEscena) => {
+    setFadeOpacity(1); // 1. Oscurece la pantalla
+
+    setTimeout(() => {
+      setEscenaActual(nuevaEscena); // 2. Cambia la foto mientras está oscuro
+      
+      setTimeout(() => {
+        setFadeOpacity(0); // 3. Aclara la pantalla suavemente después de cargar
+      }, 200); 
+    }, 400); // 400ms es el tiempo que tarda la animación CSS en ponerse negra
+  };
 
   const moverCamara = (direccion) => {
     const camara = document.querySelector('[camera]');
@@ -184,6 +198,18 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
   return (
     <div className="viewer-container">
       
+      {/* 🔴 TELÓN DE FUNDIDO (Capa negra animada) */}
+      <div 
+        style={{
+          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: '#000',
+          opacity: fadeOpacity,
+          transition: 'opacity 0.4s ease-in-out',
+          pointerEvents: 'none',
+          zIndex: 90
+        }}
+      />
+      
       <a-scene 
         ref={sceneRef}
         embedded 
@@ -192,13 +218,14 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
         cursor="rayOrigin: mouse"
       >
         
-        {/* PRECARGA NATIVA DE A-FRAME (Latencia Cero) */}
         <a-assets timeout="10000">
           <img id="tex-inicio" src="/assets/panoramas/inicio.jpg" crossOrigin="anonymous" alt="Inicio" />
           <img id="tex-biblioteca" src="/assets/panoramas/biblioteca.jpg" crossOrigin="anonymous" alt="Biblioteca" />
           <img id="tex-gimnasio" src="/assets/panoramas/gimnasio.jpg" crossOrigin="anonymous" alt="Gimnasio" />
           <img id="tex-auditorio" src="/assets/panoramas/auditorio-mayor.jpg" crossOrigin="anonymous" alt="Auditorio" />
           <img id="tex-parque" src="/assets/panoramas/parque.jpg" crossOrigin="anonymous" alt="Parque" />
+          <img id="tex-parque-centro" src="/assets/panoramas/parque-centro.jpg" crossOrigin="anonymous" alt="Parque Centro" />
+          <img id="tex-parque-canchas" src="/assets/panoramas/parque-canchas.jpg" crossOrigin="anonymous" alt="Parque Canchas" />
         </a-assets>
 
         <a-entity 
@@ -206,11 +233,12 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
         >
           <a-sky src={`/assets/panoramas/${foto}`} color="#ffffff" rotation="0 -90 0"></a-sky>
 
+          {/* 🔴 HOTSPOTS ACTUALIZADOS PARA USAR manejarCambioEscena() */}
           <a-entity visible={foto === 'inicio.jpg'} position={foto === 'inicio.jpg' ? "0 0 0" : "0 -9999 0"}>
-            <Hotspot tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#3b82f6" titulo="Biblioteca" onClick={() => setEscenaActual('biblioteca.jpg')} distancia="A 35m" instruccion="Clic para entrar" />
-            <Hotspot tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#3b82f6" titulo="Laboratorios" onClick={() => setEscenaActual('lab-software.jpg')} distancia="A 25m" instruccion="Clic para entrar"/>
-            <Hotspot tipo="nav" position="5 -1 2" rotation="0 -110 0" color="#9333ea" titulo="Gimnasio" onClick={() => setEscenaActual('gimnasio.jpg')} distancia="A 18m" instruccion="Clic para entrar"/>
-            <Hotspot tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#3b82f6" titulo="Auditorios" onClick={() => setEscenaActual('auditorio-mayor.jpg')} distancia="A 40m" instruccion="Clic para entrar"/>
+            <Hotspot tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#3b82f6" titulo="Biblioteca" onClick={() => manejarCambioEscena('biblioteca.jpg')} distancia="A 35m" instruccion="Clic para entrar" />
+            <Hotspot tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#3b82f6" titulo="Laboratorios" onClick={() => manejarCambioEscena('lab-software.jpg')} distancia="A 25m" instruccion="Clic para entrar"/>
+            <Hotspot tipo="nav" position="5 -1 2" rotation="0 -110 0" color="#9333ea" titulo="Gimnasio" onClick={() => manejarCambioEscena('gimnasio.jpg')} distancia="A 18m" instruccion="Clic para entrar"/>
+            <Hotspot tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#3b82f6" titulo="Auditorios" onClick={() => manejarCambioEscena('auditorio-mayor.jpg')} distancia="A 40m" instruccion="Clic para entrar"/>
           </a-entity>
         </a-entity>
 
@@ -221,7 +249,7 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
             rotation="0 150 0" 
             color="#3b82f6" 
             titulo="Subir al Segundo Piso" 
-            onClick={() => setEscenaActual('gimnasio-piso2.jpg')} 
+            onClick={() => manejarCambioEscena('gimnasio-piso2.jpg')} 
             distancia="Escaleras" 
             instruccion="Clic para subir" 
           />
@@ -231,8 +259,61 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           <Hotspot 
             tipo="back" position="-3 -1 4" rotation="0 150 0" 
             color="#ef4444" 
-            titulo="Bajar al Primer Piso" onClick={() => setEscenaActual('gimnasio.jpg')} 
+            titulo="Bajar al Primer Piso" onClick={() => manejarCambioEscena('gimnasio.jpg')} 
             distancia="Escaleras" instruccion="Clic para bajar" 
+          />
+        </a-entity>
+
+        {/* =========================================
+            RECORRIDO: PARQUE METROPOLITANO 
+           ========================================= */}
+
+        <a-entity visible={foto === 'parque.jpg'} position={foto === 'parque.jpg' ? "0 0 0" : "0 -9999 0"}>
+          <Hotspot 
+            tipo="nav" 
+            position="0 -1.5 -6" 
+            rotation="-90 0 0" 
+            color="#10b981" 
+            titulo="Zona Central" 
+            onClick={() => manejarCambioEscena('parque-centro.jpg')} 
+            distancia="A 15m" 
+            instruccion="Clic para avanzar" 
+          />
+        </a-entity>
+
+        <a-entity visible={foto === 'parque-centro.jpg'} position={foto === 'parque-centro.jpg' ? "0 0 0" : "0 -9999 0"}>
+          <Hotspot 
+            tipo="back" 
+            position="0 -1.5 6" 
+            rotation="-90 0 0" 
+            color="#ef4444" 
+            titulo="Entrada del Parque" 
+            onClick={() => manejarCambioEscena('parque.jpg')} 
+            distancia="A 15m" 
+            instruccion="Clic para retroceder" 
+          />
+          <Hotspot 
+            tipo="nav" 
+            position="-3 -1.5 -7" 
+            rotation="-90 0 0" 
+            color="#10b981" 
+            titulo="Canchas Deportivas" 
+            onClick={() => manejarCambioEscena('parque-canchas.jpg')} 
+            distancia="A 20m" 
+            instruccion="Clic para avanzar" 
+          />
+        </a-entity>
+
+        <a-entity visible={foto === 'parque-canchas.jpg'} position={foto === 'parque-canchas.jpg' ? "0 0 0" : "0 -9999 0"}>
+          <Hotspot 
+            tipo="back" 
+            position="3 -1.5 5" 
+            rotation="-90 0 0" 
+            color="#ef4444" 
+            titulo="Zona Central" 
+            onClick={() => manejarCambioEscena('parque-centro.jpg')} 
+            distancia="A 20m" 
+            instruccion="Clic para retroceder" 
           />
         </a-entity>
 
@@ -263,7 +344,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           </div>
         </div>
 
-        {/* 🔴 INTERFAZ INFERIOR LIMPIA (Sin el carrusel de fotos) */}
         <div className="overlay-bottom" style={{ justifyContent: 'flex-start' }}>
           <div className="v-controls pointer-auto" style={{ pointerEvents: 'auto' }}>
             <button className="ctrl-btn up" onClick={() => moverCamara('up')}><ChevronUp size={16} /></button>
