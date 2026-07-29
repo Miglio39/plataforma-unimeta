@@ -66,7 +66,7 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
   ];
 
   const menuSedesExternas = [
-    { nombre: 'Parque Metropolitano', archivo: 'parque.jpg', icono: <TreePine size={18} /> },
+    { nombre: 'Parque Metropolitano', archivo: 'parque-01.jpg', icono: <TreePine size={18} /> },
     { nombre: 'Unimeta Tech', archivo: 'unimeta-tech.jpg', icono: <MonitorPlay size={18} /> }
   ];
 

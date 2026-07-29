@@ -2,6 +2,66 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X, Play, MapPin, Info, Landmark, ArrowUp } from 'lucide-react';
 import 'aframe';
 
+// =======================================================
+// 🛠️ MODO DESARROLLADOR: BUSCADOR DE COORDENADAS
+// =======================================================
+if (typeof window !== 'undefined' && typeof window.AFRAME !== 'undefined' && !window.AFRAME.components['dev-logger']) {
+  window.AFRAME.registerComponent('dev-logger', {
+    init: function () {
+      this.el.addEventListener('click', (e) => {
+        if (e.detail.intersection) {
+          const p = e.detail.intersection.point;
+          const coordenadaExacta = `${p.x.toFixed(2)} -1.50 ${p.z.toFixed(2)}`;
+          
+          // 🔴 MAGIA: Copiado automático al portapapeles
+          navigator.clipboard.writeText(coordenadaExacta).then(() => {
+            alert(`✅ ¡Copiado con éxito!\n\nCoordenada: ${coordenadaExacta}\n\nYa puedes ir a tu código y presionar Ctrl+V (Pegar).`);
+          }).catch(err => {
+            prompt(`Hubo un bloqueo. Cópialo de aquí:`, coordenadaExacta);
+          });
+          
+          console.log("Coordenada copiada:", coordenadaExacta);
+        }
+      });
+    }
+  });
+}
+
+// =======================================================
+// 📍 MATRIZ LIMPIA: MAPEO DEL PARQUE METROPOLITANO
+// =======================================================
+// REGLA DE ORO AL REEMPLAZAR:
+// 🟢 posNext = Botón de Avanzar (Clic mirando hacia el frente)
+// 🔴 posPrev = Botón de Retroceder (Clic dándote la vuelta 180° hacia atrás)
+// 🚁 Para Dron: Pon Y positivo (ej. 2.50) y agrega -> rotNext: '0 0 0', tipoNext: 'up'
+
+const recorridoParque = [
+  { id: 'parque-01.jpg', next: 'parque-02.jpg', prev: null, posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: '' },
+  { id: 'parque-02.jpg', next: 'parque-03.jpg', prev: 'parque-01.jpg', posNext: '-7.14 -1.50 -3.03', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-03.jpg', next: 'parque-04.jpg', prev: 'parque-02.jpg', posNext: '6.22 -1.50 -2.05', posPrev: '1.10 -1.50 5.21', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-04.jpg', next: 'parque-05.jpg', prev: 'parque-03.jpg', posNext: '-5.65 -1.50 0.82', posPrev: '-8.28 -1.50 -4.05', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-05.jpg', next: 'parque-06.jpg', prev: 'parque-04.jpg', posNext: '-1.23 -1.50 5.01', posPrev: '-3.91 -1.50 1.25', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-06.jpg', next: 'parque-07.jpg', prev: 'parque-05.jpg', posNext: '9.69 -1.50 -2.29', posPrev: '-2.27 -1.50 -7.94', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-07.jpg', next: 'parque-12.jpg', prev: 'parque-06.jpg', posNext: '12.29 -1.50 -2.87', posPrev: '-8.50 -1.50 3.63', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-12.jpg', next: 'parque-13.jpg', prev: 'parque-07.jpg', posNext: '0.54 -1.50 -13.04', posPrev: '0.14 -1.50 12.80', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-13.jpg', next: 'parque-14.jpg', prev: 'parque-12.jpg', posNext: '0.89 -1.50 12.84', posPrev: '-0.33 -1.50 -9.64', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-14.jpg', next: 'parque-15.jpg', prev: 'parque-13.jpg', posNext: '6.35 -1.50 -6.69', posPrev: '-0.45 -1.50 7.49', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-15.jpg', next: 'parque-16.jpg', prev: 'parque-14.jpg', posNext: '-5.11 -1.50 0.26', posPrev: '-0.06 -1.50 -8.73', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-16.jpg', next: null, prev: 'parque-17.jpg', posNext: '0 -1.5 -6', posPrev: '-0.69 -1.50 4.53', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-17.jpg', next: 'parque-18.jpg', prev: 'parque-16.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-18.jpg', next: 'parque-19.jpg', prev: 'parque-17.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-19.jpg', next: 'parque-20.jpg', prev: 'parque-18.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-20.jpg', next: 'parque-21.jpg', prev: 'parque-19.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-21.jpg', next: 'parque-22.jpg', prev: 'parque-20.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-22.jpg', next: 'parque-23.jpg', prev: 'parque-21.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-23.jpg', next: 'parque-24.jpg', prev: 'parque-22.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-24.jpg', next: 'parque-25.jpg', prev: 'parque-23.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-25.jpg', next: 'parque-26.jpg', prev: 'parque-24.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-26.jpg', next: 'parque-27.jpg', prev: 'parque-25.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-27.jpg', next: 'parque-28.jpg', prev: 'parque-26.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-28.jpg', next: null, prev: 'parque-27.jpg', posNext: '0 -1.5 -6', posPrev: '0 -1.5 6', textNext: '', textPrev: 'Retroceder' }
+];
+
 const TooltipFlotante = () => {
   const [lugarHover, setLugarHover] = useState(null);
 
@@ -48,6 +108,7 @@ const TooltipFlotante = () => {
   );
 };
 
+// 🔴 COMPONENTE HOTSPOT MEJORADO (Más grande y visible)
 const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, instruccion }) => {
   const entityRef = useRef(null);
 
@@ -90,16 +151,16 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, 
       position={position}
       rotation={rotation}
       className="clickable"
-      scale="0.5 0.5 0.5" 
-      animation__mouseenter="property: scale; to: 0.55 0.55 0.55; dur: 200; easing: easeOutQuad; startEvents: mouseenter"
-      animation__mouseleave="property: scale; to: 0.5 0.5 0.5; dur: 200; easing: easeOutQuad; startEvents: mouseleave"
+      scale="1.5 1.5 1.5" 
+      animation__mouseenter="property: scale; to: 1.7 1.7 1.7; dur: 200; easing: easeOutQuad; startEvents: mouseenter"
+      animation__mouseleave="property: scale; to: 1.5 1.5 1.5; dur: 200; easing: easeOutQuad; startEvents: mouseleave"
     >
-      <a-circle radius="0.5" color="#0b0f19" material="shader: flat; opacity: 0.5; transparent: true" position="0 0 -0.01" segments="64"></a-circle>
-      <a-circle radius="0.45" color={color} material="shader: flat; opacity: 0.4; transparent: true" segments="64"></a-circle>
-      <a-ring radius-inner="0.44" radius-outer="0.46" color={color} material="shader: flat; opacity: 0.9; transparent: true" segments="64"></a-ring>
-      <a-image src={iconoActual} position="0 0 0.01" width="0.40" height="0.40" material="shader: flat; transparent: true"></a-image>
-      <a-ring radius-inner="0.55" radius-outer="0.58" color={color} material="shader: flat; opacity: 0.5; transparent: true" segments="64"
-              animation="property: scale; to: 1.15 1.15 1.15; dir: alternate; dur: 1200; loop: true; easing: easeInOutSine"></a-ring>
+      <a-circle radius="0.5" color="#0b0f19" material="shader: flat; opacity: 0.8; transparent: true" position="0 0 -0.01" segments="64"></a-circle>
+      <a-circle radius="0.45" color={color} material="shader: flat; opacity: 0.7; transparent: true" segments="64"></a-circle>
+      <a-ring radius-inner="0.42" radius-outer="0.48" color={color} material="shader: flat; opacity: 1; transparent: true" segments="64"></a-ring>
+      <a-image src={iconoActual} position="0 0 0.01" width="0.45" height="0.45" material="shader: flat; transparent: true"></a-image>
+      <a-ring radius-inner="0.55" radius-outer="0.65" color={color} material="shader: flat; opacity: 0.7; transparent: true" segments="64"
+              animation="property: scale; to: 1.25 1.25 1.25; dir: alternate; dur: 1200; loop: true; easing: easeInOutSine"></a-ring>
     </a-entity>
   );
 };
@@ -107,20 +168,17 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, distancia, 
 const Viewer360 = ({ foto, setEscenaActual }) => {
   const [infoEmergente, setInfoEmergente] = useState(null);
   const [isAutoRotating, setIsAutoRotating] = useState(true);
-  const [fadeOpacity, setFadeOpacity] = useState(0); // 🔴 ESTADO DEL FUNDIDO
+  const [fadeOpacity, setFadeOpacity] = useState(0); 
   const sceneRef = useRef(null);
 
-  // 🔴 FUNCIÓN PARA MANEJAR LA TRANSICIÓN SUAVE
   const manejarCambioEscena = (nuevaEscena) => {
-    setFadeOpacity(1); // 1. Oscurece la pantalla
-
+    setFadeOpacity(1); 
     setTimeout(() => {
-      setEscenaActual(nuevaEscena); // 2. Cambia la foto mientras está oscuro
-      
+      setEscenaActual(nuevaEscena); 
       setTimeout(() => {
-        setFadeOpacity(0); // 3. Aclara la pantalla suavemente después de cargar
+        setFadeOpacity(0); 
       }, 200); 
-    }, 400); // 400ms es el tiempo que tarda la animación CSS en ponerse negra
+    }, 400); 
   };
 
   const moverCamara = (direccion) => {
@@ -146,28 +204,11 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
       if (e.target.tagName.toLowerCase() === 'input' || e.target.tagName.toLowerCase() === 'textarea') return;
 
       switch(e.key) {
-        case 'ArrowUp':
-        case 'w':
-        case 'W':
-          moverCamara('up');
-          break;
-        case 'ArrowDown':
-        case 's':
-        case 'S':
-          moverCamara('down');
-          break;
-        case 'ArrowLeft':
-        case 'a':
-        case 'A':
-          moverCamara('left');
-          break;
-        case 'ArrowRight':
-        case 'd':
-        case 'D':
-          moverCamara('right');
-          break;
-        default:
-          break;
+        case 'ArrowUp': case 'w': case 'W': moverCamara('up'); break;
+        case 'ArrowDown': case 's': case 'S': moverCamara('down'); break;
+        case 'ArrowLeft': case 'a': case 'A': moverCamara('left'); break;
+        case 'ArrowRight': case 'd': case 'D': moverCamara('right'); break;
+        default: break;
       }
     };
 
@@ -181,7 +222,6 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
 
     const stopAutoRotate = () => {
       if (isAutoRotating) {
-        console.log("Interacción detectada, deteniendo rotación automática.");
         setIsAutoRotating(false);
       }
     };
@@ -198,7 +238,7 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
   return (
     <div className="viewer-container">
       
-      {/* 🔴 TELÓN DE FUNDIDO (Capa negra animada) */}
+      {/* TELÓN DE FUNDIDO */}
       <div 
         style={{
           position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
@@ -218,104 +258,104 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
         cursor="rayOrigin: mouse"
       >
         
+        {/* SUELO INVISIBLE MODO DESARROLLADOR */}
+        <a-plane 
+          dev-logger 
+          className="clickable" 
+          position="0 -1.5 0" 
+          rotation="-90 0 0" 
+          width="100" 
+          height="100" 
+          material="opacity: 0.0; transparent: true"
+        ></a-plane>
+
         <a-assets timeout="10000">
           <img id="tex-inicio" src="/assets/panoramas/inicio.jpg" crossOrigin="anonymous" alt="Inicio" />
           <img id="tex-biblioteca" src="/assets/panoramas/biblioteca.jpg" crossOrigin="anonymous" alt="Biblioteca" />
           <img id="tex-gimnasio" src="/assets/panoramas/gimnasio.jpg" crossOrigin="anonymous" alt="Gimnasio" />
           <img id="tex-auditorio" src="/assets/panoramas/auditorio-mayor.jpg" crossOrigin="anonymous" alt="Auditorio" />
-          <img id="tex-parque" src="/assets/panoramas/parque.jpg" crossOrigin="anonymous" alt="Parque" />
-          <img id="tex-parque-centro" src="/assets/panoramas/parque-centro.jpg" crossOrigin="anonymous" alt="Parque Centro" />
-          <img id="tex-parque-canchas" src="/assets/panoramas/parque-canchas.jpg" crossOrigin="anonymous" alt="Parque Canchas" />
+          
+          {/* Precarga de las imágenes */}
+          {recorridoParque.map(nodo => (
+            <img key={`asset-${nodo.id}`} id={`tex-${nodo.id}`} src={`/assets/panoramas/${nodo.id}`} crossOrigin="anonymous" alt={nodo.id} />
+          ))}
         </a-assets>
 
-        <a-entity 
-          animation={foto === 'inicio.jpg' ? `property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 90000; easing: linear; enabled: ${isAutoRotating}` : undefined}
-        >
-          <a-sky src={`/assets/panoramas/${foto}`} color="#ffffff" rotation="0 -90 0"></a-sky>
-
-          {/* 🔴 HOTSPOTS ACTUALIZADOS PARA USAR manejarCambioEscena() */}
-          <a-entity visible={foto === 'inicio.jpg'} position={foto === 'inicio.jpg' ? "0 0 0" : "0 -9999 0"}>
-            <Hotspot tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#3b82f6" titulo="Biblioteca" onClick={() => manejarCambioEscena('biblioteca.jpg')} distancia="A 35m" instruccion="Clic para entrar" />
-            <Hotspot tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#3b82f6" titulo="Laboratorios" onClick={() => manejarCambioEscena('lab-software.jpg')} distancia="A 25m" instruccion="Clic para entrar"/>
-            <Hotspot tipo="nav" position="5 -1 2" rotation="0 -110 0" color="#9333ea" titulo="Gimnasio" onClick={() => manejarCambioEscena('gimnasio.jpg')} distancia="A 18m" instruccion="Clic para entrar"/>
-            <Hotspot tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#3b82f6" titulo="Auditorios" onClick={() => manejarCambioEscena('auditorio-mayor.jpg')} distancia="A 40m" instruccion="Clic para entrar"/>
+        {/* =========================================
+            1. CIELO GIRATORIO (Solo pantalla de inicio)
+           ========================================= */}
+        {foto === 'inicio.jpg' && (
+          <a-entity animation={`property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 90000; easing: linear; enabled: ${isAutoRotating}`}>
+            <a-sky src="/assets/panoramas/inicio.jpg" color="#ffffff" rotation="0 -90 0"></a-sky>
+            
+            <a-entity position="0 0 0">
+              <Hotspot tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#3b82f6" titulo="Biblioteca" onClick={() => manejarCambioEscena('biblioteca.jpg')} distancia="A 35m" instruccion="Clic para entrar" />
+              <Hotspot tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#3b82f6" titulo="Laboratorios" onClick={() => manejarCambioEscena('lab-software.jpg')} distancia="A 25m" instruccion="Clic para entrar"/>
+              <Hotspot tipo="nav" position="5 -1 2" rotation="0 -110 0" color="#9333ea" titulo="Gimnasio" onClick={() => manejarCambioEscena('gimnasio.jpg')} distancia="A 18m" instruccion="Clic para entrar"/>
+              <Hotspot tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#3b82f6" titulo="Auditorios" onClick={() => manejarCambioEscena('auditorio-mayor.jpg')} distancia="A 40m" instruccion="Clic para entrar"/>
+            </a-entity>
           </a-entity>
-        </a-entity>
+        )}
+
+        {/* =========================================
+            2. CIELO FIJO (Para las fotos del recorrido)
+           ========================================= */}
+        {foto !== 'inicio.jpg' && (
+          <a-sky src={`/assets/panoramas/${foto}`} color="#ffffff" rotation="0 -90 0"></a-sky>
+        )}
 
         <a-entity visible={foto === 'gimnasio.jpg'} position={foto === 'gimnasio.jpg' ? "0 0 0" : "0 -9999 0"}>
           <Hotspot 
-            tipo="up" 
-            position="-3 1.5 4" 
-            rotation="0 150 0" 
-            color="#3b82f6" 
-            titulo="Subir al Segundo Piso" 
-            onClick={() => manejarCambioEscena('gimnasio-piso2.jpg')} 
-            distancia="Escaleras" 
-            instruccion="Clic para subir" 
+            tipo="up" position="-3 1.5 4" rotation="0 150 0" color="#3b82f6" 
+            titulo="Subir al Segundo Piso" onClick={() => manejarCambioEscena('gimnasio-piso2.jpg')} 
+            distancia="Escaleras" instruccion="Clic para subir" 
           />
         </a-entity>
 
         <a-entity visible={foto === 'gimnasio-piso2.jpg'} position={foto === 'gimnasio-piso2.jpg' ? "0 0 0" : "0 -9999 0"}>
           <Hotspot 
-            tipo="back" position="-3 -1 4" rotation="0 150 0" 
-            color="#ef4444" 
+            tipo="back" position="-3 -1 4" rotation="0 150 0" color="#ef4444" 
             titulo="Bajar al Primer Piso" onClick={() => manejarCambioEscena('gimnasio.jpg')} 
             distancia="Escaleras" instruccion="Clic para bajar" 
           />
         </a-entity>
 
         {/* =========================================
-            RECORRIDO: PARQUE METROPOLITANO 
+            RENDERIZADO DINÁMICO DE LOS NODOS (VISTA DRON + PISO)
            ========================================= */}
-
-        <a-entity visible={foto === 'parque.jpg'} position={foto === 'parque.jpg' ? "0 0 0" : "0 -9999 0"}>
-          <Hotspot 
-            tipo="nav" 
-            position="0 -1.5 -6" 
-            rotation="-90 0 0" 
-            color="#10b981" 
-            titulo="Zona Central" 
-            onClick={() => manejarCambioEscena('parque-centro.jpg')} 
-            distancia="A 15m" 
-            instruccion="Clic para avanzar" 
-          />
-        </a-entity>
-
-        <a-entity visible={foto === 'parque-centro.jpg'} position={foto === 'parque-centro.jpg' ? "0 0 0" : "0 -9999 0"}>
-          <Hotspot 
-            tipo="back" 
-            position="0 -1.5 6" 
-            rotation="-90 0 0" 
-            color="#ef4444" 
-            titulo="Entrada del Parque" 
-            onClick={() => manejarCambioEscena('parque.jpg')} 
-            distancia="A 15m" 
-            instruccion="Clic para retroceder" 
-          />
-          <Hotspot 
-            tipo="nav" 
-            position="-3 -1.5 -7" 
-            rotation="-90 0 0" 
-            color="#10b981" 
-            titulo="Canchas Deportivas" 
-            onClick={() => manejarCambioEscena('parque-canchas.jpg')} 
-            distancia="A 20m" 
-            instruccion="Clic para avanzar" 
-          />
-        </a-entity>
-
-        <a-entity visible={foto === 'parque-canchas.jpg'} position={foto === 'parque-canchas.jpg' ? "0 0 0" : "0 -9999 0"}>
-          <Hotspot 
-            tipo="back" 
-            position="3 -1.5 5" 
-            rotation="-90 0 0" 
-            color="#ef4444" 
-            titulo="Zona Central" 
-            onClick={() => manejarCambioEscena('parque-centro.jpg')} 
-            distancia="A 20m" 
-            instruccion="Clic para retroceder" 
-          />
-        </a-entity>
+        {recorridoParque.map((nodo) => (
+          <a-entity key={`nodo-${nodo.id}`} visible={foto === nodo.id} position={foto === nodo.id ? "0 0 0" : "0 -9999 0"}>
+            
+            {/* Botón RETROCEDER */}
+            {nodo.prev && (
+              <Hotspot 
+                tipo={nodo.tipoPrev || "back"} 
+                position={nodo.posPrev} 
+                rotation={nodo.rotPrev || "-90 0 0"} 
+                color="#ef4444" 
+                titulo={nodo.textPrev} 
+                onClick={() => manejarCambioEscena(nodo.prev)} 
+                distancia="Atrás" 
+                instruccion="Clic para retroceder" 
+              />
+            )}
+            
+            {/* Botón AVANZAR */}
+            {nodo.next && (
+              <Hotspot 
+                tipo={nodo.tipoNext || "nav"} 
+                position={nodo.posNext} 
+                rotation={nodo.rotNext || "-90 0 0"} 
+                color="#10b981" 
+                titulo={nodo.textNext} 
+                onClick={() => manejarCambioEscena(nodo.next)} 
+                distancia={nodo.tipoNext === 'up' ? "Vista Dron" : "Adelante"} 
+                instruccion={nodo.tipoNext === 'up' ? "Clic para volar" : "Clic para avanzar"} 
+              />
+            )}
+            
+          </a-entity>
+        ))}
 
         <a-entity camera look-controls="enabled: true; mouseEnabled: true" wasd-controls="enabled: false" position="0 0 0">
           <a-entity cursor="rayOrigin: mouse;" raycaster="objects: .clickable"></a-entity>

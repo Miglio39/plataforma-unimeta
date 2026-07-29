@@ -41,11 +41,11 @@ const datosSedes = {
   'lab-quimica.jpg': { nombre: 'Laboratorio de Química', categoria: 'Laboratorios', descripcion: 'Espacio para prácticas y reacciones químicas controladas.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
   'lab-biologia.jpg': { nombre: 'Laboratorio de Biología', categoria: 'Laboratorios', descripcion: 'Microscopía y estudio de ecosistemas y microorganismos.', vistaExterior: '/assets/panoramas/exterior-rectoria.jpg', mapaUrl: enlaceSanFernando },
 
+ 
   // --- SEDES EXTERNAS ---
-  // --- SEDES EXTERNAS ---
-  'parque.jpg': { nombre: 'Parque Metropolitano - Entrada', categoria: 'Zonas Externas', descripcion: 'Entrada principal y zonas verdes del parque.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano },
-  'parque-centro.jpg': { nombre: 'Parque Metropolitano - Zona Central', categoria: 'Zonas Externas', descripcion: 'Punto de encuentro central del parque.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano },
-  'parque-canchas.jpg': { nombre: 'Parque Metropolitano - Canchas', categoria: 'Zonas Externas', descripcion: 'Zona de esparcimiento deportivo.', vistaExterior: '/assets/panoramas/exterior-parque.jpg', mapaUrl: enlaceParqueMetropolitano },
+  'parque-01.jpg': { nombre: 'Parque Metropolitano - Entrada', categoria: 'Zonas Externas', descripcion: 'Entrada principal y zonas verdes del parque.', vistaExterior: '/assets/panoramas/exterior-parque-01.jpg', mapaUrl: enlaceParqueMetropolitano },
+  'parque-centro.jpg': { nombre: 'Parque Metropolitano - Zona Central', categoria: 'Zonas Externas', descripcion: 'Punto de encuentro central del parque.', vistaExterior: '/assets/panoramas/exterior-parque-01.jpg', mapaUrl: enlaceParqueMetropolitano },
+  'parque-canchas.jpg': { nombre: 'Parque Metropolitano - Canchas', categoria: 'Zonas Externas', descripcion: 'Zona de esparcimiento deportivo.', vistaExterior: '/assets/panoramas/exterior-parque-01.jpg', mapaUrl: enlaceParqueMetropolitano },
   'unimeta-tech.jpg': { nombre: 'Unimeta Tech', categoria: 'Tecnología', descripcion: 'Centro de innovación tecnológica con laboratorios de sistemas e ingeniería.', vistaExterior: '/assets/panoramas/exterior-unimeta-tech.jpg', mapaUrl: enlaceUnimetaTech }
 };
 
