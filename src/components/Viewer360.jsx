@@ -32,29 +32,26 @@ if (typeof window !== 'undefined' && typeof window.AFRAME !== 'undefined' && !wi
 // 📍 MATRIZ LIMPIA: MAPEO DEL PARQUE METROPOLITANO
 // =======================================================
 const recorridoParque = [
-  { id: 'parque-01.jpg', next: 'parque-02.jpg', prev: null, posNext: '0 -1.50 -6', posPrev: '0 -1.50 6', textNext: 'Avanzar', textPrev: '' },
-  { id: 'parque-02.jpg', next: 'parque-05.jpg', prev: 'parque-01.jpg', posNext: '-4.35 2.50 -6.19', rotNext: '0 50 0', tipoNext: 'info', posPrev: '0 -1.50 6', textNext: 'Vista Aérea', textPrev: 'Retroceder' },  
-  { id: 'parque-03.jpg', next: 'parque-04.jpg', prev: 'parque-02.jpg', posNext: '6.22 -1.50 -2.05', posPrev: '1.10 -1.50 5.21', textNext: 'Avanzar', textPrev: 'Retroceder' },
-  { id: 'parque-05.jpg', next: 'parque-06.jpg', prev: 'parque-04.jpg', posNext: '-1.23 -1.50 5.01', posPrev: '-3.91 -1.50 1.25', textNext: 'Avanzar', textPrev: 'Retroceder' },
-  { id: 'parque-06.jpg', next: 'parque-12.jpg', prev: 'parque-05.jpg', posNext: '22.55 0.5 -2.36', rotNext: '0 5000 0', tipoNext: 'info', posPrev: '-2.27 2.50 -7.94', rotPrev: '0 0 0', tipoPrev: 'back', textNext: 'Avanzar a lo lejos', textPrev: 'Vista Aérea' },  
-  { id: 'parque-12.jpg', next: 'parque-14.jpg', prev: 'parque-06.jpg', posNext: '0.37 -1.50 -5.11', posPrev: '0.03 -1.50 9.75', textNext: 'Ir al establo', textPrev: 'Retroceder' },
-  { id: 'parque-14.jpg', next: 'parque-16.jpg', prev: 'parque-12.jpg', posNext: '4.59 0.50 -8.26', rotNext: '0 5 0', tipoNext: 'info', posPrev: '0 -1.50 6', textNext: 'Entrar al establo', textPrev: 'Retroceder' },
+  { id: 'parque-01.webp', next: 'parque-02.webp', prev: null, posNext: '-0.36 -1.50 -5.01', posPrev: '0 -1.50 6', textNext: 'Avanzar', textPrev: '' },
+  { id: 'parque-02.webp', next: 'parque-05.webp', prev: 'parque-01.webp', posNext: '-2.84 -1.50 -4.02', tipoNext: 'info', posPrev: '0 -1.50 6', textNext: 'Vista Aérea', textPrev: 'Retroceder' },  
+  { id: 'parque-05.webp', next: 'parque-06.webp', prev: 'parque-02.webp', posNext: '-0.62 -1.50 2.24',posPrev: '-2.96 -1.50 0.93',tipoPrev: 'up', rotIconoPrev: 90, tamanoPrev: 0.3,tamanoNext: 0.3, textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-06.webp', next: 'parque-12.webp', prev: 'parque-05.webp', posNext: '5.96 -1.50 -0.72', tipoNext: 'info', posPrev: '-2.27 2.50 -7.94', rotPrev: '0 0 0', tipoPrev: 'back', textNext: 'Avanzar a lo lejos', textPrev: 'Vista Aérea' },  
+  { id: 'parque-12.webp', next: 'parque-14.webp', prev: 'parque-06.webp', posNext: '0.37 -1.50 -5.11', posPrev: '0.08 -1.50 6.90', textNext: 'Ir al establo', textPrev: 'Retroceder' },
+  { id: 'parque-14.webp', next: 'parque-16.webp', prev: 'parque-12.webp', posNext: '3.51 -1.50 -4.89',  tipoNext: 'info', posPrev: '0 -1.50 6', textNext: 'Entrar al establo', textPrev: 'Retroceder' },
   
   // 🔴 FOTO 16 (Ajustada): Flecha de avanzar flotante ('Casa principal'), flecha de retroceso acostada y girada 180°
-  { id: 'parque-16.jpg', next: 'parque-19.jpg', prev: 'parque-14.jpg', posNext: '0.53 1 -2.23', rotNext: '0 0 0', tipoNext: 'info', posPrev: '-0.46 -1.50 3.38', rotPrev: '-90 0 0', tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.5, textNext: 'Casa principal', textPrev: 'Retroceder' },
+  { id: 'parque-16.webp', next: 'parque-19.webp', prev: 'parque-14.webp', posNext: '0.53 1 -2.23', rotNext: '0 0 0', tipoNext: 'info', posPrev: '-0.46 -1.50 3.38',tamanoNext: 0.4, rotPrev: '-90 0 0', tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.7, textNext: 'Casa principal', textPrev: 'Retroceder' },
   
-  { id: 'parque-19.jpg', next: 'parque-24.jpg', prev: 'parque-16.jpg', posNext: '-7.21 1.50 -2.31',rotNext: '0 50 0', tipoNext: 'info', posPrev: '0  6', textNext: 'Avanzar', },
-  { id: 'parque-24.jpg', next: 'parque-20.jpg', prev: 'parque-19.jpg', posNext: '-1.08 -1.50 -2.88', posPrev: '0 -1.50 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
-  { id: 'parque-23.jpg', next: 'parque-22.jpg', prev: 'parque-24.jpg', posNext: '0 -1.50 -6', posPrev: '0 -1.50 6', textNext: 'Auditorio', textPrev: 'Retroceder' },
-  { id: 'parque-22.jpg', next: 'parque-23.jpg', prev: 'parque-21.jpg', posNext: '0 -1.50 -6', posPrev: '0 -1.50 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
-  { id: 'parque-2.jpg', next: 'parque-24.jpg', prev: 'parque-22.jpg', posNext: '0 -1.50 -6', posPrev: '0 -1.50 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
-  
-  
-  
-  { id: 'parque-25.jpg', next: 'parque-26.jpg', prev: 'parque-24.jpg', posNext: '0 -1.50 -6', posPrev: '0 -1.50 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
-  { id: 'parque-26.jpg', next: 'parque-27.jpg', prev: 'parque-25.jpg', posNext: '0 -1.50 -6', posPrev: '0 -1.50 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
-  { id: 'parque-27.jpg', next: 'parque-28.jpg', prev: 'parque-26.jpg', posNext: '0 -1.50 -6', posPrev: '0 -1.50 6', textNext: 'Avanzar', textPrev: 'Retroceder' },
-  { id: 'parque-28.jpg', next: null, prev: 'parque-27.jpg', posNext: '0 -1.50 -6', posPrev: '0 -1.50 6', textNext: '', textPrev: 'Retroceder' }
+  { id: 'parque-19.webp', next: 'parque-24.webp', prev: 'parque-16.webp', posNext: '-4.68 -1.50 -1.34', tipoNext: 'info', posPrev: '6.06 -1.50 2.83', textNext: 'Avanzar',textPrev: 'Retroceder' },
+  { id: 'parque-24.webp', next: 'parque-20.webp', prev: null, posNext: '-1.25 -1.50 -3.26', textNext: 'Centro' },
+  { id: 'parque-20.webp', next: 'parque-22.webp', next2: 'parque-23.webp', posNext: '0 -1.50 -6', posNext2: '-6.31 -1.50 2.76', textNext: 'Auditorio', textNext2: 'Interior casa' },
+{ id: 'parque-23.webp', next: null, prev: 'parque-20.webp', posNext: '0 0 0', posPrev: '0.11 -1.50 2.67', rotPrev: '-90 0 0', tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.7, textNext: '', textPrev: 'Salir' },  
+  { id: 'parque-22.webp', next: null, prev: 'parque-25.webp', posNext: '0 0 0', posPrev: '-0.01 -1.50 3.38', rotPrev: '-90 0 0', tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.7, textNext: '', textPrev: 'Salir' },  
+  { id: 'parque-25.webp', next: 'parque-26.webp', prev: 'parque-19.webp', posNext: '2.03 -1.50 4.14', posPrev: '-4.78 -1.50 -0.61', textNext: 'Ir a piscina', textPrev: 'Retroceder' },
+  { id: 'parque-26.webp', next: 'parque-27.webp', prev: 'parque-25.webp', posNext: '0.35 -1.50 3.45', posPrev: '-0.18 -1.50 -3.68', tipoPrev: 'up', rotIconoPrev: 5, tamanoPrev: 0.9, textNext: 'Avanzar', textPrev: 'Retroceder' },
+  { id: 'parque-27.webp', next: 'parque-28.webp', prev: 'parque-26.webp', posNext: '0.97 -1.50 -2.23',tipoNext:'info', posPrev: '-0.39 -1.50 1.09',tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.2,tamanoNext: 0.4, textNext: '', textPrev: 'Retroceder' },
+  { id: 'parque-28.webp', next: null, prev: 'parque-27.webp', posNext: '', posPrev: '0.16 -1.50 -2.18',tipoPrev: 'up', rotIconoPrev: 1, tamanoPrev: 0.6, textPrev: 'Retroceder' }
+
 ];
 
 // 🟢 TOOLTIP FLOTANTE
@@ -122,9 +119,10 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, instruccion
   const scaleBase = isGround ? 1.1 : 0.75;
   const scaleFinal = scaleBase * tamano;
 
-  const iconosRaw = {
+ const iconosRaw = {
     nav: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
     info: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'/%3E%3C/svg%3E",
+    media: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E",
     back: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/%3E%3C/svg%3E",
     up: "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='1024' height='1024' fill='white'%3E%3Cpath d='M12 2l-8 8h6v12h4v-12h6z'/%3E%3C/svg%3E"
   };
@@ -279,37 +277,40 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
         <a-plane dev-logger className="clickable" position="0 -1.5 0" rotation="-90 0 0" width="100" height="100" material="opacity: 0.0; transparent: true"></a-plane>
 
         <a-assets timeout="10000">
-          <img id="tex-inicio" src="/assets/panoramas/inicio.jpg" crossOrigin="anonymous" alt="Inicio" />
-          <img id="tex-biblioteca" src="/assets/panoramas/biblioteca.jpg" crossOrigin="anonymous" alt="Biblioteca" />
-          <img id="tex-gimnasio" src="/assets/panoramas/gimnasio.jpg" crossOrigin="anonymous" alt="Gimnasio" />
-          <img id="tex-auditorio" src="/assets/panoramas/auditorio-mayor.jpg" crossOrigin="anonymous" alt="Auditorio" />
+          <img id="tex-inicio" src="/assets/panoramas/inicio.webp" crossOrigin="anonymous" alt="Inicio" />
+          <img id="tex-biblioteca" src="/assets/panoramas/biblioteca.webp" crossOrigin="anonymous" alt="Biblioteca" />
+          <img id="tex-gimnasio" src="/assets/panoramas/gimnasio.webp" crossOrigin="anonymous" alt="Gimnasio" />
+          <img id="tex-auditorio" src="/assets/panoramas/auditorio-mayor.webp" crossOrigin="anonymous" alt="Auditorio" />
           {recorridoParque.map(nodo => (
             <img key={`asset-${nodo.id}`} id={`tex-${nodo.id}`} src={`/assets/panoramas/${nodo.id}`} crossOrigin="anonymous" alt={nodo.id} />
           ))}
         </a-assets>
 
-        {foto === 'inicio.jpg' && (
+        {foto === 'inicio.webp' && (
           <a-entity animation={`property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 90000; easing: linear; enabled: ${isAutoRotating}`}>
-            <a-sky src="/assets/panoramas/inicio.jpg" color="#ffffff" rotation="0 -90 0"></a-sky>
+            <a-sky src="/assets/panoramas/inicio.webp" color="#ffffff" rotation="0 -90 0"></a-sky>
             <a-entity position="0 0 0">
-              <Hotspot tipo="nav" position="2 -0.5 -5" rotation="0 -20 0" color="#3b82f6" titulo="Biblioteca" destino="biblioteca.jpg" instruccion="Clic para entrar" onClick={() => manejarCambioEscena('biblioteca.jpg')} />
-              <Hotspot tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#3b82f6" titulo="Laboratorios" destino="lab-software.jpg" instruccion="Clic para entrar" onClick={() => manejarCambioEscena('lab-software.jpg')} />
-              <Hotspot tipo="nav" position="5 -1 2" rotation="0 -110 0" color="#9333ea" titulo="Gimnasio" destino="gimnasio.jpg" instruccion="Clic para entrar" onClick={() => manejarCambioEscena('gimnasio.jpg')} />
-              <Hotspot tipo="nav" position="-2 -1 5" rotation="0 150 0" color="#3b82f6" titulo="Auditorios" destino="auditorio-mayor.jpg" instruccion="Clic para entrar" onClick={() => manejarCambioEscena('auditorio-mayor.jpg')} />
+              <Hotspot tipo="nav" position="0.82 -1.2 -9.44" rotation="0 -20 0" color="#33dd27" titulo="Gimnasio" destino="gimnasio.webp" tamano tamano={1} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('gimnasio.webp')} />
+              <Hotspot tipo="nav" position="-0.26 -1.10 -4.31" rotation="0 -20 0" color="#f5f5f5" titulo="Biblioteca" destino="biblioteca.webp" tamano tamano={0.5} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('biblioteca.webp')} />
+              <Hotspot tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#3b82f6" titulo="Auditorios" destino="auditorio-mayor.webp" tamano tamano={1} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('auditorio-mayor.webp')} />
+              <Hotspot tipo="nav" position="-10.91 -0.50 5.12" rotation="0 100 0" color="#9333ea" titulo="Sala de Audiencias" destino="audiencias.webp" instruccion="Clic para entrar" onClick={() => manejarCambioEscena('audiencias.webp')} />
+              <Hotspot tipo="nav" position="-4.07 -1.10 -0.66" rotation="0 70 0" color="#3b82f6" titulo="Sala de Radio" destino="sala-radio.webp" tamano tamano={0.8} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('sala-radio.webp')} />
+              <Hotspot tipo="media" position="-1.3 -1.50 1.68" rotation="-90 0 0" color="#f6d73b" titulo="Cancha" destino="canchas.webp" tamano tamano={0.2} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('canchas.webp')} />
+              <Hotspot tipo="nav" position="-2.10 -1 1.8" rotation="0 100 0" color="#0c09e3" titulo="Domo" destino="domo.webp" tamano tamano={0.3} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('domo.webp')} />  
             </a-entity>
           </a-entity>
         )}
 
-        {foto !== 'inicio.jpg' && (
+        {foto !== 'inicio.webp' && (
           <a-sky src={`/assets/panoramas/${foto}`} color="#ffffff" rotation="0 -90 0"></a-sky>
         )}
 
-        <a-entity visible={foto === 'gimnasio.jpg'} position={foto === 'gimnasio.jpg' ? "0 0 0" : "0 -9999 0"}>
-          <Hotspot tipo="up" position="-3 1.5 4" rotation="0 150 0" color="#3b82f6" titulo="Subir al Segundo Piso" destino="gimnasio-piso2.jpg" instruccion="Clic para subir" onClick={() => manejarCambioEscena('gimnasio-piso2.jpg')} />
+        <a-entity visible={foto === 'gimnasio.webp'} position={foto === 'gimnasio.webp' ? "0 -1 0" : "0 100 0"}>
+          <Hotspot tipo="up" position="-0.09 0 5.61" rotation="150 5 180" color="#3bf64e" titulo="Subir al Segundo Piso" destino="gimnasio-piso2.webp" instruccion="Clic para subir" onClick={() => manejarCambioEscena('gimnasio-piso2.webp')} />
         </a-entity>
 
-        <a-entity visible={foto === 'gimnasio-piso2.jpg'} position={foto === 'gimnasio-piso2.jpg' ? "0 0 0" : "0 -9999 0"}>
-          <Hotspot tipo="back" position="-3 -1 4" rotation="0 150 0" color="#ef4444" titulo="Bajar al Primer Piso" destino="gimnasio.jpg" instruccion="Clic para bajar" onClick={() => manejarCambioEscena('gimnasio.jpg')} />
+        <a-entity visible={foto === 'gimnasio-piso2.webp'} position={foto === 'gimnasio-piso2.webp' ? "0 0 0" : "0 -9999 0"}>
+          <Hotspot tipo="back" position="0.02 -0.7 5.46" rotation="0 180 90" color="#ef4444" titulo="Bajar al Primer Piso" destino="gimnasio.webp" instruccion="Clic para bajar" onClick={() => manejarCambioEscena('gimnasio.webp')} />
         </a-entity>
 
         {recorridoParque.map((nodo) => (

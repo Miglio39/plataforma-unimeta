@@ -11,42 +11,42 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
   const [auditoriosOpen, setAuditoriosOpen] = useState(false);
 
   const menuInicio = [
-    { nombre: 'Inicio (Vista Dron)', archivo: 'inicio.jpg', icono: <Home size={18} /> }
+    { nombre: 'Inicio (Vista Dron)', archivo: 'inicio.webp', icono: <Home size={18} /> }
   ];
 
   const listaLaboratorios = [
-    { nombre: 'Lab. de Física', archivo: 'lab-fisica.jpg' },
-    { nombre: 'Lab. de Redes', archivo: 'lab-redes.jpg' },
-    { nombre: 'Lab. de Software', archivo: 'lab-software.jpg' },
-    { nombre: 'Lab. de Suelos', archivo: 'lab-suelos.jpg' },
-    { nombre: 'Lab. de Hidráulica', archivo: 'lab-hidraulica.jpg' },
-    { nombre: 'Lab. de Materiales', archivo: 'lab-materiales.jpg' },
-    { nombre: 'Lab. de Electrónica', archivo: 'lab-electronica.jpg' },
-    { nombre: 'Lab. de Telemática', archivo: 'lab-telematica.jpg' },
-    { nombre: 'Taller de Arquitectura', archivo: 'lab-arquitectura.jpg' },
-    { nombre: 'Lab. de Topografía', archivo: 'lab-topografia.jpg' },
-    { nombre: 'Lab. de Pavimentos', archivo: 'lab-pavimentos.jpg' },
-    { nombre: 'Lab. de Idiomas', archivo: 'lab-idiomas.jpg' },
-    { nombre: 'Centro de Cómputo', archivo: 'lab-sistemas.jpg' },
-    { nombre: 'Lab. de Química', archivo: 'lab-quimica.jpg' },
-    { nombre: 'Lab. de Biología', archivo: 'lab-biologia.jpg' }
+    { nombre: 'Lab. de Física', archivo: 'lab-fisica.webp' },
+    { nombre: 'Lab. de Redes', archivo: 'lab-redes.webp' },
+    { nombre: 'Lab. de Software', archivo: 'lab-software.webp' },
+    { nombre: 'Lab. de Suelos', archivo: 'lab-suelos.webp' },
+    { nombre: 'Lab. de Hidráulica', archivo: 'lab-hidraulica.webp' },
+    { nombre: 'Lab. de Materiales', archivo: 'lab-materiales.webp' },
+    { nombre: 'Lab. de Electrónica', archivo: 'lab-electronica.webp' },
+    { nombre: 'Lab. de Telemática', archivo: 'lab-telematica.webp' },
+    { nombre: 'Taller de Arquitectura', archivo: 'lab-arquitectura.webp' },
+    { nombre: 'Lab. de Topografía', archivo: 'lab-topografia.webp' },
+    { nombre: 'Lab. de Pavimentos', archivo: 'lab-pavimentos.webp' },
+    { nombre: 'Lab. de Idiomas', archivo: 'lab-idiomas.webp' },
+    { nombre: 'Centro de Cómputo', archivo: 'lab-sistemas.webp' },
+    { nombre: 'Lab. de Química', archivo: 'lab-quimica.webp' },
+    { nombre: 'Lab. de Biología', archivo: 'lab-biologia.webp' }
   ];
 
   const listaAuditorios = [
-    { nombre: 'Auditorio Principal', archivo: 'auditorio-mayor.jpg' },
-    { nombre: 'Auditorio Bloque A', archivo: 'auditorio-bloquea.jpg' },
-    { nombre: 'Auditorio Cs. Jurídicas', archivo: 'auditorio-juridico.jpg' }
+    { nombre: 'Auditorio Principal', archivo: 'auditorio-mayor.webp' },
+    { nombre: 'Auditorio Bloque A', archivo: 'auditorio-bloquea.webp' },
+    { nombre: 'Auditorio Cs. Jurídicas', archivo: 'auditorio-juridico.webp' }
   ];
 
   const menuSanFernando = [
-    { nombre: 'Paraninfo', archivo: 'paraninfo.jpg', icono: <Presentation size={18} /> },
-    { nombre: 'Consultorio Jurídico', archivo: 'consultorio.jpg', icono: <Scale size={18} /> },
-    { nombre: 'Sala de Audiencias', archivo: 'audiencias.jpg', icono: <Gavel size={18} /> },
-    { nombre: 'Gimnasio', archivo: 'gimnasio.jpg', icono: <Dumbbell size={18} /> },
-    { nombre: 'Biblioteca', archivo: 'biblioteca.jpg', icono: <Library size={18} /> },
+    { nombre: 'Paraninfo', archivo: 'paraninfo.webp', icono: <Presentation size={18} /> },
+    { nombre: 'Consultorio Jurídico', archivo: 'consultorio.webp', icono: <Scale size={18} /> },
+    { nombre: 'Sala de Audiencias', archivo: 'audiencias.webp', icono: <Gavel size={18} /> },
+    { nombre: 'Gimnasio', archivo: 'gimnasio.webp', icono: <Dumbbell size={18} /> },
+    { nombre: 'Biblioteca', archivo: 'biblioteca.webp', icono: <Library size={18} /> },
     
     // 🔴 REEMPLAZO LOGRADO: SALA DE RADIO CON ÍCONO DE MICROFONO DE EMISORA
-    { nombre: 'Sala de Radio', archivo: 'sala-radio.jpg', icono: <Radio size={18} /> },
+    { nombre: 'Sala de Radio', archivo: 'sala-radio.webp', icono: <Radio size={18} /> },
     
     { 
       esSubmenu: true, 
@@ -66,8 +66,8 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
   ];
 
   const menuSedesExternas = [
-    { nombre: 'Parque Metropolitano', archivo: 'parque-01.jpg', icono: <TreePine size={18} /> },
-    { nombre: 'Unimeta Tech', archivo: 'unimeta-tech.jpg', icono: <MonitorPlay size={18} /> }
+    { nombre: 'Parque Metropolitano', archivo: 'parque-01.webp', icono: <TreePine size={18} /> },
+    { nombre: 'Unimeta Tech', archivo: 'unimeta-tech.webp', icono: <MonitorPlay size={18} /> }
   ];
 
   const renderItem = (lugar, index) => {
