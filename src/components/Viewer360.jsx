@@ -24,7 +24,7 @@ const recorridoParque = [
   { id: 'parque-22.webp', next: null, prev: 'parque-25.webp', posNext: '0 0 0', posPrev: '-0.01 -1.50 3.38', rotPrev: '-90 0 0', tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.7, textNext: '', textPrev: 'Salir' },  
   { id: 'parque-25.webp', next: 'parque-26.webp', prev: 'parque-19.webp', posNext: '2.03 -1.50 4.14', posPrev: '-4.78 -1.50 -0.61', textNext: 'Ir a piscina', textPrev: 'Retroceder' },
   { id: 'parque-26.webp', next: 'parque-27.webp', prev: 'parque-25.webp', posNext: '0.35 -1.50 3.45', posPrev: '-0.18 -1.50 -3.68', tipoPrev: 'up', rotIconoPrev: 5, tamanoPrev: 0.9, textNext: 'Avanzar', textPrev: 'Retroceder' },
-  { id: 'parque-27.webp', next: 'parque-28.webp', prev: 'parque-26.webp', posNext: '0.97 -1.50 -2.23',tipoNext:'info', posPrev: '-0.39 -1.50 1.09',tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.2,tamanoNext: 0.4, textNext: '', textPrev: 'Retroceder' },
+  { id: 'parque-27.webp', next: 'parque-28.webp', prev: 'parque-26.webp', posNext: '0.97 -1.50 -2.23',tipoNext:'info', posPrev: '-0.39 -1.50 1.09',tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.2,tamanoNext: 0.4, textNext: 'Ir a mariposario', textPrev: 'Retroceder' },
   { id: 'parque-28.webp', next: null, prev: 'parque-27.webp', posNext: '', posPrev: '0.16 -1.50 -2.18',tipoPrev: 'up', rotIconoPrev: 1, tamanoPrev: 0.6, textPrev: 'Retroceder' }
 
 ];
