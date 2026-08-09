@@ -43,9 +43,23 @@ const datosSedes = {
   'lab-biologia.webp': { nombre: 'Laboratorio de Biología', categoria: 'Laboratorios', descripcion: 'Microscopía y estudio de ecosistemas y microorganismos.', vistaExterior: '/assets/panoramas/exterior-rectoria.webp', mapaUrl: enlaceSanFernando },
 
   // --- SEDES EXTERNAS ---
-  'parque-01.webp': { nombre: 'Parque Metropolitano - Entrada', categoria: 'Zonas Externas', descripcion: 'Entrada principal y zonas verdes del parque.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
-  'parque-centro.webp': { nombre: 'Parque Metropolitano - Zona Central', categoria: 'Zonas Externas', descripcion: 'Punto de encuentro central del parque.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
-  'parque-canchas.webp': { nombre: 'Parque Metropolitano - Canchas', categoria: 'Zonas Externas', descripcion: 'Zona de esparcimiento deportivo.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  // --- SEDES EXTERNAS (PARQUE METROPOLITANO) ---
+  'parque-01.webp': { nombre: 'Parque Metropolitano - Entrada', categoria: 'Zonas Externas', descripcion: 'Entrada principal del parque.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-02.webp': { nombre: 'Parque Metropolitano - Recepción y Aulas', categoria: 'Zonas Externas', descripcion: 'Punto de acceso y equipamiento, integrado con modernos salones de clase para actividades académicas.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-05.webp': { nombre: 'Parque Metropolitano - Vista Aérea (Aulas)', categoria: 'Zonas Externas', descripcion: 'Perspectiva aérea que destaca la infraestructura de las aulas y el sistema de paneles solares sostenibles.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-06.webp': { nombre: 'Parque Metropolitano - Sendero Principal', categoria: 'Zonas Externas', descripcion: 'Zona central que marca el inicio del sendero ecológico de 1.000 metros a través de los paisajes naturales del parque.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-12.webp': { nombre: 'Parque Metropolitano - Puente Principal', categoria: 'Zonas Externas', descripcion: 'Estructura principal que conecta los espacios del parque', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-14.webp': { nombre: 'Parque Metropolitano - Exterior del Establo', categoria: 'Zonas Externas', descripcion: 'Espacio dedicado al cuidado y acondicionamiento de fauna, albergando diversas especies de granja.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-16.webp': { nombre: 'Parque Metropolitano - Interior del Establo', categoria: 'Zonas Externas', descripcion: 'Vista detallada del interior de los corrales, diseñados para el manejo seguro y el bienestar de los animales.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-19.webp': { nombre: 'Parque Metropolitano - Entrada Casa Principal', categoria: 'Zonas Externas', descripcion: 'Acceso a la histórica casa principal del parque, un espacio de gran valor institucional y arquitectónico.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-24.webp': { nombre: 'Parque Metropolitano - Vista Aérea Casa', categoria: 'Zonas Externas', descripcion: 'Toma aérea que permite apreciar la magnitud, el diseño y los alrededores de la emblemática casa principal.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-20.webp': { nombre: 'Parque Metropolitano - Centro Casa Principal', categoria: 'Zonas Externas', descripcion: 'Punto central de encuentro y distribución dentro de las instalaciones de la casa principal.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-23.webp': { nombre: 'Parque Metropolitano - Residencia Fundador', categoria: 'Zonas Externas', descripcion: 'Interior histórico de la residencia del Dr. Rafael Mojica, fundador de UNIMETA, donde se preserva el legado de la institución.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-22.webp': { nombre: 'Parque Metropolitano - Auditorio María Lucía', categoria: 'Zonas Externas', descripcion: 'Auditorio principal del parque, un espacio campestre diseñado para eventos institucionales y académicos.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-25.webp': { nombre: 'Parque Metropolitano - Senderos Húmedos', categoria: 'Zonas Externas', descripcion: 'Camino conector desde la casa principal hacia la zona húmeda, rodeado de senderos peatonales y hermosos jardines.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-26.webp': { nombre: 'Parque Metropolitano - Piscina', categoria: 'Zonas Externas', descripcion: 'Área recreativa equipada con piscina, diseñada para el descanso, la integración y el bienestar de la comunidad universitaria.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-27.webp': { nombre: 'Parque Metropolitano - Vista Aérea Piscina', categoria: 'Zonas Externas', descripcion: 'Perspectiva aérea de la zona húmeda y de descanso, destacando su amplia distribución y hermoso entorno paisajístico.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
+  'parque-28.webp': { nombre: 'Parque Metropolitano - Mariposario', categoria: 'Zonas Externas', descripcion: 'Espacio académico e investigativo dedicado a la conservación de la biodiversidad, protección de lepidópteros.', vistaExterior: '/assets/panoramas/exterior-parque.webp', mapaUrl: enlaceParqueMetropolitano },
   'unimeta-tech.webp': { nombre: 'Unimeta Tech', categoria: 'Tecnología', descripcion: 'Centro de innovación tecnológica con laboratorios de sistemas e ingeniería.', vistaExterior: '/assets/panoramas/exterior-unimeta-tech.webp', mapaUrl: enlaceUnimetaTech }
 };
 
@@ -118,6 +132,14 @@ function App() {
   const infoSede = datosSedes[escenaActual] || { nombre: 'Campus San Fernando', categoria: 'General', descripcion: 'Campus principal.', vistaExterior: '/assets/panoramas/exterior-campus-sanfernando.webp', mapaUrl: enlaceSanFernando };
   const dirInfo = obtenerDirectorio(escenaActual);
 
+  // 🔴 NUEVA LÓGICA: Determinar la dirección exacta según la escena actual
+  let textoUbicacion = "Barrio San Fernando, Villavicencio"; // Por defecto (Sede Principal)
+  if (escenaActual.includes('parque')) {
+    textoUbicacion = "Granja El Hachón, Villavicencio, Meta";
+  } else if (escenaActual.includes('tech')) {
+    textoUbicacion = "Centro de Villavicencio";
+  }
+
   return (
     <>
       {/* 🔴 NUEVO MODAL PARA IMAGEN AMPLIADA */}
@@ -171,7 +193,8 @@ function App() {
             <header className="top-bar">
               <div className="location-info">
                 <h1>{infoSede.nombre}</h1>
-                <p className="hide-mobile"><MapPin size={14} /> Barrio San Fernando, Villavicencio</p>
+                {/* 🔴 NUEVO: Ahora muestra la variable dinámica que acabamos de crear */}
+                <p className="hide-mobile"><MapPin size={14} /> {textoUbicacion}</p>
               </div>
               
               <div className="top-actions">

@@ -2,31 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X, Play, MapPin, Info, Landmark, ArrowUp, User } from 'lucide-react';
 import 'aframe';
 
-// =======================================================
-// 🛠️ MODO DESARROLLADOR: BUSCADOR DE COORDENADAS
-// =======================================================
-if (typeof window !== 'undefined' && typeof window.AFRAME !== 'undefined' && !window.AFRAME.components['dev-logger']) {
-  window.AFRAME.registerComponent('dev-logger', {
-    init: function () {
-      this.el.addEventListener('click', (e) => {
-        if (e.detail.intersection) {
-          const p = e.detail.intersection.point;
-          const coordenadaExacta = `${p.x.toFixed(2)} ${p.y.toFixed(2)} ${p.z.toFixed(2)}`;
-          
-          navigator.clipboard.writeText(coordenadaExacta).then(() => {
-            const toast = document.createElement('div');
-            toast.innerText = `📍 Coordenada copiada: ${coordenadaExacta}`;
-            toast.style.cssText = "position:absolute; top:20px; left:50%; transform:translateX(-50%); background:#10b981; color:white; padding:10px 20px; border-radius:10px; z-index:9999; font-weight:bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); font-family: sans-serif;";
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2000);
-          }).catch(err => {
-            console.log("Coordenada:", coordenadaExacta);
-          });
-        }
-      });
-    }
-  });
-}
 
 // =======================================================
 // 📍 MATRIZ LIMPIA: MAPEO DEL PARQUE METROPOLITANO
