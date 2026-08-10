@@ -15,21 +15,16 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
   ];
 
   const listaLaboratorios = [
-    { nombre: 'Lab. de Física', archivo: 'lab-fisica.webp' },
-    { nombre: 'Lab. de Redes', archivo: 'lab-redes.webp' },
-    { nombre: 'Lab. de Software', archivo: 'lab-software.webp' },
-    { nombre: 'Lab. de Suelos', archivo: 'lab-suelos.webp' },
-    { nombre: 'Lab. de Hidráulica', archivo: 'lab-hidraulica.webp' },
-    { nombre: 'Lab. de Materiales', archivo: 'lab-materiales.webp' },
-    { nombre: 'Lab. de Electrónica', archivo: 'lab-electronica.webp' },
-    { nombre: 'Lab. de Telemática', archivo: 'lab-telematica.webp' },
-    { nombre: 'Taller de Arquitectura', archivo: 'lab-arquitectura.webp' },
-    { nombre: 'Lab. de Topografía', archivo: 'lab-topografia.webp' },
-    { nombre: 'Lab. de Pavimentos', archivo: 'lab-pavimentos.webp' },
-    { nombre: 'Lab. de Idiomas', archivo: 'lab-idiomas.webp' },
-    { nombre: 'Centro de Cómputo', archivo: 'lab-sistemas.webp' },
-    { nombre: 'Lab. de Química', archivo: 'lab-quimica.webp' },
-    { nombre: 'Lab. de Biología', archivo: 'lab-biologia.webp' }
+    { nombre: 'Lab Calidad Amb', archivo: 'lab-calidad-ambiental.webp' },
+    { nombre: 'Lab Biol. y Quím.', archivo: 'lab-biologia-quimica.webp' },
+    { nombre: 'Lab de Microbiología', archivo: 'lab-microbiologia.webp' },
+    { nombre: 'Lab de Física', archivo: 'lab-fisica.webp' },
+    { nombre: 'Lab de  Eléctrica 401', archivo: 'lab-electrica-401.webp' },
+    { nombre: 'Lab de Eléctrica 402', archivo: 'lab-electrica-402.webp' },
+    { nombre: 'Lab de  Eléctrica 403', archivo: 'lab-electrica-403.webp' },
+    { nombre: 'Lab Hig-Seg Industri', archivo: 'lab-higiene-seguridad.webp' },
+    { nombre: 'Lab Suel-Pavimentos', archivo: 'lab-suelo-pavimentos.webp' },
+    { nombre: 'Lab Procesos-Agros', archivo: 'lab-procesos-agros.webp' },
   ];
 
   const listaAuditorios = [

@@ -2,6 +2,31 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X, Play, MapPin, Info, Landmark, ArrowUp, User } from 'lucide-react';
 import 'aframe';
 
+// =======================================================
+// 🛠️ MODO DESARROLLADOR: BUSCADOR DE COORDENADAS
+// =======================================================
+if (typeof window !== 'undefined' && typeof window.AFRAME !== 'undefined' && !window.AFRAME.components['dev-logger']) {
+  window.AFRAME.registerComponent('dev-logger', {
+    init: function () {
+      this.el.addEventListener('click', (e) => {
+        if (e.detail.intersection) {
+          const p = e.detail.intersection.point;
+          const coordenadaExacta = `${p.x.toFixed(2)} ${p.y.toFixed(2)} ${p.z.toFixed(2)}`;
+          
+          navigator.clipboard.writeText(coordenadaExacta).then(() => {
+            const toast = document.createElement('div');
+            toast.innerText = `📍 Coordenada copiada: ${coordenadaExacta}`;
+            toast.style.cssText = "position:absolute; top:20px; left:50%; transform:translateX(-50%); background:#10b981; color:white; padding:10px 20px; border-radius:10px; z-index:9999; font-weight:bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); font-family: sans-serif;";
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+          }).catch(err => {
+            console.log("Coordenada:", coordenadaExacta);
+          });
+        }
+      });
+    }
+  });
+}
 
 // =======================================================
 // 📍 MATRIZ LIMPIA: MAPEO DEL PARQUE METROPOLITANO
@@ -13,23 +38,19 @@ const recorridoParque = [
   { id: 'parque-06.webp', next: 'parque-12.webp', prev: 'parque-05.webp', posNext: '5.96 -1.50 -0.72', tipoNext: 'info', posPrev: '-2.27 2.50 -7.94', rotPrev: '0 0 0', tipoPrev: 'back', textNext: 'Avanzar a lo lejos', textPrev: 'Vista Aérea' },  
   { id: 'parque-12.webp', next: 'parque-14.webp', prev: 'parque-06.webp', posNext: '0.37 -1.50 -5.11', posPrev: '0.08 -1.50 6.90', textNext: 'Ir al establo', textPrev: 'Retroceder' },
   { id: 'parque-14.webp', next: 'parque-16.webp', prev: 'parque-12.webp', posNext: '3.51 -1.50 -4.89',  tipoNext: 'info', posPrev: '0 -1.50 6', textNext: 'Entrar al establo', textPrev: 'Retroceder' },
-  
-  // 🔴 FOTO 16 (Ajustada): Flecha de avanzar flotante ('Casa principal'), flecha de retroceso acostada y girada 180°
   { id: 'parque-16.webp', next: 'parque-19.webp', prev: 'parque-14.webp', posNext: '0.53 1 -2.23', rotNext: '0 0 0', tipoNext: 'info', posPrev: '-0.46 -1.50 3.38',tamanoNext: 0.4, rotPrev: '-90 0 0', tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.7, textNext: 'Casa principal', textPrev: 'Retroceder' },
-  
   { id: 'parque-19.webp', next: 'parque-24.webp', prev: 'parque-16.webp', posNext: '-4.68 -1.50 -1.34', tipoNext: 'info', posPrev: '6.06 -1.50 2.83', textNext: 'Avanzar',textPrev: 'Retroceder' },
   { id: 'parque-24.webp', next: 'parque-20.webp', prev: null, posNext: '-1.25 -1.50 -3.26', textNext: 'Centro' },
   { id: 'parque-20.webp', next: 'parque-22.webp', next2: 'parque-23.webp', posNext: '0 -1.50 -6', posNext2: '-6.31 -1.50 2.76', textNext: 'Auditorio', textNext2: 'Interior casa' },
-{ id: 'parque-23.webp', next: null, prev: 'parque-20.webp', posNext: '0 0 0', posPrev: '0.11 -1.50 2.67', rotPrev: '-90 0 0', tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.7, textNext: '', textPrev: 'Salir' },  
+  { id: 'parque-23.webp', next: null, prev: 'parque-20.webp', posNext: '0 0 0', posPrev: '0.11 -1.50 2.67', rotPrev: '-90 0 0', tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.7, textNext: '', textPrev: 'Salir' },  
   { id: 'parque-22.webp', next: null, prev: 'parque-25.webp', posNext: '0 0 0', posPrev: '-0.01 -1.50 3.38', rotPrev: '-90 0 0', tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.7, textNext: '', textPrev: 'Salir' },  
   { id: 'parque-25.webp', next: 'parque-26.webp', prev: 'parque-19.webp', posNext: '2.03 -1.50 4.14', posPrev: '-4.78 -1.50 -0.61', textNext: 'Ir a piscina', textPrev: 'Retroceder' },
   { id: 'parque-26.webp', next: 'parque-27.webp', prev: 'parque-25.webp', posNext: '0.35 -1.50 3.45', posPrev: '-0.18 -1.50 -3.68', tipoPrev: 'up', rotIconoPrev: 5, tamanoPrev: 0.9, textNext: 'Avanzar', textPrev: 'Retroceder' },
   { id: 'parque-27.webp', next: 'parque-28.webp', prev: 'parque-26.webp', posNext: '0.97 -1.50 -2.23',tipoNext:'info', posPrev: '-0.39 -1.50 1.09',tipoPrev: 'up', rotIconoPrev: 180, tamanoPrev: 0.2,tamanoNext: 0.4, textNext: 'Ir a mariposario', textPrev: 'Retroceder' },
   { id: 'parque-28.webp', next: null, prev: 'parque-27.webp', posNext: '', posPrev: '0.16 -1.50 -2.18',tipoPrev: 'up', rotIconoPrev: 1, tamanoPrev: 0.6, textPrev: 'Retroceder' }
-
 ];
 
-// 🟢 TOOLTIP FLOTANTE
+// 🟢 TOOLTIP FLOTANTE PRINCIPAL
 const TooltipFlotante = () => {
   const [lugarHover, setLugarHover] = useState(null);
 
@@ -132,10 +153,7 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, instruccion
         <React.Fragment>
           <a-circle radius="0.5" color="#0b0f19" material="shader: flat; opacity: 0.5; transparent: true" segments="64"></a-circle>
           <a-circle radius="0.25" color={color} material="shader: flat;" position="0 0 0.01"></a-circle>
-          
-          {/* 🔴 EL DIBUJO GIRA AQUÍ ADENTRO */}
           <a-image src={iconoActual} position="0 0 0.02" rotation={`0 0 ${rotIcono}`} width="0.25" height="0.25" material="shader: flat; transparent: true"></a-image>
-
           <a-ring radius-inner="0.28" radius-outer="0.29" color="white" material="shader: flat; opacity: 0.8; transparent: true" position="0 0 0.01" segments="64"></a-ring>
           <a-ring radius-inner="0.32" radius-outer="0.33" color="white" material="shader: flat; opacity: 0.8; transparent: true" position="0 0 0.01" segments="64"></a-ring>
           <a-ring radius-inner="0.36" radius-outer="0.37" color="white" material="shader: flat; opacity: 0.8; transparent: true" position="0 0 0.01" segments="64"></a-ring>
@@ -151,7 +169,6 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, instruccion
           <a-ring radius-inner="0.38" radius-outer="0.42" color={color} material="shader: flat; opacity: 1; transparent: true" segments="64"></a-ring>
           <a-ring radius-inner="0.45" radius-outer="0.55" color={color} material="shader: flat; opacity: 0.7; transparent: true" segments="64"
                   animation="property: scale; to: 1.25 1.25 1.25; dir: alternate; dur: 1200; loop: true; easing: easeInOutSine"></a-ring>
-          
           <a-image src={iconoActual} position="0 0 0.01" rotation={`0 0 ${rotIcono}`} width="0.4" height="0.4" material="shader: flat; transparent: true"></a-image>
         </React.Fragment>
       )}
@@ -159,11 +176,28 @@ const Hotspot = ({ position, rotation, tipo, titulo, color, onClick, instruccion
   );
 };
 
+// 🔴 LISTA INTERNA PARA EL CARRUSEL
+const listaLaboratoriosMenu = [
+  { nombre: 'Calidad Amb.', archivo: 'lab-calidad-ambiental.webp' },
+  { nombre: 'Biol. y Quím.', archivo: 'lab-biologia-quimica.webp' },
+  { nombre: 'Microbiología', archivo: 'lab-microbiologia.webp' },
+  { nombre: 'Física', archivo: 'lab-fisica.webp' },
+  { nombre: 'Eléctrica 401', archivo: 'lab-electrica-401.webp' },
+  { nombre: 'Eléctrica 402', archivo: 'lab-electrica-402.webp' },
+  { nombre: 'Eléctrica 403', archivo: 'lab-electrica-403.webp' },
+  { nombre: 'Hig. y Seg.', archivo: 'lab-higiene-seguridad.webp' },
+  { nombre: 'Suelos y Pav.', archivo: 'lab-suelo-pavimentos.webp' },
+  { nombre: 'Proc. Agros.', archivo: 'lab-procesos-agros.webp' }
+];
+
 const Viewer360 = ({ foto, setEscenaActual }) => {
   const [isAutoRotating, setIsAutoRotating] = useState(true);
   const [fadeOpacity, setFadeOpacity] = useState(0); 
   const [zoomScale, setZoomScale] = useState(1);
   const sceneRef = useRef(null);
+  
+  // 🔴 ESTADO: Detecta el hover sobre las micro-miniaturas
+  const [labHovered, setLabHovered] = useState(null);
 
   const manejarCambioEscena = (nuevaEscena) => {
     setFadeOpacity(1);
@@ -265,13 +299,27 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
           <a-entity animation={`property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 90000; easing: linear; enabled: ${isAutoRotating}`}>
             <a-sky src="/assets/panoramas/inicio.webp" color="#ffffff" rotation="0 -90 0"></a-sky>
             <a-entity position="0 0 0">
-              <Hotspot tipo="nav" position="0.82 -1.2 -9.44" rotation="0 -20 0" color="#33dd27" titulo="Gimnasio" destino="gimnasio.webp" tamano tamano={1} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('gimnasio.webp')} />
-              <Hotspot tipo="nav" position="-0.26 -1.10 -4.31" rotation="0 -20 0" color="#f5f5f5" titulo="Biblioteca" destino="biblioteca.webp" tamano tamano={0.5} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('biblioteca.webp')} />
-              <Hotspot tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#3b82f6" titulo="Auditorios" destino="auditorio-mayor.webp" tamano tamano={1} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('auditorio-mayor.webp')} />
-              <Hotspot tipo="nav" position="-10.91 -0.50 5.12" rotation="0 100 0" color="#9333ea" titulo="Sala de Audiencias" destino="audiencias.webp" instruccion="Clic para entrar" onClick={() => manejarCambioEscena('audiencias.webp')} />
-              <Hotspot tipo="nav" position="-4.07 -1.10 -0.66" rotation="0 70 0" color="#3b82f6" titulo="Sala de Radio" destino="sala-radio.webp" tamano tamano={0.8} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('sala-radio.webp')} />
-              <Hotspot tipo="media" position="-1.3 -1.50 1.68" rotation="-90 0 0" color="#f6d73b" titulo="Cancha" destino="canchas.webp" tamano tamano={0.2} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('canchas.webp')} />
-              <Hotspot tipo="nav" position="-2.10 -1 1.8" rotation="0 100 0" color="#0c09e3" titulo="Domo" destino="domo.webp" tamano tamano={0.3} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('domo.webp')} />  
+              <Hotspot tipo="nav" position="0.82 -1.2 -9.44" rotation="0 -20 0" color="#3b82f6" titulo="Gimnasio" destino="gimnasio.webp" tamano={0.8} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('gimnasio.webp')} />
+              <Hotspot tipo="nav" position="-0.26 -1.10 -4.31" rotation="0 -20 0" color="#3b82f6" titulo="Biblioteca" destino="biblioteca.webp" tamano={0.5} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('biblioteca.webp')} />
+              <Hotspot tipo="nav" position="-4 -1 -4" rotation="0 40 0" color="#3b82f6" titulo="Auditorios" destino="auditorio-mayor.webp" tamano={0.8} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('auditorio-mayor.webp')} />
+              <Hotspot tipo="nav" position="-10.91 -0.50 5.12" rotation="0 100 0" color="#3b82f6" titulo="Sala de Audiencias" destino="audiencias.webp" instruccion="Clic para entrar" onClick={() => manejarCambioEscena('audiencias.webp')} />
+              <Hotspot tipo="nav" position="-4.07 -1.10 -0.66" rotation="0 70 0" color="#3b82f6" titulo="Sala de Radio" destino="sala-radio.webp" tamano={0.8} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('sala-radio.webp')} />
+              <Hotspot tipo="media" position="-1.3 -1.50 1.68" rotation="-90 0 0" color="#f6d73b" titulo="Cancha" destino="canchas.webp" tamano={0.2} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('canchas.webp')} />
+              <Hotspot tipo="nav" position="-2.10 -1 1.8" rotation="0 100 0" color="#3b82f6" titulo="Domo" destino="domo.webp" tamano={0.3} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('domo.webp')} />
+              <Hotspot tipo="nav" position="-1.45 -1.35 -3.2" rotation="0 40 0" color="#3b82f6" titulo="Paraninfo" destino="paraninfo.webp" tamano={0.4} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('paraninfo.webp')} />
+              <Hotspot tipo="nav" position="-1.9 -1.3 1.1" rotation="0 90 0" color="#3b82f6" titulo="Consultorio Jurídico" destino="consultorio.webp" tamano={0.4} instruccion="Clic para entrar" onClick={() => manejarCambioEscena('consultorio.webp')} />
+              
+              <Hotspot 
+                tipo="nav" 
+                position="-4.2 -1 -2" 
+                rotation="0 80 0" 
+                color="#3b82f6" 
+                titulo="Laboratorios" 
+                destino="lab-calidad-ambiental.webp" 
+                tamano={0.7} 
+                instruccion="Clic para entrar" 
+                onClick={() => manejarCambioEscena('lab-calidad-ambiental.webp')} 
+              />
             </a-entity>
           </a-entity>
         )}
@@ -290,68 +338,30 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
 
         {recorridoParque.map((nodo) => (
           <a-entity key={`nodo-${nodo.id}`} visible={foto === nodo.id} position={foto === nodo.id ? "0 0 0" : "0 -9999 0"}>
-            
             {nodo.prev && (
               <Hotspot 
-                tipo={nodo.tipoPrev || "back"} 
-                position={nodo.posPrev} 
-                rotation={nodo.rotPrev || "-90 0 0"} 
-                rotIcono={nodo.rotIconoPrev || 0}
-                tamano={nodo.tamanoPrev || 1}
-                color="#ef4444" 
-                titulo={nodo.textPrev || "Retroceder"} 
-                destino={nodo.prev} 
-                instruccion="Clic para retroceder" 
-                onClick={() => manejarCambioEscena(nodo.prev)}
+                tipo={nodo.tipoPrev || "back"} position={nodo.posPrev} rotation={nodo.rotPrev || "-90 0 0"} rotIcono={nodo.rotIconoPrev || 0} tamano={nodo.tamanoPrev || 1}
+                color="#ef4444" titulo={nodo.textPrev || "Retroceder"} destino={nodo.prev} instruccion="Clic para retroceder" onClick={() => manejarCambioEscena(nodo.prev)}
               />
             )}
-            
             {nodo.next && (
               <Hotspot 
-                tipo={nodo.tipoNext || "nav"} 
-                position={nodo.posNext} 
-                rotation={nodo.rotNext || "-90 0 0"} 
-                rotIcono={nodo.rotIconoNext || 0}
-                tamano={nodo.tamanoNext || 1}
-                color="#10b981" 
-                titulo={nodo.textNext || "Avanzar"} 
-                destino={nodo.next} 
-                instruccion={nodo.tipoNext === 'up' ? "Clic para volar" : "Clic para avanzar"} 
-                onClick={() => manejarCambioEscena(nodo.next)}
+                tipo={nodo.tipoNext || "nav"} position={nodo.posNext} rotation={nodo.rotNext || "-90 0 0"} rotIcono={nodo.rotIconoNext || 0} tamano={nodo.tamanoNext || 1}
+                color="#10b981" titulo={nodo.textNext || "Avanzar"} destino={nodo.next} instruccion={nodo.tipoNext === 'up' ? "Clic para volar" : "Clic para avanzar"} onClick={() => manejarCambioEscena(nodo.next)}
               />
             )}
-
             {nodo.next2 && (
               <Hotspot 
-                tipo={nodo.tipoNext2 || "nav"} 
-                position={nodo.posNext2} 
-                rotation={nodo.rotNext2 || "-90 0 0"} 
-                rotIcono={nodo.rotIconoNext2 || 0}
-                tamano={nodo.tamanoNext2 || 1}
-                color="#3b82f6" 
-                titulo={nodo.textNext2 || "Desvío"} 
-                destino={nodo.next2} 
-                instruccion="Clic para avanzar"
-                onClick={() => manejarCambioEscena(nodo.next2)} 
+                tipo={nodo.tipoNext2 || "nav"} position={nodo.posNext2} rotation={nodo.rotNext2 || "-90 0 0"} rotIcono={nodo.rotIconoNext2 || 0} tamano={nodo.tamanoNext2 || 1}
+                color="#3b82f6" titulo={nodo.textNext2 || "Desvío"} destino={nodo.next2} instruccion="Clic para avanzar" onClick={() => manejarCambioEscena(nodo.next2)} 
               />
             )}
-
-            {/* 🔴 NUEVO: BOTÓN AVANZAR 3 */}
             {nodo.next3 && (
               <Hotspot 
-                tipo={nodo.tipoNext3 || "nav"} 
-                position={nodo.posNext3} 
-                rotation={nodo.rotNext3 || "-90 0 0"} 
-                rotIcono={nodo.rotIconoNext3 || 0}
-                tamano={nodo.tamanoNext3 || 1}
-                color="#10b981" 
-                titulo={nodo.textNext3 || "Camino Extra"} 
-                destino={nodo.next3} 
-                instruccion="Clic para avanzar"
-                onClick={() => manejarCambioEscena(nodo.next3)} 
+                tipo={nodo.tipoNext3 || "nav"} position={nodo.posNext3} rotation={nodo.rotNext3 || "-90 0 0"} rotIcono={nodo.rotIconoNext3 || 0} tamano={nodo.tamanoNext3 || 1}
+                color="#10b981" titulo={nodo.textNext3 || "Camino Extra"} destino={nodo.next3} instruccion="Clic para avanzar" onClick={() => manejarCambioEscena(nodo.next3)} 
               />
             )}
-            
           </a-entity>
         ))}
 
@@ -362,6 +372,65 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
 
       <div className="viewer-ui-overlay" style={{ pointerEvents: 'none' }}>
         <TooltipFlotante />
+        
+        {/* 🔴 NUEVO: MICRO-CARRUSEL INFERIOR (Miniaturas como chips) */}
+        {foto && foto.includes('lab-') && (
+          <div style={{
+            position: 'absolute', bottom: '15px', left: '50%', transform: 'translateX(-50%)',
+            width: 'auto', maxWidth: '95%', zIndex: 100, pointerEvents: 'auto',
+            display: 'flex', flexDirection: 'column', alignItems: 'center'
+          }}>
+
+            {/* Etiqueta flotante que solo aparece al pasar el ratón */}
+            <div style={{
+              height: '24px', transition: 'opacity 0.2s ease, transform 0.2s ease',
+              opacity: labHovered ? 1 : 0, transform: labHovered ? 'translateY(0)' : 'translateY(5px)',
+              marginBottom: '6px'
+            }}>
+              <span style={{
+                backgroundColor: 'rgba(11, 15, 25, 0.9)', color: 'white', padding: '4px 10px',
+                borderRadius: '8px', fontSize: '0.7rem', fontWeight: '600', letterSpacing: '0.3px',
+                boxShadow: '0 4px 10px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)'
+              }}>
+                {labHovered}
+              </span>
+            </div>
+
+            {/* Contenedor del Carrusel muy ajustado */}
+            <div style={{ 
+              display: 'flex', gap: '5px', overflowX: 'auto', padding: '5px 6px', 
+              backgroundColor: 'rgba(11, 15, 25, 0.4)', backdropFilter: 'blur(8px)', 
+              borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' 
+            }} className="custom-scroll">
+              
+              {listaLaboratoriosMenu.map((lab) => (
+                <div 
+                  key={lab.archivo}
+                  onClick={() => manejarCambioEscena(lab.archivo)}
+                  onMouseEnter={() => setLabHovered(lab.nombre)}
+                  onMouseLeave={() => setLabHovered(null)}
+                  style={{
+                    minWidth: '45px', height: '32px', borderRadius: '4px', overflow: 'hidden',
+                    cursor: 'pointer', border: '1.5px solid transparent',
+                    transition: 'all 0.2s cubic-bezier(0.25, 1, 0.5, 1)', flexShrink: 0,
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
+                    borderColor: foto === lab.archivo ? '#10b981' : 'transparent',
+                    opacity: foto === lab.archivo ? 1 : 0.6,
+                    transform: labHovered === lab.nombre ? 'scale(1.25)' : 'scale(1)'
+                  }}
+                >
+                  <img 
+                    src={`/assets/panoramas/${lab.archivo}`} 
+                    alt={lab.nombre}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => e.target.src = '/assets/panoramas/exterior-laboratorios.webp'}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div style={{ position: 'absolute', bottom: '30px', left: '30px', pointerEvents: 'auto', zIndex: 100 }}>
           <div className="v-controls">
             <button className="ctrl-btn up" onClick={() => moverCamara('up')}><ChevronUp size={16} /></button>
