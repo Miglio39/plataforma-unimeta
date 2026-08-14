@@ -28,9 +28,8 @@ const Sidebar = ({ setEscenaActual, escenaActual }) => {
   ];
 
   const listaAuditorios = [
-    { nombre: 'Auditorio Principal', archivo: 'auditorio-mayor.webp' },
-    { nombre: 'Auditorio Bloque A', archivo: 'auditorio-bloquea.webp' },
-    { nombre: 'Auditorio Cs. Jurídicas', archivo: 'auditorio-juridico.webp' }
+    { nombre: 'Julio Flórez Roa 1 ', archivo: 'auditorio-mayor.webp' },
+    { nombre: 'Julio Flórez Roa 2 ', archivo: 'auditorio-bloquea.webp' },
   ];
 
   const menuSanFernando = [
