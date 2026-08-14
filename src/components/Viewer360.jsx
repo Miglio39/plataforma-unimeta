@@ -395,9 +395,10 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
                   }}
                 >
                   <img 
-                    src={`/assets/panoramas/${lab.archivo}`} 
+                    loading="lazy"
+                    src={`/assets/miniaturas/${lab.archivo}`} 
                     alt={lab.nombre}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                     onError={(e) => e.target.src = '/assets/panoramas/exterior-laboratorios.webp'}
                   />
                 </div>
