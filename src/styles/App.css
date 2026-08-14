@@ -125,9 +125,6 @@ ul { list-style: none; }
 /* =========================================
    6. CHATBOT PANEL
    ========================================= */
-/* =========================================
-   6. CHATBOT PANEL
-   ========================================= */
 /* Ampliamos el ancho de 270px a 340px para mayor comodidad visual */
 .chatbot-panel { position: absolute; top: 10px; right: 10px; width: 340px; height: calc(100% - 20px); background: #0b0f19; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; display: flex; flex-direction: column; z-index: 50; box-shadow: -5px 10px 30px rgba(0, 0, 0, 0.6); }
 
@@ -198,6 +195,7 @@ ul { list-style: none; }
 .item-content { display: flex; align-items: center; gap: 8px; }
 .sidebar-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
 .sidebar-item.active { background: var(--accent-blue); color: white; font-weight: 500; }
+
 /* 🔴 ESTILOS PARA EL SUBMENÚ DE LABORATORIOS */
 .submenu-list {
   padding-left: 20px;
@@ -256,7 +254,6 @@ ul { list-style: none; }
 .popup-header h3 { font-size: 1.1rem; color: white; margin: 0; }
 .hotspot-popup-modal p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
 
-
 /* =========================================
    10. PANEL INFERIOR RETRÁCTIL (Flecha)
    ========================================= */
@@ -302,7 +299,26 @@ ul { list-style: none; }
 
   .bottom-panel-wrapper.open { transform: translateY(0); }
 
-  .bottom-cards-grid { height: 120px !important; gap: 8px !important; overflow-y: auto; }
+  /* 🔴 FIX: Tarjetas deslizables para versión móvil (Responsivo) */
+  .bottom-cards-grid { 
+    display: flex !important;
+    flex-direction: row !important;
+    height: auto !important;
+    min-height: 140px;
+    gap: 15px !important; 
+    overflow-x: auto !important; /* Permite deslizar horizontalmente */
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory; /* Efecto magnético al deslizar */
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch; /* Suavidad extra en móviles iOS */
+  } 
+
+  .info-card {
+    min-width: 280px !important; /* Obliga a mantener el ancho legible */
+    flex-shrink: 0 !important; /* Evita que se aplasten */
+    scroll-snap-align: start;
+  }
+
   .thumb-info { width: 50px !important; height: 50px !important; }
   .text-info h4 { font-size: 0.8rem !important; }
   .text-info p { font-size: 0.65rem !important; -webkit-line-clamp: 1 !important; }
@@ -327,8 +343,6 @@ ul { list-style: none; }
     border-left: 1px solid var(--border-glass) !important; 
     z-index: 99999 !important;
   }
-
-  
 
   .chatbot-toggle-btn { width: 45px !important; height: 45px !important; bottom: 20px !important; right: 10px !important; }
   .chatbot-toggle-img { width: 35px !important; height: 35px !important; }
