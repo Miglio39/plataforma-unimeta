@@ -377,32 +377,38 @@ const Viewer360 = ({ foto, setEscenaActual }) => {
               backgroundColor: 'rgba(11, 15, 25, 0.4)', backdropFilter: 'blur(8px)', 
               borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' 
             }} className="custom-scroll">
-              
               {listaLaboratoriosMenu.map((lab) => (
-                <div 
-                  key={lab.archivo}
-                  onClick={() => manejarCambioEscena(lab.archivo)}
-                  onMouseEnter={() => setLabHovered(lab.nombre)}
-                  onMouseLeave={() => setLabHovered(null)}
-                  style={{
-                    minWidth: '45px', height: '32px', borderRadius: '4px', overflow: 'hidden',
-                    cursor: 'pointer', border: '1.5px solid transparent',
-                    transition: 'all 0.2s cubic-bezier(0.25, 1, 0.5, 1)', flexShrink: 0,
-                    boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
-                    borderColor: foto === lab.archivo ? '#10b981' : 'transparent',
-                    opacity: foto === lab.archivo ? 1 : 0.6,
-                    transform: labHovered === lab.nombre ? 'scale(1.25)' : 'scale(1)'
-                  }}
-                >
-                  <img 
-                    loading="lazy"
-                    src={`/assets/miniaturas/${lab.archivo}`} 
-                    alt={lab.nombre}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                    onError={(e) => e.target.src = '/assets/panoramas/exterior-laboratorios.webp'}
-                  />
-                </div>
-              ))}
+  <div 
+    key={lab.archivo}
+    onClick={() => manejarCambioEscena(lab.archivo)}
+    onMouseEnter={() => setLabHovered(lab.nombre)}
+    onMouseLeave={() => setLabHovered(null)}
+    style={{
+      width: '36px',     /* 🔴 FIX: Obliga a iOS a mantener este ancho exacto */
+      minWidth: '36px',  /* 🔴 FIX: Evita que se aplasten[cite: 1] */
+      height: '30px',    /* 🔴 Altura ajustada para que se vean más cuadrados/compactos[cite: 1] */
+      borderRadius: '4px', 
+      overflow: 'hidden',
+      cursor: 'pointer', 
+      border: '1.5px solid transparent',
+      transition: 'all 0.2s cubic-bezier(0.25, 1, 0.5, 1)', 
+      flexShrink: 0,     /* Mantiene su forma al deslizar[cite: 1] */
+      boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
+      borderColor: foto === lab.archivo ? '#10b981' : 'transparent',
+      opacity: foto === lab.archivo ? 1 : 0.6,
+      transform: labHovered === lab.nombre ? 'scale(1.25)' : 'scale(1)'
+    }}
+  >
+    <img 
+      loading="lazy"
+      src={`/assets/miniaturas/${lab.archivo}`} 
+      alt={lab.nombre}
+      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+      onError={(e) => e.target.src = '/assets/panoramas/exterior-laboratorios.webp'}
+    />
+  </div>
+))}
+              
             </div>
           </div>
         )}
