@@ -150,7 +150,6 @@ const ChatBot = ({ setEscenaActual }) => {
               <h3 className="chat-welcome-text">¡Hola! Soy tu asistente virtual.<br/>¿En qué puedo ayudarte hoy?</h3>
               <div className="chat-suggestions-vertical">
                 <button onClick={() => enviarMensaje(null, "¿Dónde está la biblioteca?")}><Search size={16} className="sugg-icon"/> ¿Dónde está la biblioteca?</button>
-                <button onClick={() => enviarMensaje(null, "Llévame a rectoría")}><MapPin size={16} className="sugg-icon"/> Llévame a rectoría</button>
                 <button onClick={() => enviarMensaje(null, "Mostrar laboratorios")}><Home size={16} className="sugg-icon"/> Mostrar laboratorios</button>
                 <button onClick={() => enviarMensaje(null, "Quiero un recorrido guiado")}><Compass size={16} className="sugg-icon"/> Quiero un recorrido guiado</button>
               </div>
